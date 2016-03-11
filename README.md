@@ -1,3 +1,7 @@
+
+# pondy-heritage-web
+Web application for Pondy heritage
+
 # pauloborges:mapbox demo
 
 This repository contains a very simple Meteor application that uses
