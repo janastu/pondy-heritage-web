@@ -1,0 +1,9 @@
+<template name="mapState">
+<ul class="btn-group" role="group" style="margin-top:100px;z-index: 100; list-style:none; display: inline-flex; ">
+{{#each locations}}
+<li style="padding: 5px;"> <button type="button" class="btn btn-default" role="group" style="z-index: 100; display: inline; "> {{name}}</button></li>
+{{/each}}
+</ul>
+
+{{> userState}}
+</template>

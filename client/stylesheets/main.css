@@ -1,0 +1,25 @@
+/*div#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}*/
+#map.mapbox {
+  top:95px;
+  
+}
+div#footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.nested.column {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.btn-default {
+    background-color: #ccc;
+    opacity: 0.8;
+  }
