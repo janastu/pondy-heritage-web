@@ -1,9 +1,13 @@
-/*div#map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-}*/
+
+/* custom style sheet*/
+#__flow-root {
+  margin-top:85px;
+}
+.margin-adjust{
+  margin-top: -100px;
+}
+
+
 #map.mapbox {
   top:95px;
   

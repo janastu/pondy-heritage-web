@@ -8,14 +8,24 @@
       FlowLayout.render('about');
     }
   });
+   FlowRouter.route('/instructions', {
+    action: function(params) {
+      FlowLayout.render('Instructions');
+    }
+  });
   FlowRouter.route('/contact', {
     action: function(params) {
       FlowLayout.render('contact');
     }
   });
+    FlowRouter.route('/download', {
+    action: function(params) {
+      FlowLayout.render('Download');
+    }
+  });
   FlowRouter.route('/map', {
     action: function(params) {
-      FlowLayout.render('Layout', {content: 'Map', region: Session.get('region')});
+      FlowLayout.render('Layout', {content: 'Map'});
     }
   });
   FlowRouter.route('/add-to-map', {

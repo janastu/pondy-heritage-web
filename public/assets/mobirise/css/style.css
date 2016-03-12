@@ -553,7 +553,7 @@ html {
 }
 .mbr-section__container--isolated {
   padding-bottom: 93px;
-  padding-top: 93px;
+  padding-top: 40px;
 }
 .mbr-section__container--first {
   padding-top: 93px;
@@ -792,6 +792,7 @@ html {
   color: #fff;
   position: relative;
 }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 .mbr-hero__text {
   font-size: 46px;
   font-weight: bold;
