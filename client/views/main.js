@@ -39,7 +39,6 @@ FlowRouter.route('/add-to-map', {
 });
 FlowRouter.route('/map/:region', {
     action: function(params) {
-        console.log("Region log", params.region);
         Session.set('region', params.region);
         FlowLayout.render('Layout', {content: 'Map', region: Session.get('region')});
     }
@@ -74,7 +73,6 @@ Meteor.methods({
                         if(err){
                             console.log("error", err);
                         } else {
-                            console.log("result", result.data);
                             Session.set('userSession', result.data);
                             FlowRouter.go('/add-to-map');
                         }
@@ -92,7 +90,6 @@ Meteor.methods({
                         if(err){
                             console.log("error", err);
                         } else {
-                            console.log("result", result.data);
                             FlowRouter.go('/login/');
                         }
                     });
@@ -122,7 +119,6 @@ if (Meteor.isClient) {
             if (Mapbox.loaded()) {
                 //need help
                 //set view on map should be dynamic based on regions data from server
-                console.log(Session);
                 var regData = Session.get('regionData');
                 L.mapbox.accessToken = 'pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g';
                 var map = L.mapbox.map('map', 'mapbox.pirates')
@@ -200,10 +196,6 @@ if (Meteor.isClient) {
                 var map = L.mapbox.map('map', 'mapbox.pirates')
                     .setView([11.935001, 79.819558], 14)
                     .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
-                //.addTo(map);
-                map.on('zoomend', function(event){
-                    console.log(event.target);
-                });
 
                 var marker = L.marker([11.935001, 79.819558], {
                     icon: L.mapbox.marker.icon({
@@ -218,7 +210,6 @@ if (Meteor.isClient) {
                     var latlng = marker.getLatLng();
                     Session.set('mapClick', latlng);
                     $('#add-heritage').modal({show: true});
-                    console.log(marker, event, latlng);
                 });
             }
         });
@@ -244,19 +235,16 @@ if (Meteor.isClient) {
             event.preventDefault();
             /* should integrate leaflet bookmarks plugin for this*/
             var mapClickText = event.target.textContent.trim().toUpperCase();
-            console.log(mapClickText, "am textguy");
             var Regions = Session.get('Regions');
             var mapClickData = {};
 
             for (i=0; i<Regions.length; i++){
-                console.log(Regions[i].name);
 
                 if (Regions[i].name == mapClickText){
                     //Session.set('LATLNG', Regions[i]);
                     mapClickData = Regions[i];
                 }
             }
-            console.log(mapClickData);
             Session.set('regionData', mapClickData);
             FlowRouter.go('/map/'+event.target.textContent.trim().toLowerCase());
         }
@@ -286,14 +274,6 @@ if (Meteor.isClient) {
     Template.Register.events({
         'submit form': function(event){
             event.preventDefault();
-            /*console.log({
-              username: event.target.username.value, 
-              password: event.target.password.value, 
-              emailId: event.target.email.value,
-              residentstatus: event.target.residentStatus.value,
-              agestatus: event.target.ageGroup.value,
-              specialmessage: event.target.specialmessage.value
-              });*/
             Meteor.call('Register', {
                 username: event.target.username.value, 
                 password: event.target.password.value, 
