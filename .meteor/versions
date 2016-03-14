@@ -45,6 +45,7 @@ spacebars@1.0.6
 spacebars-compiler@1.0.6
 templating@1.1.1
 tracker@1.0.7
+tsega:bootstrap3-lightbox@0.2.0
 twbs:bootstrap@3.3.6
 ui@1.0.6
 underscore@1.0.3
