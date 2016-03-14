@@ -35,7 +35,6 @@
       } else {
         FlowRouter.go('/login');
       }
-      
     }
   });
   FlowRouter.route('/map/:region', {
@@ -64,7 +63,6 @@
               return result;
             }
           });
-        
         return response;
   },
   Login: function(request){
@@ -79,8 +77,8 @@
           console.log("result", result.data);
           Session.set('userSession', result.data);
           FlowRouter.go('/add-to-map');
+          Session.set('loginSpinner', false);
         }
-        
       });
   },
   Register: function(request){
@@ -90,25 +88,19 @@
       'residentstatus='+request.residentstatus+'&'+
       'agestatus='+request.agestatus+'&'+
       'specialmessage='+request.specialmessage,
-      
-
-      headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':"application/json"}}, 
+      headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':"application/json"}},
       function(err, result){
         if(err){
           console.log("error", err);
         } else {
           console.log("result", result.data);
             FlowRouter.go('/login/');
-       
+          Session.set('registerSpinner', false);
         }
-        
       });
 
   }
-
-
   });
-    
   if (Meteor.isClient) {
     Session.set('Regions', [{name: "BAHOUR", id:1, lat:  11.803506,
                    lng:  79.738941,
@@ -258,10 +250,16 @@
         FlowRouter.go('/map/'+event.target.textContent.trim().toLowerCase());
         }
     });
+    Template.Login.helpers({
+        loaded: function() {
+            return Session.get('loginSpinner');
+        }
+    });
     Template.Login.events({
       'submit form': function(event){
         event.preventDefault();
-        Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value})
+        Session.set('loginSpinner', true);
+        Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value});
        
       }
     });
@@ -284,17 +282,15 @@
         
       }
     });
+    Template.Register.helpers({
+        loaded: function() {
+            return Session.get('registerSpinner');
+        }
+    });
     Template.Register.events({
       'submit form': function(event){
         event.preventDefault();
-        /*console.log({
-          username: event.target.username.value, 
-          password: event.target.password.value, 
-          emailId: event.target.email.value,
-          residentstatus: event.target.residentStatus.value,
-          agestatus: event.target.ageGroup.value,
-          specialmessage: event.target.specialmessage.value
-        });*/
+          Session.set('registerSpinner', true);
         Meteor.call('Register', {
           username: event.target.username.value, 
           password: event.target.password.value, 
