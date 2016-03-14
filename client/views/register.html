@@ -44,8 +44,12 @@
                                 	<input type="text" class="form-control" name="specialmessage" placeholder="SPECIAL MESSAGE">
                             	</div>
                             	
-                            	<div class="mbr-buttons mbr-buttons--right"><button type="submit" class="mbr-buttons__btn btn btn-lg btn-danger">REGISTER</button>
-                            	</div>
+                            	<div class="mbr-buttons mbr-buttons--right">
+                                    <button type="submit" class="mbr-buttons__btn btn btn-lg btn-danger">REGISTER</button>
+                                    {{#if loaded}}
+                                    {{> spinner}}
+                                    {{/if}}
+                                </div>
                         	</form>
 						</div>
 					</div>

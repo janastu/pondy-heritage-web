@@ -35,11 +35,11 @@ FlowRouter.route('/map', {
 });
 FlowRouter.route('/add-to-map', {
     action: function(params) {
-        if(Session.get('userSession')){
-            FlowLayout.render('MapEditor');
-        } else {
-            FlowRouter.go('/login');
-        }
+       if(Session.get('userSession')){
+        FlowLayout.render('MapEditor');
+      } else {
+        FlowRouter.go('/login');
+      }
     }
 });
 FlowRouter.route('/map/:region', {
@@ -62,48 +62,53 @@ Meteor.methods({
     heritagGeoJson: function(){
         this.unblock();
         var response = Meteor.http.call("GET","http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson", 
-                function(result){
-                    if(result){
-                        return result;
-                    }
-                });
+          function(result){
+            if(result){
+              return result;
+            }
+          });
         return response;
-    },
-    Login: function(request){
+  },
+  Login: function(request){
 
-        var response = Meteor.http.call("POST", "http://pondy.openrun.com:8080/heritageweb/api/authenticate", 
-                {content: 'username='+request.username+'&'+'password='+request.password, 
-                    headers:{"Content-Type":"application/x-www-form-urlencoded", "Accept":"application/json"}}, 
-                    function(err, result){
-                        if(err){
-                            console.log("error", err);
-                        } else {
-                            Session.set('userSession', result.data);
-                            FlowRouter.go('/add-to-map');
-                        }
-                    });
-    },
-    Register: function(request){
-        var response = Meteor.http.call("POST", "http://pondy.openrun.com:8080/heritageweb/api/registerForMobile", 
-                {content: 'username='+request.username+'&'+'password='+request.password+'&'+
-                    'emailId='+request.emailId+'&'+
-                        'residentstatus='+request.residentstatus+'&'+
-                        'agestatus='+request.agestatus+'&'+
-                        'specialmessage='+request.specialmessage,
-                    headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':"application/json"}},
-                    function(err, result){
-                        if(err){
-                            console.log("error", err);
-                        } else {
-                            FlowRouter.go('/login/');
-                        }
-                    });
-    }
-});
-if (Meteor.isClient) {
-    Session.set('regionData', {name: "TOWN", id:2, lat:   11.935001,
-        lng:   79.819558,
-        zoom: 14});
+    var response = Meteor.http.call("POST", "http://pondy.openrun.com:8080/heritageweb/api/authenticate", 
+      {content: 'username='+request.username+'&'+'password='+request.password, 
+      headers:{"Content-Type":"application/x-www-form-urlencoded", "Accept":"application/json"}}, 
+      function(err, result){
+        if(err){
+          console.log("error", err);
+        } else {
+          console.log("result", result.data);
+          Session.set('userSession', result.data);
+          FlowRouter.go('/add-to-map');
+          Session.set('loginSpinner', false);
+        }
+      });
+  },
+  Register: function(request){
+  var response = Meteor.http.call("POST", "http://pondy.openrun.com:8080/heritageweb/api/registerForMobile", 
+      {content: 'username='+request.username+'&'+'password='+request.password+'&'+
+      'emailId='+request.emailId+'&'+
+      'residentstatus='+request.residentstatus+'&'+
+      'agestatus='+request.agestatus+'&'+
+      'specialmessage='+request.specialmessage,
+      headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':"application/json"}},
+      function(err, result){
+        if(err){
+          console.log("error", err);
+        } else {
+          console.log("result", result.data);
+            FlowRouter.go('/login/');
+          Session.set('registerSpinner', false);
+        }
+      });
+
+  }
+  });
+  if (Meteor.isClient) {
+      Session.set('regionData', {name: "TOWN", id:2, lat:   11.935001,
+            lng:   79.819558,
+            zoom: 14});
 
     Session.set('Regions', [{name: "BAHOUR", id:1, lat:  11.803506,
         lng:  79.738941,
@@ -249,11 +254,17 @@ if (Meteor.isClient) {
             FlowRouter.go('/map/'+event.target.textContent.trim().toLowerCase());
         }
     });
-    Template.Login.events({
-        'submit form': function(event){
-            event.preventDefault();
-            Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value})
+    Template.Login.helpers({
+        loaded: function() {
+            return Session.get('loginSpinner');
         }
+    });
+    Template.Login.events({
+      'submit form': function(event){
+        event.preventDefault();
+        Session.set('loginSpinner', true);
+        Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value});
+      }
     });
     Template.userState.helpers({
         userLogged: function(){
@@ -271,27 +282,37 @@ if (Meteor.isClient) {
             }
         }
     });
-    Template.Register.events({
-        'submit form': function(event){
-            event.preventDefault();
-            Meteor.call('Register', {
-                username: event.target.username.value, 
-                password: event.target.password.value, 
-                emailId: event.target.email.value,
-                residentstatus: event.target.residentStatus.value,
-                agestatus: event.target.ageGroup.value,
-                specialmessage: event.target.specialmessage.value
-            });
+    Template.Register.helpers({
+        loaded: function() {
+            return Session.get('registerSpinner');
         }
+    });
+    Template.Register.events({
+      'submit form': function(event){
+        event.preventDefault();
+          Session.set('registerSpinner', true);
+        Meteor.call('Register', {
+          username: event.target.username.value, 
+          password: event.target.password.value, 
+          emailId: event.target.email.value,
+          residentstatus: event.target.residentStatus.value,
+          agestatus: event.target.ageGroup.value,
+          specialmessage: event.target.specialmessage.value
+        });
+      }
     });
     Template.AddToMap.helpers({
         latlng: function() {
             return Session.get('mapClick');
+        },
+        loaded: function() {
+            return Session.get('uploadSpin');
         }
     });
     Template.AddToMap.events({
         'submit form': function(event, template){
             event.preventDefault();
+            Session.set('uploadSpin', true);
             var file = template.find('input:file').files[0];
             var lat = Session.get('mapClick').lat;
             var lng = Session.get('mapClick').lng;
@@ -305,6 +326,9 @@ if (Meteor.isClient) {
             fd.append("language", event.target.language.value);
             fd.append("picture", file);
             var xhr = new XMLHttpRequest;
+            xhr.addEventListener("load", function(e){
+                Session.set('uploadSpin', false);
+            });
             xhr.open('POST', 'http://pondy.openrun.com:8080/heritageweb/api/createAnyMediaGeoTagHeritageFromWeb', true);
             xhr.send(fd);
         }

@@ -68,6 +68,9 @@
 
 
 <div class="modal-footer">
+    {{#if loaded}}
+    {{> spinner}}
+    {{/if}}
 		<button type="submit" class="btn btn-primary" >SUBMIT</button>	
           <!--button type="button" class="btn btn-primary" id="save">Save</button-->
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
