@@ -141,24 +141,30 @@ if (Meteor.isClient) {
                                     feature = marker.feature;
                                     var content = "";
                                     //identifying content type to build templates accordingly
+                                    //for map popup on marker click
+                                    //should enhance this feature to
+                                    //hover and show in side panel
                                     switch(feature.properties.mediatype) {
                                         case 'IMAGE':
                                             content = '<h2>'+feature.properties.title+'</h2>' + 
-                                                '<p><img class="img-responsive" width="280px" src="' +
+                                                '<p><img class="img-responsive" style="width:280px;" src="' +
                                                 feature.properties.url+ '" />'+feature.properties.description+'</p>';
                                             break;
                                         case 'VIDEO':
-                                            content = '<h2>'+feature.properties.title+'</h2>' + '<p><video width="280" controls src="' +
+                                            content = '<h2>'+feature.properties.title+'</h2>' + '<p><video style="width:280px;" controls autobuffer>'+
+                                                '<source src="'+feature.properties.url+'"type=""/> <code>Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
+                                                feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></video>'+
+                                                feature.properties.description+'</p>';
+                                            /*content = '<h2>'+feature.properties.title+'</h2>' + '<p><video width="280" controls preload src="' +
                                                 feature.properties.url+'>'+
                                                 '"Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
-                                                feature.properties.url+'">download it</a> and watch it with your favorite video player!</video>"'+
-                                                feature.properties.description+'</p>';
+                                                feature.properties.url+'">download it</a> and watch it with your favorite video player!</video>'+
+                                                feature.properties.description+'</p>';*/
                                             break;
                                         case 'AUDIO':
-                                            content = '<h2>'+feature.properties.title+'</h2>' + '<p><audio width="280" controls src="' +
-                                                feature.properties.url+'>'+
-                                                '"Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
-                                                feature.properties.url+'">download it</a> and watch it with your favorite video player!</audio>"'+
+                                            content = '<h2>'+feature.properties.title+'</h2>' + '<p><audio style="width:280px;" controls autobuffer>'+
+                                                '<source src="'+feature.properties.url+'"type=""/> <code>Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
+                                                feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></audio>'+
                                                 feature.properties.description+'</p>';
                                             break;
 
