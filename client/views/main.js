@@ -51,6 +51,7 @@ FlowRouter.route('/map/:region', {
 FlowRouter.route('/login', {
     action: function(params) {
         FlowLayout.render('Login');
+        Session.set('showDialog', false);
     }
 });
 FlowRouter.route('/register', {
@@ -76,12 +77,18 @@ Meteor.methods({
       headers:{"Content-Type":"application/x-www-form-urlencoded", "Accept":"application/json"}}, 
       function(err, result){
         if(err){
-          console.log("error", err);
+            Session.set("errorAlert", true);
+            Session.set('loginSpinner', false);
+            Meteor.setTimeout(function(){
+                Session.set("errorAlert", false);
+
+            }, 5000);
         } else {
           console.log("result", result.data);
           Session.set('userSession', result.data);
           FlowRouter.go('/add-to-map');
           Session.set('loginSpinner', false);
+          Session.set('showDialog', true);
         }
       });
   },
@@ -95,17 +102,26 @@ Meteor.methods({
       headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':"application/json"}},
       function(err, result){
         if(err){
-          console.log("error", err);
+          Session.set("errorAlert", true);
+          Session.set('loginSpinner', false);
+            Meteor.setTimeout(function(){
+                Session.set("errorAlert", false);
+
+            }, 5000);
+          
+          
         } else {
-          console.log("result", result.data);
+         
             FlowRouter.go('/login/');
           Session.set('registerSpinner', false);
         }
+
       });
 
   }
   });
   if (Meteor.isClient) {
+    Session.set("errorAlert", false);
       Session.set('regionData', {name: "TOWN", id:2, lat:   11.935001,
             lng:   79.819558,
             zoom: 14});
@@ -301,6 +317,28 @@ Meteor.methods({
         });
       }
     });
+    Template.body.helpers({
+        showDialog: function() {
+            return Session.get('showDialog');
+            
+        },
+        errorAlert: function() {
+            return Session.get('errorAlert');
+
+        }
+        
+    });
+    Template.Alerts.helpers({
+        
+        userSession: function(){
+            if(Session.get('userSession')){
+                var userStr = Session.get('userSession').token;
+                var usrArray = userStr.split(":");
+                return {"loggedUser": usrArray[0]};
+                
+            }
+        }
+});
     Template.AddToMap.helpers({
         latlng: function() {
             return Session.get('mapClick');
