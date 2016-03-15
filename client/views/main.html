@@ -17,17 +17,50 @@
   <link href='https://api.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
         <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
 </head>
+
 <body>
 {{> navBar}}
-
-
+{{#if showDialog}}
+{{> Alerts}}
+{{/if}}
+{{#if errorAlert}}
+<div class="row" style="position: fixed;
+    top: 100px;
+    display: block;
+    z-index: 100;
+    left: 0px;">
+<div class="alert alert-danger" role="alert">
+  
+  <strong>Something went wrong,Try Again!</strong> 
+</div>
+</div>
+{{/if}}
 {{> AddToMap}}
 </body>
+
+
 
 <template name="Layout">
 {{> mapState}}
 
   {{> Template.dynamic template=content }}
+
+</template>
+
+
+<template name="Alerts">
+{{#if userSession}}
+<div class="row" style="position: fixed;
+    top: 100px;
+    display: block;
+    z-index: 100;
+    right: 0px;">
+<div class="alert alert-success" role="alert">
+  
+  <strong>Welcome</strong> {{userSession.loggedUser}}
+</div>
+</div>
+{{/if}}
 
 </template>
 <!--template name="GL">
