@@ -356,10 +356,6 @@ myLayer.on('popupopen', function(e) {
         showDialog: function() {
             return Session.get('showDialog');
             
-        },
-        errorAlert: function() {
-            return Session.get('errorAlert');
-
         }
         
     });
@@ -374,6 +370,16 @@ myLayer.on('popupopen', function(e) {
             }
         }
 });
+    Template.dismissibleAlert.helpers({
+
+        errorAlert: function() {
+            return Session.get('errorAlert');
+
+        },
+        uploadMedia: function(){
+            return  Session.get('uploadMedia');
+        }
+    });
     Template.AddToMap.helpers({
         latlng: function() {
             return Session.get('mapClick');
@@ -386,24 +392,66 @@ myLayer.on('popupopen', function(e) {
         'submit form': function(event, template){
             event.preventDefault();
             Session.set('uploadSpin', true);
-            var file = template.find('input:file').files[0];
+             var fd = new FormData();
+             var file = template.find('input:file').files[0];
+            if(file.type){
+                
+                var mediaType = file.type.split("/")[0];
+                switch(mediaType){
+                case "image":
+                fd.append("mediatype", "1");
+                break;
+
+                case "audio":
+                fd.append("mediatype", "2");
+                break;
+
+                case "video":
+                fd.append("mediatype", "3");
+                break;
+            }
+
+            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+             else {
+                fd.append("mediatype", "4");
+            }
+            
             var lat = Session.get('mapClick').lat;
             var lng = Session.get('mapClick').lng;
-            var fd = new FormData();
+           
+            
+            
             fd.append("title", event.target.title.value);
             fd.append("description", event.target.description.value);
             fd.append("latitude", lat);
             fd.append("longitude", lng);
             fd.append("category", event.target.category.value);
-            fd.append("mediatype", event.target.mediatype.value);
+            
             fd.append("language", event.target.language.value);
             fd.append("picture", file);
             var xhr = new XMLHttpRequest;
             xhr.addEventListener("load", function(e){
                 Session.set('uploadSpin', false);
+                event.target.reset();
+                Session.set('uploadMedia', true);
+                $('#add-heritage').modal('toggle');
+                Meteor.setTimeout(function(){
+                Session.set("uploadMedia", false);
+
+            }, 5000);
             });
             xhr.open('POST', 'http://pondy.openrun.com:8080/heritageweb/api/createAnyMediaGeoTagHeritageFromWeb', true);
             xhr.send(fd);
+
+            xhr.addEventListener("error", function(e){
+                Session.set('uploadSpin', false);
+                Meteor.setTimeout(function(){
+                Session.set("errorAlert", true);
+
+            }, 5000);
+            });
+
+
         }
     });
 }

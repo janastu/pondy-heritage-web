@@ -19,30 +19,39 @@
 </head>
 
 <body>
+{{> dismissibleAlert}}
 {{> navBar}}
 {{#if showDialog}}
 {{> Alerts}}
 {{/if}}
 
-<!--NEED FIX: error alert need to put in seperate template -->
+
+
+
+
+{{> AddToMap}}
+</body>
+
+<template name="dismissibleAlert">
+<!-- Error alert for signin-->
 {{#if errorAlert}}
-<div class="row" style="position: fixed;
-    top: 100px;
-    display: block;
-    z-index: 100;
-    left: 0px;">
+<div class="dismiss-alert-wrap">
 <div class="alert alert-danger" role="alert">
   
   <strong>Something went wrong,Try Again!</strong> 
 </div>
 </div>
 {{/if}}
-
-
-{{> AddToMap}}
-</body>
-
-
+<!-- Success alert for upload media-->
+{{#if uploadMedia}}
+<div class="dismiss-alert-wrap">
+<div class="alert alert-success" role="alert">
+  
+  <strong>Upload Success!</strong> 
+</div>
+</div>
+{{/if}}
+</template>
 
 <template name="Layout">
 {{> mapState}}
