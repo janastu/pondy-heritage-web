@@ -12,6 +12,9 @@
   top:95px;
   
 }
+.leaflet-popup-pane{
+  margin-top: 25px;
+}
 div#footer {
   position: fixed;
   left: 0;

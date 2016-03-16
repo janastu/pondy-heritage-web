@@ -183,21 +183,22 @@ Meteor.methods({
                                     //hover and show in side panel
                                     switch(feature.properties.mediatype) {
                                         case 'IMAGE':
-                                            content = '<h2>'+feature.properties.title+'</h2>' +
+                                            content = 
                                                 '<p><a href="'+feature.properties.url+'" data-toggle="lightbox"> <img class="img-responsive" style="width:280px;" src="' +
-                                                feature.properties.url+ '" /></a>'+feature.properties.description+'</p>';
+                                                feature.properties.url+ '" /></a>'+'<h2>'+feature.properties.title+'</h2>' +
+                                                feature.properties.description+'</p>';
                                             break;
                                         case 'VIDEO':
-                                            content = '<h2>'+feature.properties.title+'</h2>' + '<p><video style="width:280px;" controls autobuffer>'+
+                                            content = '<p><video style="width:280px;" controls autobuffer>'+
                                                 '<source src="'+feature.properties.url+'"type=""/> <code>Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
                                                 feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></video>'+
-                                                feature.properties.description+'</p>';
+                                                '<h2>'+feature.properties.title+'</h2>' + feature.properties.description+'</p>';
                                             break;
                                         case 'AUDIO':
-                                            content = '<h2>'+feature.properties.title+'</h2>' + '<p><audio style="width:280px;" controls autobuffer>'+
+                                            content =  '<p><audio style="width:280px;" controls autobuffer>'+
                                                 '<source src="'+feature.properties.url+'"type=""/> <code>Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
                                                 feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></audio>'+
-                                                feature.properties.description+'</p>';
+                                                '<h2>'+feature.properties.title+'</h2>' +feature.properties.description+'</p>';
                                             break;
 
                                     }
