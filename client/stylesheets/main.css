@@ -1,5 +1,12 @@
 
 /* custom style sheet*/
+/*bug fix for value not showing in firefox forms
+ * and form showing different than in mobirise*/
+
+.form-control {
+    height: auto;
+}
+
 #__flow-root {
   margin-top:85px;
 }
