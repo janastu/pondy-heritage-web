@@ -36,19 +36,18 @@ FlowRouter.route('/map', {
 FlowRouter.route('/add-to-map', {
     action: function(params) {
        if(Session.get('userSession')){
-        FlowLayout.render('MapEditor');
+        FlowLayout.render('Layout', {content:'MapEditor'});
       } else {
         FlowRouter.go('/login');
       }
     }
 });
-FlowRouter.route('/map/:region', {
+/*FlowRouter.route('/map/:region', {
     action: function(params) {
-        Session.set('region', params.region);
-        FlowLayout.render('Layout', {content: 'Map', region: Session.get('region')});
-    }
-});
-FlowRouter.route('/login', {
+      FlowLayout.render('Layout', {content: 'Map'});
+  }
+  });*/
+  FlowRouter.route('/login', {
     action: function(params) {
         FlowLayout.render('Login');
         Session.set('showDialog', false);
@@ -122,19 +121,35 @@ Meteor.methods({
   });
   if (Meteor.isClient) {
     Session.set("errorAlert", false);
-      Session.set('regionData', {name: "TOWN", id:2, lat:   11.935001,
+    Session.set('regionData', {name: "TOWN", id:1, lat:   11.935001,
             lng:   79.819558,
             zoom: 14});
 
-    Session.set('Regions', [{name: "BAHOUR", id:1, lat:  11.803506,
+    Session.set('Regions', [
+        {name: "PUDUCHERRY",
+         id:1, lat:  11.920013,
+        lng:   79.812646,
+        zoom: 16,
+        bounds: [[11.916318, 79.797196], [11.921021, 79.833417]]
+    },
+
+        {name: "BAHOUR", 
+        id:2, 
+        lat:  11.803506,
         lng:  79.738941,
-        zoom: 17},
-        {name: "TOWN", id:2, lat:   11.935001,
-            lng:   79.819558,
-            zoom: 17},
-            {name: "AUROVILLE", id:3, lat:  12.006833 ,
-                lng:  79.810513,
-                zoom: 17}]);
+        zoom: 16, 
+        bounds: [[11.806473, 79.735429], [11.806725, 79.768130]]
+        },
+        {name: "HERITAGE-TOWN", id:3, lat:   11.935001,
+                   lng:   79.819558,  
+                   zoom: 16,
+                   bounds: [[11.936959, 79.825194], [11.940464, 79.833584]]
+               }, 
+                   {name: "AUROVILLE", id:4, lat:  12.006833 ,
+                   lng:  79.810513,
+                   zoom: 16,
+                    bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
+                }]);
 
     Template.Map.onRendered(function () {
         Mapbox.debug = true;
@@ -150,12 +165,12 @@ Meteor.methods({
                 var map = L.mapbox.map('map', 'mapbox.pirates')
                     .setView([regData.lat, regData.lng], regData.zoom)
                     .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
-                Meteor.http.call("GET","http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson",
-                        function(err, response){
-                            if(err){
-                                console.log("error in getting geo json", err);
-                            } else {
-                                var myLayer = L.mapbox.featureLayer();
+                    //global context for map object to change bounding box
+                    window.MAP=map;
+
+
+                 var myLayer = L.mapbox.featureLayer();
+                                   
                                 // Set a custom icon on each marker based on feature
                                 // properties.
                                 myLayer.on('layeradd', function(e) {
@@ -188,12 +203,28 @@ Meteor.methods({
                                     }
                                     marker.bindPopup(content);
                                 });
-                                myLayer.setGeoJSON(response.data.features)
-                                    .addTo(map);
-                            }
-                        });
+
+//center map position when user clicks on marker
+                     /*myLayer.on('click', function(e) {
+                                    map.panTo(e.layer.getLatLng());
+                                    
+        
+                                     });*/
+
+myLayer.on('popupopen', function(e) {
+    var px = map.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
+    px.y -= e.popup._container.clientHeight/2 // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+    map.panTo(map.unproject(px),{animate: true}); // pan to new center
+    
+});
+//Get pondycherry heritage data from server - using mapbox loadurl method
+                myLayer.loadURL('http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson')
+                .addTo(map);
+           
+          
             }
         });
+
     });
 
     Template.Map.helpers({
@@ -252,27 +283,30 @@ Meteor.methods({
         }
     });
     Template.mapState.events({
-        'click li button': function(event){
-            event.preventDefault();
-            /* should integrate leaflet bookmarks plugin for this*/
-            var mapClickText = event.target.textContent.trim().toUpperCase();
-            var Regions = Session.get('Regions');
-            var mapClickData = {};
 
-            for (i=0; i<Regions.length; i++){
+      'click li button': function(event){
+        event.preventDefault();
+       // change map bounding box, 
+        switch(event.target.textContent.trim().toLowerCase()){
+            case "puducherry":
+            MAP.fitBounds(Session.get('Regions')[0].bounds);
+            break;
 
-                if (Regions[i].name == mapClickText){
-                    //Session.set('LATLNG', Regions[i]);
-                    mapClickData = Regions[i];
-                }
-            }
-            Session.set('regionData', mapClickData);
-            FlowRouter.go('/map/'+event.target.textContent.trim().toLowerCase());
+            case "bahour":
+            MAP.fitBounds(Session.get('Regions')[1].bounds);
+            break;
+
+            case "heritage-town":
+            MAP.fitBounds(Session.get('Regions')[2].bounds);
+            break;
+
+            case "auroville":
+            MAP.fitBounds(Session.get('Regions')[3].bounds);
+            break;
+            
         }
-    });
-    Template.Login.helpers({
-        loaded: function() {
-            return Session.get('loginSpinner');
+        
+
         }
     });
     Template.Login.events({
