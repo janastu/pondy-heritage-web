@@ -40,10 +40,10 @@
   });
   FlowRouter.route('/map/:region', {
     action: function(params) {
-      console.log("Region log", params.region);
-      Session.set('region', params.region);
-      FlowLayout.render('Layout', {content: 'Map', region: Session.get('region')});
-    }
+
+      FlowLayout.render('Layout', {content: 'Map'});
+       
+  }
   });
   FlowRouter.route('/login', {
     action: function(params) {
@@ -112,13 +112,19 @@
   if (Meteor.isClient) {
     Session.set('Regions', [{name: "BAHOUR", id:1, lat:  11.803506,
                    lng:  79.738941,
-                   zoom: 14},
+                   zoom: 16, 
+                   bounds: [[11.806473, 79.735429], [11.806725, 79.768130]]
+                },
                    {name: "TOWN", id:2, lat:   11.935001,
                    lng:   79.819558,  
-                   zoom: 14}, 
+                   zoom: 16,
+                   bounds: [[11.939160, 79.786725], [11.917662, 79.831872]]
+               }, 
                    {name: "AUROVILLE", id:3, lat:  12.006833 ,
                    lng:  79.810513,
-                   zoom: 14}]);
+                   zoom: 16,
+                    bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
+                }]);
     
 
     Template.Map.onRendered(function () {
@@ -129,7 +135,7 @@
       });
 
      
-    
+      
 
       this.autorun(function () {
           if (Mapbox.loaded()) {
@@ -140,6 +146,7 @@
               var map = L.mapbox.map('map', 'mapbox.pirates')
                         .setView([11.935001, 79.819558], 14)
                         .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
+              window.MAP=map;
                         
             
               Meteor.http.call("GET","http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson",
@@ -149,23 +156,27 @@
                 } else {
                   
               var myLayer = L.mapbox.featureLayer();
+               myLayer.on('click', function(e) {
+        map.panTo(e.layer.getLatLng());
+        console.log(e.layer.getLatLng());
+    });
                   // Set a custom icon on each marker based on feature
                   // properties.
                    myLayer.on('layeradd', function(e) {
                      var marker = e.layer,
                          feature = marker.feature;
-                     
+                      
                            //marker.setIcon(L.icon({ options: feature.properties.icon}));
                              var content = '<h2>'+feature.properties.title+'</h2>' + '<p><img class="img-responsive" src="' +
                                             feature.properties.url+ '" />'+feature.properties.description+'</p>';
                                marker.bindPopup(content);
                                });
-                             
+                               
                                myLayer.setGeoJSON(response.data.features)
                                .addTo(map);
                              }
      });
-
+        
         
             
           }
@@ -255,7 +266,23 @@
     Template.mapState.events({
       'click li button': function(event){
         event.preventDefault();
+        switch(event.target.textContent.trim().toLowerCase()){
+            case "bahour":
+            Session.set('Region', Session.get('Regions')[0]);
+            break;
+            case "town":
+            Session.set('Region', Session.get('Regions')[1]);
+            break;
+            case "auroville":
+            Session.set('Region', Session.get('Regions')[2]);
+            break;
+        }
+        var bounds = Session.get('Region').bounds;
+         console.log(bounds);
+        MAP.fitBounds(bounds);
+       
         FlowRouter.go('/map/'+event.target.textContent.trim().toLowerCase());
+
         }
     });
     Template.Login.events({
