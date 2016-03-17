@@ -7,40 +7,43 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h4 class="modal-title">Add your resource</h4>
-          
+          <h3 class="modal-title">Pin your resource</h3>
+          <p>to location 
+          <span>
+          {{#if latlng}}
+
+          <a href="#">{{latlng.lat}}</a>,<a href="#">{{latlng.lng}}</a>
+             {{/if}}
+             </span>
+             </p>
+       
         </div>
 
         <div class="modal-body">
 <form name="multiform" id="multiform" enctype="multipart/form-data" >
 <div class="form-group">
 <label>Title:</label>
-<input type="text" class="form-control" name="title" required="" placeholder="TITLE" >
+<input type="text" class="form-control" name="title" required="" placeholder="Add a title" >
 </div>
 <div class="form-group form-group-lg">
 <label>Description:</label>
-<input type="text" class="form-control input-lg" name="description" required="" placeholder="DESCRIPTION" >
+<textarea type="text" class="form-control input-lg" name="description" form="multiform" required="" placeholder="Add a description of this place">
+</textarea>
 </div>
-{{#if latlng}}
-<div class="form-group">
-<label>Latitude:</label>
-<input type="text" class="form-control" name="latitude" required="" value={{latlng.lat}} placeholder="LATITUDE">
-</div>
-<div class="form-group">
-<label>Longitude:</label>
-<input type="text" class="form-control" name="longitude" required="" value={{latlng.lng}} placeholder="LONGITUDE">
-</div>
-{{/if}}
-<div class="form-group">
+<div class="col-md-4 col-lg-4 col-sm-4">
+<div class="form-group" style="padding: 25px;">
 <label >Category:</label>
 
 <select id="category" name="category"  >
       <option value="1">Natural Heritage</option>
       <option value="2">Built Heritage</option>
     </select>
+    
 
 </div>
-<div class="form-group">
+</div>
+<div class="col-md-4 col-lg-4 col-sm-4">
+<div class="form-group" style="padding: 25px;">
 <label>Language:</label>
 
  <select id="language" name="language"  >
@@ -50,21 +53,13 @@
     </select>
    
 </div>
-<!--div class="form-group">
-<label >Media type:</label>
-<select id="mediatype" name="mediatype"  >
-      <option value="1">IMAGE</option>
-      <option value="2">AUDIO</option>
-	  <option value="3">VIDEO</option>
-<option value="4">TEXT</option>
-    </select>
+</div>
+<div class="col-md-4 col-lg-4 col-sm-4">
+<div class="form-group" style="padding: 25px;">
 
-</div-->
-<div class="form-group">
-<label>File:</label>
 <input type="file"  name="picture" required="" placeholder="MEDIA">
 </div>
-
+</div>
 
 
 <div class="modal-footer">
