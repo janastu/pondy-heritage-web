@@ -1,3 +1,7 @@
+//V0.0.1 
+
+//routes for the app
+
 FlowRouter.route('/', {
     action: function(params) {
         FlowLayout.render('pondyHome');
@@ -26,14 +30,20 @@ FlowRouter.route('/download', {
 FlowRouter.route('/map', {
     action: function(params) {
         FlowLayout.render('Layout', {content: 'Map'});
-        //to add lightbox for the map popup box in this view
-        return $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-                event.preventDefault();
-                    $(this).ekkoLightbox();
-        });
     }
 });
-FlowRouter.route('/add-to-map', {
+  FlowRouter.route('/login', {
+    action: function(params) {
+        FlowLayout.render('Login');
+        Session.set('showDialog', false);
+    }
+});
+FlowRouter.route('/register', {
+    action: function(params) {
+        FlowLayout.render('Register');
+    }
+});
+/*FlowRouter.route('/add-to-map', {
     action: function(params) {
        if(Session.get('userSession')){
         FlowLayout.render('Layout', {content:'MapEditor'});
@@ -47,18 +57,11 @@ FlowRouter.route('/add-to-map', {
       FlowLayout.render('Layout', {content: 'Map'});
   }
   });*/
-  FlowRouter.route('/login', {
-    action: function(params) {
-        FlowLayout.render('Login');
-        Session.set('showDialog', false);
-    }
-});
-FlowRouter.route('/register', {
-    action: function(params) {
-        FlowLayout.render('Register');
-    }
-});
+
+//API calls to heritage web server
+//fix needed heritageGeoJson is not working
 Meteor.methods({
+    //this is not working, hence using mapbox load
     heritagGeoJson: function(){
         this.unblock();
         var response = Meteor.http.call("GET","http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson", 
@@ -85,7 +88,7 @@ Meteor.methods({
         } else {
           console.log("result", result.data);
           Session.set('userSession', result.data);
-          FlowRouter.go('/add-to-map');
+          FlowRouter.go('/map');
           Session.set('loginSpinner', false);
           Session.set('showDialog', true);
         }
@@ -119,12 +122,22 @@ Meteor.methods({
 
   }
   });
-  if (Meteor.isClient) {
+if (Meteor.isClient) {
+    //to add lightbox for the map popup box in this view
+    $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+    //Session variable for error alert when signin fails
     Session.set("errorAlert", false);
+
+    //region centre for initial view setting onload
+
     Session.set('regionData', {name: "TOWN", id:1, lat:   11.935001,
             lng:   79.819558,
             zoom: 14});
 
+ //Bookmarked regions with bound data
     Session.set('Regions', [
         {name: "PUDUCHERRY",
          id:1, lat:  11.920013,
@@ -154,7 +167,7 @@ Meteor.methods({
     Template.Map.onRendered(function () {
         Mapbox.debug = true;
         Mapbox.load({
-            plugins: ['markercluster', 'heat', 'directions']
+            plugins: ['markercluster', 'heat', 'draw']
         });
         this.autorun(function () {
             if (Mapbox.loaded()) {
@@ -219,70 +232,71 @@ myLayer.on('popupopen', function(e) {
     
 });
 //Get pondycherry heritage data from server - using mapbox loadurl method
-                myLayer.loadURL('http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson')
+
+                  myLayer.loadURL('http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson')
                 .addTo(map);
-           
+
+
+              
+
+                //if user is logged in, add draw controls to add marker
+if(Session.get('userSession')){
+    
+
+                 var featureGroup = L.featureGroup().addTo(map); 
+
+                    //initialize draw control without shapes buttons
+            var drawControl = new L.Control.Draw({
+                draw:{         
+                
+                    polyline: false, 
+                    polygon: false, 
+                    circle: false, 
+                    rectangle:false
+                },
+                    edit: {featureGroup: featureGroup}
+                }).addTo(map);
+            // Set the button title text for the marker button
+L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
+ map.on('draw:created', function(e) {
+                var marker = e.layer;
+                var popupContent = "<p>Click on <b>ADD TO MAP</b> button to add picture, video, audio and text to the map location</p>";
+                marker.bindPopup(popupContent);
+                featureGroup.addLayer(marker);
+                e.layer.openPopup();
+                var latlng = marker.getLatLng();
+                Session.set('mapClick', latlng);
+
+              });
+
+  
+           }
           
             }
         });
 
     });
 
-    Template.Map.helpers({
-        html: '<div id="map" class="mapbox"></div>',
-        js:   'Mapbox.load();\nTracker.autorun(function () {\n' +
-            '\tif (Mapbox.loaded()) {\n' +
-                '\t\tL.mapbox.accessToken = MY_ACCESS_TOKEN;\n' +
-                    '\t\tvar map = L.mapbox.map("map", MY_MAP_ID);\n' +
-                    '\t}\n' +
-                    '});'
+          Template.Map.helpers({
+                html: '<div id="map" class="mapbox"></div>',
+                js:   'Mapbox.load();\nTracker.autorun(function () {\n' +
+                    '\tif (Mapbox.loaded()) {\n' +
+                        '\t\tL.mapbox.accessToken = MY_ACCESS_TOKEN;\n' +
+                            '\t\tvar map = L.mapbox.map("map", MY_MAP_ID);\n' +
+                            '\t}\n' +
+                            '});'
 
-    });
-    Template.MapEditor.onRendered(function () {
-        Mapbox.debug = true;
-        Mapbox.load({
-            plugins: ['markercluster', 'heat']
-        });
-        this.autorun(function () {
-            if (Mapbox.loaded()) {
-                L.mapbox.accessToken = 'pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g';
-                var map = L.mapbox.map('map', 'mapbox.pirates')
-                    .setView([11.935001, 79.819558], 14)
-                    .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
+            });
 
-                var marker = L.marker([11.935001, 79.819558], {
-                    icon: L.mapbox.marker.icon({
-                        'marker-color': '#f86767',
-                        "marker-symbol": "star"
-                    }),
-                    draggable: true
-                }).addTo(map);
-
-                // every time the marker is dragged, update the coordinates container
-                marker.on('dragend',  function(event){
-                    var latlng = marker.getLatLng();
-                    Session.set('mapClick', latlng);
-                    $('#add-heritage').modal({show: true});
-                });
-            }
-        });
-    });
-    Template.MapEditor.helpers({
-        html: '<div id="mapedit" class="mapbox"></div>',
-        js:   'Mapbox.load();\nTracker.autorun(function () {\n' +
-            '\tif (Mapbox.loaded()) {\n' +
-                '\t\tL.mapbox.accessToken = MY_ACCESS_TOKEN;\n' +
-                    '\t\tvar map = L.mapbox.map("map", MY_MAP_ID);\n' +
-                    '\t}\n' +
-                    '});'
-
-    });
-    Template.mapState.helpers({
+          //Render bookmarked locations in buttons on map
+ Template.mapState.helpers({
 
         locations: function(){
             return Session.get('Regions');
         }
     });
+
+ //Click on bookamrked location button should set map bounds
     Template.mapState.events({
 
       'click li button': function(event){
@@ -310,6 +324,8 @@ myLayer.on('popupopen', function(e) {
 
         }
     });
+
+    //Submit login form to Meteor method
     Template.Login.events({
       'submit form': function(event){
         event.preventDefault();
@@ -317,6 +333,7 @@ myLayer.on('popupopen', function(e) {
         Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value});
       }
     });
+    
     Template.userState.helpers({
         userLogged: function(){
             return Session.get('userSession');
@@ -327,7 +344,16 @@ myLayer.on('popupopen', function(e) {
         'click #add-to-map': function(event){
             event.preventDefault();
             if(Session.get('userSession')){
-                FlowRouter.go('/add-to-map');
+                //FlowRouter.go('/add-to-map');
+               if(Session.get('mapClick')){
+            $('#add-heritage').modal({show: true});
+        } else {
+            Session.set('markerAlert', true);
+            Meteor.setTimeout(function(){
+                Session.set("markerAlert", false);
+
+            }, 5000);
+        }
             } else {
                 FlowRouter.go('/login');
             }
@@ -378,6 +404,9 @@ myLayer.on('popupopen', function(e) {
         },
         uploadMedia: function(){
             return  Session.get('uploadMedia');
+        },
+        markerAlert: function(){
+            return Session.get('markerAlert');
         }
     });
     Template.AddToMap.helpers({
