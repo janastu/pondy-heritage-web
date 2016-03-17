@@ -299,7 +299,7 @@ L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
  //Click on bookamrked location button should set map bounds
     Template.mapState.events({
 
-      'click li button': function(event){
+      'click li a': function(event){
         event.preventDefault();
        // change map bounding box, 
         switch(event.target.textContent.trim().toLowerCase()){
@@ -333,7 +333,7 @@ L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
         Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value});
       }
     });
-    
+
     Template.userState.helpers({
         userLogged: function(){
             return Session.get('userSession');
@@ -348,6 +348,7 @@ L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
                if(Session.get('mapClick')){
             $('#add-heritage').modal({show: true});
         } else {
+
             Session.set('markerAlert', true);
             Meteor.setTimeout(function(){
                 Session.set("markerAlert", false);
@@ -385,17 +386,28 @@ L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
         }
         
     });
-    Template.Alerts.helpers({
+    Template.LoggedUser.helpers({
         
         userSession: function(){
             if(Session.get('userSession')){
                 var userStr = Session.get('userSession').token;
                 var usrArray = userStr.split(":");
-                return {"loggedUser": usrArray[0]};
+                var loggedUser = usrArray[0].toUpperCase();
+                return {"loggedUser": loggedUser};
                 
+            } else {
+                console.log("log in");
             }
         }
 });
+    Template.LoggedUser.events({
+        "click li": function() {
+            Session.set('userSession', "");
+            
+        }
+
+    });
+
     Template.dismissibleAlert.helpers({
 
         errorAlert: function() {

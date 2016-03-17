@@ -22,7 +22,7 @@
 {{> dismissibleAlert}}
 {{> navBar}}
 {{#if showDialog}}
-{{> Alerts}}
+{{> LoggedUser}}
 {{/if}}
 
 
@@ -70,17 +70,22 @@
 </template>
 
 
-<template name="Alerts">
+<template name="LoggedUser">
 {{#if userSession}}
-<div class="row" style="position: fixed;
-    top: 100px;
-    display: block;
-    z-index: 100;
-    right: 0px;">
-<div class="alert alert-success" role="alert">
-  
-  <strong>Welcome</strong> {{userSession.loggedUser}}
+<div  class="logged-user">
+    <!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-success">{{userSession.loggedUser}}</button>
+  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu" style="background-color: rgb(122, 198, 115); border-color: rgb(122, 198, 115);">
+    <li><a style="text-decoration: none;" href="#">LOGOUT</a></li>
+    
+  </ul>
 </div>
+
 </div>
 {{/if}}
 
