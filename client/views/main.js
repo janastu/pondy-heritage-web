@@ -80,10 +80,10 @@ Meteor.methods({
       function(err, result){
         if(err){
             Session.set("errorAlert", true);
-            Session.set('loginSpinner', false);
+            
             Meteor.setTimeout(function(){
                 Session.set("errorAlert", false);
-
+                Session.set('loginSpinner', false);
             }, 5000);
         } else {
           console.log("result", result.data);
@@ -256,6 +256,8 @@ if(Session.get('userSession')){
                 },
                     edit: {featureGroup: featureGroup}
                 }).addTo(map);
+            //declaring global context to disable upon signout
+            window.DRAWCNTRL = drawControl;
             // Set the button title text for the marker button
 L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
  map.on('draw:created', function(e) {
@@ -333,6 +335,11 @@ L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
         Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value});
       }
     });
+    Template.Login.helpers({
+        loaded: function(){
+            return Session.get('loginSpinner');
+        }
+    })
 
     Template.userState.helpers({
         userLogged: function(){
@@ -403,6 +410,7 @@ L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
     Template.LoggedUser.events({
         "click li": function() {
             Session.set('userSession', "");
+            MAP.removeControl(DRAWCNTRL);
             
         }
 
