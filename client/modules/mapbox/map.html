@@ -2,13 +2,19 @@
 
 <template name="Map">
 
+
 	<div id="map" class="mapbox"></div>
+	
 </template>
 
 <template name="Layout">
+<section class="mbr-section mbr-section--relative">
+
 	{{> LocBookmark}}
 	{{> AddToMapBtn}}
-
+	</section>
 	{{> Template.dynamic template=content }}
+
+
 
 </template>

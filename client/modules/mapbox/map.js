@@ -1,3 +1,5 @@
+//Global scripts, variables and Session items
+
     //to add lightbox for the map popup box in this view
     $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
         event.preventDefault();

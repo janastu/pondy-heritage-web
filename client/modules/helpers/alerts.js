@@ -8,6 +8,8 @@ Template.body.helpers({
   }
 
 });
+
+
 Template.LoggedUser.helpers({
 
   userSession: function(){
