@@ -46,6 +46,7 @@ bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
     });
     this.autorun(function () {
         if (Mapbox.loaded()) {
+            console.log(pondyHeritage.find().fetch());
                 
                 L.mapbox.accessToken = 'pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g';
                 var map = L.mapbox.map('map', 'mapbox.pirates')
@@ -64,6 +65,7 @@ bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
                                 myLayer.on('layeradd', function(e) {
                                     var marker = e.layer,
                                     feature = marker.feature;
+                                    console.log(marker, feature);
                                     var content = "";
                                     //identifying content type to build templates accordingly
                                     //for map popup on marker click
@@ -107,8 +109,9 @@ myLayer.on('popupopen', function(e) {
     
 });
 //Get pondycherry heritage data from server - using mapbox loadurl method
-
-myLayer.loadURL('http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson');
+myLayer.setGeoJSON(pondyHeritage.find().fetch())
+.addTo(map);
+//myLayer.loadURL('http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson');
 //.addTo(map);
 
                  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
@@ -140,7 +143,7 @@ myLayer.on('ready', function(e) {
                             rectangle:false
                         },
                         edit: {featureGroup: featureGroup}
-                    }).addTo(map);
+                    });//.addTo(map);
             //declaring global context to disable upon signout
             window.DRAWCNTRL = drawControl;
             // Set the button title text for the marker button
