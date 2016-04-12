@@ -108,7 +108,7 @@ myLayer.on('popupopen', function(e) {
 });
 //Get pondycherry heritage data from server - using mapbox loadurl method
 
-myLayer.loadURL('http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson');
+myLayer.loadURL('http://196.12.53.138:8080/heritageweb/api/mapp');
 //.addTo(map);
 
                  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
