@@ -116,8 +116,8 @@ myLayer.on('popupopen', function(e) {
     
 });
 
-myLayer.loadURL('http://196.12.53.138:8080/heritageweb/api/mapp');
-//.addTo(map);
+//Load map features from api url
+myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
 
                  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
 // call to only use its marker data once we know it is actually loaded.

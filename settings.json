@@ -13,7 +13,8 @@
         "apis": {
             "getApps": "http://196.12.53.138:8080/heritageweb/api/heritageAppsMob",
             "login": "http://196.12.53.138:8080/heritageweb/api/authenticate",
-            "register": "http://196.12.53.138:8080/heritageweb/api/registerForMobile"
+            "register": "http://196.12.53.138:8080/heritageweb/api/registerForMobile",
+            "getFeatures": "http://196.12.53.138:8080/heritageweb/api/mapp"
         }
     }
 }
