@@ -50,6 +50,7 @@ mongo-id@1.0.1
 mongo-livedata@1.0.9
 npm-mongo@1.4.39_1
 observe-sequence@1.0.7
+okgrow:analytics@1.0.5
 ordered-dict@1.0.4
 pauloborges:mapbox@2.2.3_2
 promise@0.5.1

@@ -3,20 +3,19 @@
 //API calls to heritage web server
 //fix needed heritageGeoJson is not working
 Meteor.methods({
-    //this is not working, hence using mapbox load
-    heritagGeoJson: function(){
-      this.unblock();
-      var response = Meteor.http.call("GET","http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson", 
-        function(result){
-          if(result){
-            return result;
-          }
+    getApps: function() {
+        var response = Meteor.http.call("GET", Meteor.settings.public.apis.getApps, function(err, result){
+            if(err) {
+                console.log("send error alert");
+            } else {
+                console.log("getApps", result.data);
+                return result.data;
+            }
         });
-      return response;
     },
     Login: function(request){
 
-      var response = Meteor.http.call("POST", "http://pondy.openrun.com:8080/heritageweb/api/authenticate", 
+      var response = Meteor.http.call("POST", Meteor.settings.public.apis.login, 
         {content: 'username='+request.username+'&'+'password='+request.password, 
         headers:{"Content-Type":"application/x-www-form-urlencoded", "Accept":"application/json"}}, 
         function(err, result){
@@ -37,7 +36,7 @@ Meteor.methods({
         });
     },
     Register: function(request){
-      var response = Meteor.http.call("POST", "http://pondy.openrun.com:8080/heritageweb/api/registerForMobile", 
+      var response = Meteor.http.call("POST", Meteor.settings.public.apis.register,
         {content: 'username='+request.username+'&'+'password='+request.password+'&'+
         'emailId='+request.emailId+'&'+
         'residentstatus='+request.residentstatus+'&'+

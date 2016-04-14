@@ -11,14 +11,20 @@
 
       'click li a': function(event){
         event.preventDefault();
+        //get the map bounds from Session variable
+       var pondytown = [[Session.get('Regions')[0].bottomLatitude, Session.get('Regions')[0].bottomLongitude], [Session.get('Regions')[0].topLatitude, Session.get('Regions')[0].topLongitude]];
+       var auroville = [[Session.get('Regions')[1].bottomLatitude, Session.get('Regions')[1].bottomLongitude], [Session.get('Regions')[1].topLatitude, Session.get('Regions')[1].topLongitude]]
+       console.log(pondytown);
+       var bahour = [[Session.get('Regions')[2].bottomLatitude, Session.get('Regions')[2].bottomLongitude], [Session.get('Regions')[2].topLatitude, Session.get('Regions')[2].topLongitude]];
        // change map bounding box, 
         switch(event.target.textContent.trim().toLowerCase()){
-            case "puducherry":
-            MAP.fitBounds(Session.get('Regions')[0].bounds);
+            case "pondytown":
+            MAP.fitBounds(pondytown);
+            //MAP.fitBounds(Session.get('Regions')[0].bounds);
             break;
 
             case "bahour":
-            MAP.fitBounds(Session.get('Regions')[1].bounds);
+            MAP.fitBounds(bahour);
             break;
 
             case "heritage-town":
@@ -26,11 +32,10 @@
             break;
 
             case "auroville":
-            MAP.fitBounds(Session.get('Regions')[3].bounds);
+            MAP.fitBounds(auroville);
+            //MAP.fitBounds(Session.get('Regions')[3].bounds);
             break;
-            
         }
-        
 
         }
     });
