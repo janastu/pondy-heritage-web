@@ -8,36 +8,45 @@
     //Session variable for error alert when signin fails
     Session.set("errorAlert", false);
 
-    //region centre for initial view setting onload
+    //Bookmarked regions with bound data
+    //set sesstion variable after api request completed
+    window.allApps = {};
+    HTTP.get(Meteor.settings.public.apis.getApps, function(err, success) {
+        console.log(success.data);
+        if(success) {
+            console.log("no error");
+            allApps = success.data;
+            Session.set('Regions', allApps[0].regions);
+        } else {
+            console.log("error getting apps", err);
+        }
+});
 
-    
+    /*Session.set('Regions', [
+            {name: "PUDUCHERRY",
+                id:1, lat:  11.920013,
+                lng:   79.812646,
+                zoom: 16,
+                bounds: [[11.916318, 79.797196], [11.921021, 79.833417]]
+            },
 
- //Bookmarked regions with bound data
- Session.set('Regions', [
-    {name: "PUDUCHERRY",
-    id:1, lat:  11.920013,
-    lng:   79.812646,
-    zoom: 16,
-    bounds: [[11.916318, 79.797196], [11.921021, 79.833417]]
-},
-
-{name: "BAHOUR", 
-id:2, 
-lat:  11.803506,
-lng:  79.738941,
-zoom: 16, 
-bounds: [[11.806473, 79.735429], [11.806725, 79.768130]]
-},
-{name: "HERITAGE-TOWN", id:3, lat:   11.935001,
-lng:   79.819558,  
-zoom: 16,
-bounds: [[11.936959, 79.825194], [11.940464, 79.833584]]
-}, 
-{name: "AUROVILLE", id:4, lat:  12.006833 ,
-lng:  79.810513,
-zoom: 16,
-bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
-}]);
+            {name: "BAHOUR", 
+                id:2, 
+                lat:  11.803506,
+                lng:  79.738941,
+                zoom: 16, 
+                bounds: [[11.806473, 79.735429], [11.806725, 79.768130]]
+            },
+            {name: "HERITAGE-TOWN", id:3, lat:   11.935001,
+                lng:   79.819558,  
+                zoom: 16,
+                bounds: [[11.936959, 79.825194], [11.940464, 79.833584]]
+            }, 
+            {name: "AUROVILLE", id:4, lat:  12.006833 ,
+                lng:  79.810513,
+                zoom: 16,
+                bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
+            }]);*/
 
  Template.Map.onRendered(function () {
     Mapbox.debug = true;
@@ -46,8 +55,6 @@ bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
     });
     this.autorun(function () {
         if (Mapbox.loaded()) {
-            console.log(pondyHeritage.find().fetch());
-                
                 L.mapbox.accessToken = 'pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g';
                 var map = L.mapbox.map('map', 'mapbox.pirates')
                 .setView([11.972157926492702, 79.81773376464844], 12)
