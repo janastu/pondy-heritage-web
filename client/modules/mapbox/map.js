@@ -148,7 +148,7 @@ myLayer.on('ready', function(e) {
                             rectangle:false
                         },
                         edit: {featureGroup: featureGroup}
-                    });//.addTo(map);
+                    }).addTo(map);
             //declaring global context to disable upon signout
             window.DRAWCNTRL = drawControl;
             // Set the button title text for the marker button
