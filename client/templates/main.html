@@ -1,3 +1,4 @@
+<template name="mainLayout">
 <head>
   <title>Pondycherry Heritage</title>
   <!-- Site made with Mobirise Website Builder v2.8.5, https://mobirise.com -->
@@ -28,16 +29,14 @@
   {{> LoggedUser}}
   {{/if}}
 
-
+  {{> Template.dynamic template=content}}
 
 
 
 
 </body>
+</template>
 
-
-<!--template name="GL">
-  <div id="map" class="mapbox"></div>
-
-</template-->
-
+<template name="group">
+    <span> testing</span>
+</template>
