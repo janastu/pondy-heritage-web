@@ -14,7 +14,9 @@
             "getApps": "http://196.12.53.138:8080/heritageweb/api/heritageAppsMob",
             "login": "http://196.12.53.138:8080/heritageweb/api/authenticate",
             "register": "http://196.12.53.138:8080/heritageweb/api/registerForMobile",
-            "getFeatures": "http://196.12.53.138:8080/heritageweb/api/mapp"
+            "getUser": "http://196.12.53.138:8080/heritageweb/api/users/",
+            "getFeatures": "http://196.12.53.138:8080/heritageweb/api/mapp",
+            "postFeature": "http://196.12.53.138:8080/heritageweb/api/createNewMediaHeritageForm/app/PondyMap/"
         }
     }
 }

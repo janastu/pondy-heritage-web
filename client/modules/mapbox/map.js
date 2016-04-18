@@ -17,6 +17,8 @@
             console.log("no error");
             allApps = success.data;
             Session.set('Regions', allApps[0].regions);
+            Session.set('Groups', allApps[0].groups);
+            Session.set('Categories', allApps[0].categories);
         } else {
             console.log("error getting apps", err);
         }
@@ -72,7 +74,6 @@
                                 myLayer.on('layeradd', function(e) {
                                     var marker = e.layer,
                                     feature = marker.feature;
-                                    console.log(marker, feature);
                                     var content = "";
                                     //identifying content type to build templates accordingly
                                     //for map popup on marker click
