@@ -1,7 +1,7 @@
 //controller for alerts
 
 
-Template.body.helpers({
+Template.mainLayout.helpers({
   showDialog: function() {
     return Session.get('showDialog');
 

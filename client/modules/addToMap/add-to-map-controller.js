@@ -22,7 +22,7 @@ Template.AddToMapBtn.events({
                 	}, 5000);
                 }
             } else {
-            	FlowRouter.go('/login');
+            	Router.go('login.static');
             }
         }
     });
@@ -74,15 +74,15 @@ Template.AddToMapDialog.events({
         fd.append("description", event.target.description.value);
 		fd.append("latitude", lat);
 		fd.append("longitude", lng);
-		fd.append("category", "Built Heritage");//event.target.category.value);
+		fd.append("category", "Built-Heritage");//event.target.category.value);
 		fd.append("language", event.target.language.value);
 		fd.append("picture", file);
-        fd.append("uploadTime", new Date());
+        fd.append("uploadTime", new Date().toString());
         fd.append("userAgent", "dummy");
         fd.append("fileOrURLLink", "");
 		var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
-                console.log("status code =", xhr.status, "readystate =", xhr.readyState, xhr);
+                console.log("status code =", xhr.status, "readystate =", xhr.readyState, xhr, new Date);
         }
 		xhr.addEventListener("load", function(e){
 			Session.set('uploadSpin', false);

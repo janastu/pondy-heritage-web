@@ -82,21 +82,21 @@
                                     switch(feature.properties.mediatype) {
                                         case 'IMAGE':
                                         content = 
-                                        '<p><a href="'+feature.properties.url+'" data-toggle="lightbox"> <img class="img-responsive" style="width:280px;" src="' +
+                                        '<div class="map-content"><a href="'+feature.properties.url+'" data-toggle="lightbox"> <img class="img-responsive" style="width:280px;" src="' +
                                         feature.properties.url+ '" /></a>'+'<h2>'+feature.properties.title+'</h2>' +
-                                        feature.properties.description+'</p>';
+                                        feature.properties.description+'</div>';
                                         break;
                                         case 'VIDEO':
-                                        content = '<p><video style="width:280px;" controls autobuffer>'+
+                                        content = '<div class="map-content"> <p><video style="width:280px;" controls autobuffer>'+
                                         '<source src="'+feature.properties.url+'"type=""/> <code>Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
                                         feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></video>'+
-                                        '<h2>'+feature.properties.title+'</h2>' + feature.properties.description+'</p>';
+                                        '<h2>'+feature.properties.title+'</h2>' + feature.properties.description+'</div>';
                                         break;
                                         case 'AUDIO':
-                                        content =  '<p><audio style="width:280px;" controls autobuffer>'+
+                                        content =  '<div class="map-content"><audio style="width:280px;" controls autobuffer>'+
                                         '<source src="'+feature.properties.url+'"type=""/> <code>Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
                                         feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></audio>'+
-                                        '<h2>'+feature.properties.title+'</h2>' +feature.properties.description+'</p>';
+                                        '<h2>'+feature.properties.title+'</h2>' +feature.properties.description+'</div>';
                                         break;
 
                                     }
@@ -106,16 +106,15 @@
 //center map position when user clicks on marker
                      /*myLayer.on('click', function(e) {
                                     map.panTo(e.layer.getLatLng());
-                                    
-        
                                 });*/
 
 myLayer.on('popupopen', function(e) {
     var px = map.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
     px.y -= e.popup._container.clientHeight/2 // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
     map.panTo(map.unproject(px),{animate: true}); // pan to new center
-    
+
 });
+
 
 //Load map features from api url
 myLayer.loadURL(Meteor.settings.public.apis.getFeatures);

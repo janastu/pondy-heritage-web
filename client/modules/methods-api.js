@@ -29,7 +29,7 @@ Meteor.methods({
           } else {
             console.log("result", result.data);
             Session.set('userSession', result.data);
-            FlowRouter.go('/map');
+            Router.go('app.show', {appId: 'pondymap'});
             Session.set('loginSpinner', false);
             Session.set('showDialog', true);
           }
@@ -55,7 +55,7 @@ Meteor.methods({
             
           } else {
             
-            FlowRouter.go('/login/');
+            Router.go('login.static');
             Session.set('registerSpinner', false);
           }
 

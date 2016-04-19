@@ -6,8 +6,6 @@
 richsilv:semantic-ui
 pauloborges:mapbox
 
-meteorhacks:flow-router
-meteorhacks:flow-layout
 http
 twbs:bootstrap
 tsega:bootstrap3-lightbox
@@ -28,3 +26,4 @@ spacebars
 check
 meteorhacks:kadira
 okgrow:analytics
+iron:router

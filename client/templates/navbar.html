@@ -14,12 +14,22 @@
                     <nav class="mbr-navbar__menu-box mbr-navbar__menu-box--inline-right">
                         <div class="mbr-navbar__column">
                 <ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-decorator mbr-buttons--active">
-                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="/">HOME</a></li>
-                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="/about">ABOUT</a></li>
-                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="/map">EXPLORE THE MAP</a></li>
-                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="/instructions">USING THE MAP</a></li>
-                 <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="/download">DOWNLOAD</a></li>
-                 <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="/contact">CONTACT</a></li> 
+                <li class="mbr-navbar__item"><a class="mbr-buttons__link
+                btn text-white" href="{{pathFor route='home.static'}}">HOME</a></li>
+                <li class="mbr-navbar__item"><a class="mbr-buttons__link
+                        btn text-white" href="{{pathFor route='about.static'}}">ABOUT</a></li>
+                <li class="mbr-navbar__item"><a class="mbr-buttons__link
+                btn text-white" href="{{pathFor route='app.show'
+                appId='pondymap'}}">EXPLORE THE MAP</a></li>
+                <li class="mbr-navbar__item"><a class="mbr-buttons__link
+                        btn text-white" href="{{pathFor
+                        route='instructions.static'}}">USING THE MAP</a></li>
+                 <li class="mbr-navbar__item"><a
+                         class="mbr-buttons__link btn text-white"
+                         href="{{pathFor route='download.static'}}">DOWNLOAD</a></li>
+                 <li class="mbr-navbar__item"><a
+                         class="mbr-buttons__link btn text-white"
+                         href="{{pathFor route='contact.static'}}">CONTACT</a></li> 
                 </ul>
             </div>
                         
