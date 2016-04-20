@@ -1,10 +1,24 @@
-         //Render bookmarked locations in buttons on map
- Template.LocBookmark.helpers({
+//Render bookmarked locations in buttons on map
+Template.LocBookmark.helpers({
 
-        locations: function(){
-            return Session.get('Regions');
-        }
-    });
+    locations: function(){
+        HTTP.get(Meteor.settings.public.apis.getApps, function(err, success) {
+            console.log(success.data);
+            if(success) {
+                console.log("no error");
+                allApps = success.data;
+                Session.set('Regions', allApps[0].regions);
+                Session.set('Groups', allApps[0].groups);
+                Session.set('Categories', allApps[0].categories);
+                //return allApps[0].regions;
+            } else {
+                console.log("error getting apps", err);
+            }
+        });
+
+        return Session.get('Regions');
+    }
+});
 
  //Click on bookamrked location button should set map bounds
     Template.LocBookmark.events({

@@ -11,7 +11,7 @@
     //Bookmarked regions with bound data
     //set sesstion variable after api request completed
     window.allApps = {};
-    HTTP.get(Meteor.settings.public.apis.getApps, function(err, success) {
+    /*HTTP.get(Meteor.settings.public.apis.getApps, function(err, success) {
         console.log(success.data);
         if(success) {
             console.log("no error");
@@ -22,7 +22,7 @@
         } else {
             console.log("error getting apps", err);
         }
-});
+});*/
 
     /*Session.set('Regions', [
             {name: "PUDUCHERRY",
