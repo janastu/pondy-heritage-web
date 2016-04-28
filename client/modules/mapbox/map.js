@@ -14,29 +14,29 @@
 
  //Bookmarked regions with bound data
  Session.set('Regions', [
-    {name: "PUDUCHERRY",
-    id:1, lat:  11.920013,
-    lng:   79.812646,
+    {name: "MADIKERI",
+    id:1, lat:  12.447975,
+    lng:   75.979728,
     zoom: 16,
-    bounds: [[11.916318, 79.797196], [11.921021, 79.833417]]
+    bounds: [[12.447975, 75.979728], [12.121907, 75.612373]]
 },
 
-{name: "BAHOUR", 
+{name: "MYSORE", 
 id:2, 
-lat:  11.803506,
-lng:  79.738941,
+lat:  12.906859,
+lng:  77.1123504,
 zoom: 16, 
-bounds: [[11.806473, 79.735429], [11.806725, 79.768130]]
+bounds: [[12.906859, 77.1123504], [11.921103, 76.308975 ]]
 },
-{name: "HERITAGE-TOWN", id:3, lat:   11.935001,
-lng:   79.819558,  
+{name: "BHAVANI", id:3, lat:   12.162855,
+lng:   78.240509,  
 zoom: 16,
-bounds: [[11.936959, 79.825194], [11.940464, 79.833584]]
+bounds: [[12.162855, 78.240509], [10.674103, 77.471466]]
 }, 
-{name: "AUROVILLE", id:4, lat:  12.006833 ,
-lng:  79.810513,
+{name: "POOMPUHAR", id:4, lat:  11.501556 ,
+lng:  80.023040,
 zoom: 16,
-bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
+bounds: [[11.501556, 80.023040], [10.352747, 78.287200]]
 }]);
 
  Template.Map.onRendered(function () {
@@ -49,7 +49,7 @@ bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
                 
                 L.mapbox.accessToken = 'pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g';
                 var map = L.mapbox.map('map', 'mapbox.pirates')
-                .setView([11.972157926492702, 79.81773376464844], 12)
+                .setView([13.127629, 79.747009], 12)
                 .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
                     //global context for map object to change bounding box
                     window.MAP=map;
@@ -108,7 +108,7 @@ myLayer.on('popupopen', function(e) {
 });
 //Get pondycherry heritage data from server - using mapbox loadurl method
 
-myLayer.loadURL('http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson');
+myLayer.loadURL('http://196.12.53.138:8080/heritageweb/api/mapp');
 //.addTo(map);
 
                  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
