@@ -77,6 +77,17 @@ Template.AddToMapDialog.events({
 		fd.append("description", event.target.description.value);
 		fd.append("latitude", lat);
 		fd.append("longitude", lng);
+		fd.append("userName", "admin");
+		fd.append("groupId", "1");
+		fd.append("appId", "PondyMap");
+		//appId
+		//groupId
+		fd.append("uploadTime", "null");
+		fd.append("userAgent", "Chrome");
+		fd.append("fileOrURLLink", "test.png");
+		
+		
+		//uploadTime
 		fd.append("category", event.target.category.value);
 		
 		fd.append("language", event.target.language.value);
@@ -92,7 +103,7 @@ Template.AddToMapDialog.events({
 
 			}, 5000);
 		});
-		xhr.open('POST', 'http://pondy.openrun.com:8080/heritageweb/api/createAnyMediaGeoTagHeritageFromWeb', true);
+		xhr.open('POST', 'http://pondy.openrun.com:8080/heritageweb/api/createNewMediaHeritageForm2', true);
 		xhr.send(fd);
 
 		xhr.addEventListener("error", function(e){
