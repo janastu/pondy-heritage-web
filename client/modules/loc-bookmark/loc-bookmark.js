@@ -20,6 +20,10 @@ Template.LocBookmark.helpers({
     }
 });
 
+
+Template.LocBookmark.onRendered(function() {
+     $('.dropdown-toggle').dropdown();
+});
  //Click on bookamrked location button should set map bounds
     Template.LocBookmark.events({
 

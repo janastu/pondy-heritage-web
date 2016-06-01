@@ -44,8 +44,14 @@ Template.AddToMapDialog.events({
 		event.preventDefault();
 		Session.set('uploadSpin', true);
         window.heritageUser = {};
-        var userId = Session.get('userSession').token.split(":")[0].trim();
+        var userId = Session.get('userSession').token.split(":")[0].trim().toString();
+        var groupId = "1";
+        var appId = "PondyMap";
+        var lat = Session.get('mapClick').lat;
+        var lng = Session.get('mapClick').lng;
+        //create multiform data
 		var fd = new FormData();
+		
 		var file = template.find('input:file').files[0];
 		if(file.type){
 			var mediaType = file.type.split("/")[0];
@@ -67,21 +73,25 @@ Template.AddToMapDialog.events({
 		else {
 			fd.append("mediatype", "4");
 		}
-        var lat = Session.get('mapClick').lat;
-        var lng = Session.get('mapClick').lng;
-        //create multiform data
+        
+        
         fd.append("title", event.target.title.value);
         fd.append("description", event.target.description.value);
 		fd.append("latitude", lat);
 		fd.append("longitude", lng);
-		fd.append("category", "Built Heritage");//event.target.category.value);
-		fd.append("language", event.target.language.value);
+		fd.append("category", "Natural Heritage");//event.target.category.value);
+		fd.append("language", "French"); //event.target.language.value);
 		fd.append("picture", file);
         fd.append("uploadTime", new Date().toString());
-        //hack for server side compatibility
-        fd.append("userAgent", "dummy");
+        
         //is empty now
-        fd.append("fileOrURLLink", "");
+        fd.append("fileOrURLLink", "test.com");
+       
+//hack for server side compatibility
+        fd.append("userAgent", "chrome");
+		fd.append("appId", appId);
+        fd.append("groupId", groupId);
+        fd.append("userName", userId);
 
 		var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
@@ -98,18 +108,13 @@ Template.AddToMapDialog.events({
 
 			}, 5000);
 		});
-		//get group id and user for posting
-        HTTP.get(Meteor.settings.public.apis.getUser+userId, function(error, success) {
-            if(success) {
-                Session.set('heritageUser', success.data.id.toString());
-            }
-        });
-        xhr.open('POST', Meteor.settings.public.apis.postFeature+'user/'+Session.get('heritageUser')+'/group/1', true);
+		
+        xhr.open('POST', Meteor.settings.public.apis.postFeature);
         xhr.withCredentials = true;
         xhr.setRequestHeader("Accept", "application/json");
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.setRequestHeader("X-AUTH-TOKEN", Session.get('userSession').token.toString());
-        console.log(Session.get('heritageUser'), fd);
+        //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        //xhr.setRequestHeader("X-AUTH-TOKEN", Session.get('userSession').token.toString());
+        
         xhr.send(fd);
 		xhr.addEventListener("error", function(e){
 			Session.set('uploadSpin', false);

@@ -16,7 +16,7 @@
             "register": "http://196.12.53.138:8080/heritageweb/api/registerForMobile",
             "getUser": "http://196.12.53.138:8080/heritageweb/api/users/",
             "getFeatures": "http://196.12.53.138:8080/heritageweb/api/mapp",
-            "postFeature": "http://196.12.53.138:8080/heritageweb/api/createNewMediaHeritageForm/app/PondyMap/"
+            "postFeature": "http://pondy.openrun.com:8080/heritageweb/api/createNewMediaHeritageForm2/"
         }
     }
 }
