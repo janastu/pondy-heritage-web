@@ -74,16 +74,20 @@ Template.AddToMapDialog.events({
         fd.append("description", event.target.description.value);
 		fd.append("latitude", lat);
 		fd.append("longitude", lng);
-		fd.append("category", "Built-Heritage");//event.target.category.value);
+		fd.append("category", "Built Heritage");//event.target.category.value);
 		fd.append("language", event.target.language.value);
 		fd.append("picture", file);
         fd.append("uploadTime", new Date().toString());
+        //hack for server side compatibility
         fd.append("userAgent", "dummy");
+        //is empty now
         fd.append("fileOrURLLink", "");
+
 		var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
                 console.log("status code =", xhr.status, "readystate =", xhr.readyState, xhr, new Date);
         }
+        //loader
 		xhr.addEventListener("load", function(e){
 			Session.set('uploadSpin', false);
 			event.target.reset();
@@ -94,6 +98,7 @@ Template.AddToMapDialog.events({
 
 			}, 5000);
 		});
+		//get group id and user for posting
         HTTP.get(Meteor.settings.public.apis.getUser+userId, function(error, success) {
             if(success) {
                 Session.set('heritageUser', success.data.id.toString());

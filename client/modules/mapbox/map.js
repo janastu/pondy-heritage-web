@@ -5,6 +5,8 @@
         event.preventDefault();
         $(this).ekkoLightbox();
     });
+    //bootstarp dropdown call
+    $('.dropdown-toggle').dropdown()
     //Session variable for error alert when signin fails
     Session.set("errorAlert", false);
 
