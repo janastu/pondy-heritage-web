@@ -4,7 +4,12 @@
     {{> LocBookmark}}
         {{> AddToMapBtn}}
     </section>
-
+<div class='sidebar'>
+  <div class='heading'>
+    <h1>Our locations</h1>
+  </div>
+  <div id='listings' class='listings'>{{> geoJsonPoint}}</div>
+</div>
 	<div id="map" class="mapbox"></div>
 	
 </template>
