@@ -24,11 +24,12 @@ a:hover { color:#101010; }
 .sidebar {
   position:absolute;
   width:33.3333%;
-  height:100%;
-  top:0;left:0;
+  height:75%;
+  /*top:0;*/
+  right:0;
   overflow:hidden;
-  border-right:1px solid rgba(0,0,0,0.25);
-  z-index: 1000;
+  border-left:1px solid rgba(0,0,0,0.25);
+  /*z-index: 1000;*/
 }
 .pad2 {
   padding:20px;

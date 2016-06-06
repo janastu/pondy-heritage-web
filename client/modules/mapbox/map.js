@@ -113,15 +113,18 @@
                                     var link = listing.appendChild(document.createElement('a'));
                                     link.href = '#';
                                     link.className = 'title';
-                                    link.innerHTML = '<h2>'+feature.properties.title+'</h2>'+'<p>'+feature.properties.description+'</p>';
+                                    link.innerHTML = '<h3>'+feature.properties.title+'</h3>';
+                                    var description = listing.appendChild(document.createElement('p'));
+
+                                    description.innerHTML = '<p>'+feature.properties.description+'</p>';
 
                                     link.onclick = function() {
                                      // 1. Toggle an active class for `listing`. View the source in the demo link for example.
 
                                     // 2. When a menu item is clicked, animate the map to center
                                     // its associated locale and open its popup.
-                                     map.setView(marker.getLatLng(), 16);
-                                    marker.openPopup();
+                                     map.setView(marker.getLatLng(), 20);
+                                     marker.openPopup();
                                 }
 
                                 });
@@ -207,14 +210,3 @@ Template.Map.helpers({
 });
 
 
-Template.geoJsonPoint.helpers({
-    properties: function properties () {
-        // body...
-        if(Mapbox.loaded()){
-        MAP.eachLayer(function(point) { 
-            console.log(point.feature);
-            return point.feature;
-        });
-    }
-    }
-});
