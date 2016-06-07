@@ -10,7 +10,6 @@ http
 twbs:bootstrap
 tsega:bootstrap3-lightbox
 sacha:spin
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -27,3 +26,5 @@ check
 meteorhacks:kadira
 okgrow:analytics
 iron:router
+standard-minifier-css
+standard-minifier-js
