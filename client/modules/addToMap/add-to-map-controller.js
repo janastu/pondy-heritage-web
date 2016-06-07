@@ -52,16 +52,16 @@ Template.AddToMapDialog.events({
 	'submit form': function(event, template){
 		event.preventDefault();
 		Session.set('uploadSpin', true);
-        window.heritageUser = {};
+        
         var userId = Session.get('userSession').token.split(":")[0].trim().toString();
        
-        var appId = "PondyMap";
         var lat = Session.get('mapClick').lat;
         var lng = Session.get('mapClick').lng;
         //create multiform data
 		var fd = new FormData();
-		
+		//extract file from dom
 		var file = template.find('input:file').files[0];
+		//find file mediatype to add to request data
 		if(file.type){
 			var mediaType = file.type.split("/")[0];
 			switch(mediaType){
@@ -98,14 +98,12 @@ Template.AddToMapDialog.events({
        
 //hack for server side compatibility
         fd.append("userAgent", "chrome");
-		fd.append("appId", appId);
+		fd.append("appId", Meteor.settings.public.appConfig.appId);
         fd.append("groupId", event.target.group.value);
         fd.append("userName", userId);
-
+        //new xmlhttp request
 		var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-                console.log("status code =", xhr.status, "readystate =", xhr.readyState, xhr, new Date);
-        }
+        
         //loader
 		xhr.addEventListener("load", function(e){
 			Session.set('uploadSpin', false);
@@ -118,6 +116,7 @@ Template.AddToMapDialog.events({
 			}, 5000);
 		});
 		
+		//posting to server endpoint
         xhr.open('POST', Meteor.settings.public.apis.postFeature);
         xhr.withCredentials = true;
         xhr.setRequestHeader("Accept", "application/json");
