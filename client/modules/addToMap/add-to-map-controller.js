@@ -94,10 +94,10 @@ Template.AddToMapDialog.events({
         fd.append("uploadTime", new Date().toString());
         
         //is empty now
-        fd.append("fileOrURLLink", "test.com");
+        fd.append("fileOrURLLink", event.target.url.value);
        
-//hack for server side compatibility
-        fd.append("userAgent", "chrome");
+        fd.append("userAgent", null);
+        //credentials from config file
 		fd.append("appId", Meteor.settings.public.appConfig.appId);
         fd.append("groupId", event.target.group.value);
         fd.append("userName", userId);
