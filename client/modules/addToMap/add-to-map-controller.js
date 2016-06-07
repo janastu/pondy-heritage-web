@@ -35,6 +35,15 @@ Template.AddToMapDialog.helpers({
 	},
 	loaded: function() {
 		return Session.get('uploadSpin');
+	},
+	categories: function() {
+		return Session.get('Categories');
+	},
+	languages: function() {
+		return Session.get('Languages');
+	},
+	groupInfo: function() {
+		return Session.get('Groupinfo');
 	}
 });
 
@@ -45,7 +54,7 @@ Template.AddToMapDialog.events({
 		Session.set('uploadSpin', true);
         window.heritageUser = {};
         var userId = Session.get('userSession').token.split(":")[0].trim().toString();
-        var groupId = "1";
+       
         var appId = "PondyMap";
         var lat = Session.get('mapClick').lat;
         var lng = Session.get('mapClick').lng;
@@ -79,8 +88,8 @@ Template.AddToMapDialog.events({
         fd.append("description", event.target.description.value);
 		fd.append("latitude", lat);
 		fd.append("longitude", lng);
-		fd.append("category", "Natural Heritage");//event.target.category.value);
-		fd.append("language", "French"); //event.target.language.value);
+		fd.append("category", event.target.category.value);
+		fd.append("language", event.target.language.value);
 		fd.append("picture", file);
         fd.append("uploadTime", new Date().toString());
         
@@ -90,7 +99,7 @@ Template.AddToMapDialog.events({
 //hack for server side compatibility
         fd.append("userAgent", "chrome");
 		fd.append("appId", appId);
-        fd.append("groupId", groupId);
+        fd.append("groupId", event.target.group.value);
         fd.append("userName", userId);
 
 		var xhr = new XMLHttpRequest();

@@ -4,7 +4,17 @@
       'submit form': function(event){
         event.preventDefault();
         Session.set('loginSpinner', true);
-        Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value});
+        Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value}, function(err, data){
+          if(!err){
+            console.log(data);
+            Meteor.call('getGroupForUser', function(response){
+              console.log(response);
+              Session.set("Groupinfo", response); 
+
+            });
+           
+          }
+        });
       }
     });
     Template.Login.helpers({

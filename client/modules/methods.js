@@ -16,7 +16,7 @@ Meteor.methods({
     },
     Login: function(request){
 
-     /* var response = */Meteor.http.call("POST", "http://pondy.openrun.com:8080/heritageweb/api/authenticate", 
+     /* var response = */Meteor.http.call("POST", Meteor.settings.public.apis.login, 
         {content: 'username='+request.username+'&'+'password='+request.password, 
         headers:{"Content-Type":"application/x-www-form-urlencoded", "Accept":"application/json"}}, 
         function(err, result){
@@ -33,11 +33,16 @@ Meteor.methods({
             Router.go('/map');
             Session.set('loginSpinner', false);
             Session.set('showDialog', true);
+            Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser+result.data.token.split(":")[0], function(err, response){
+              if(!err){
+                console.log(response.data);
+                Session.set("Groupinfo", response.data);           }
+              });
           }
         });
     },
     Register: function(request){
-      var response = Meteor.http.call("POST", "http://pondy.openrun.com:8080/heritageweb/api/registerForMobile", 
+      var response = Meteor.http.call("POST", Meteor.settings.public.apis.login.register, 
         {content: 'username='+request.username+'&'+'password='+request.password+'&'+
         'emailId='+request.emailId+'&'+
         'residentstatus='+request.residentstatus+'&'+
@@ -58,9 +63,19 @@ Meteor.methods({
             
             Router.go('/login/');
             Session.set('registerSpinner', false);
+
           }
 
         });
 
-    }
+    },
+    getGroupForUser: function(request){
+     var response = Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser, function(err, data){
+              if(!err){
+                console.log(data);
+                Session.set("Groupinfo", response);           }
+              });
+     console.log(response);
+     return response;
+   }
 });

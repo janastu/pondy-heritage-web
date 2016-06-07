@@ -3,7 +3,7 @@
 
 
  <div class="modal fade" id="add-heritage">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-md">
       <div class="modal-content">
 
         <div class="modal-header">
@@ -30,32 +30,49 @@
 <textarea type="text" class="form-control input-lg" name="description" form="multiform" required="" placeholder="Add a description of this place">
 </textarea>
 </div>
-<div class="col-md-4 col-lg-4 col-sm-4">
-<div class="form-group" style="padding: 25px;">
-<label >Category:</label>
+<div class="">
+<div class="form-group" style="padding: 15px;">
+<label >Group:</label>
 
-<select  class="selectpicker" data-style="btn-primary" id="category" name="category"  >
-      <option value="1">Natural Heritage</option>
-      <option value="2">Built Heritage</option>
+<select  class="selectpicker" data-style="btn-primary" id="groupInfo" name="group"  >
+    {{#each groupInfo}}
+      <option value={{id}}>{{name}}</option>
+      {{/each}}
+     
     </select>
     
 
 </div>
 </div>
-<div class="col-md-4 col-lg-4 col-sm-4">
-<div class="form-group" style="padding: 25px;">
+<div class="">
+<div class="form-group" style="padding: 15px;">
+<label >Category:</label>
+
+<select  class="selectpicker" data-style="btn-primary" id="category" name="category"  >
+    {{#each categories}}
+      <option value={{categoryName}}>{{categoryName}}</option>
+      {{/each}}
+     
+    </select>
+    
+
+</div>
+</div>
+<div class="">
+<div class="form-group" style="padding: 15px;">
 <label>Language:</label>
 
  <select  class="selectpicker" data-style="btn-primary" id="language" name="language"  >
-      <option value="1">English</option>
-      <option value="2">Tamil</option>
-	  <option value="3">French</option>
+  {{#each languages}}
+      <option value={{heritageLanguage}}>{{heritageLanguage}}</option>
+      {{/each}}
+   
     </select>
    
 </div>
 </div>
-<div class="col-md-4 col-lg-4 col-sm-4">
-<div class="form-group" style="padding: 25px;">
+<div class="">
+<div class="form-group" style="padding: 15px;">
 
 <input type="file"  name="picture" required="" placeholder="MEDIA">
 </div>

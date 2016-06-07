@@ -9,7 +9,8 @@ Template.LocBookmark.helpers({
                 allApps = success.data;
                 Session.set('Regions', allApps[0].regions);
                 Session.set('Groups', allApps[0].groups);
-                Session.set('Categories', allApps[0].categories);
+                Session.set('Categories', allApps[0].categorys);
+                Session.set('Languages', allApps[0].languages)
                 //return allApps[0].regions;
             } else {
                 console.log("error getting apps", err);
@@ -22,6 +23,7 @@ Template.LocBookmark.helpers({
 
 
 Template.LocBookmark.onRendered(function() {
+    //bug fix for dropdown not working, issue #43
      $('.dropdown-toggle').dropdown();
 });
  //Click on bookamrked location button should set map bounds

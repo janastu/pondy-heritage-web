@@ -13,7 +13,7 @@
     //Bookmarked regions with bound data
     //set sesstion variable after api request completed
     window.allApps = {};
-    /*HTTP.get(Meteor.settings.public.apis.getApps, function(err, success) {
+   /* HTTP.get(Meteor.settings.public.apis.getApps, function(err, success) {
         console.log(success.data);
         if(success) {
             console.log("no error");
@@ -26,31 +26,7 @@
         }
 });*/
 
-    /*Session.set('Regions', [
-            {name: "PUDUCHERRY",
-                id:1, lat:  11.920013,
-                lng:   79.812646,
-                zoom: 16,
-                bounds: [[11.916318, 79.797196], [11.921021, 79.833417]]
-            },
 
-            {name: "BAHOUR", 
-                id:2, 
-                lat:  11.803506,
-                lng:  79.738941,
-                zoom: 16, 
-                bounds: [[11.806473, 79.735429], [11.806725, 79.768130]]
-            },
-            {name: "HERITAGE-TOWN", id:3, lat:   11.935001,
-                lng:   79.819558,  
-                zoom: 16,
-                bounds: [[11.936959, 79.825194], [11.940464, 79.833584]]
-            }, 
-            {name: "AUROVILLE", id:4, lat:  12.006833 ,
-                lng:  79.810513,
-                zoom: 16,
-                bounds: [[12.004984, 79.788036], [12.007335, 79.833011]]
-            }]);*/
 
  Template.Map.onRendered(function () {
     Mapbox.debug = true;
