@@ -20,9 +20,10 @@
                     <div class="mbr-section__container">
                         <div class="mbr-buttons mbr-buttons--auto-align
                             btn-inverse"><a class="mbr-buttons__btn btn
-                                btn-lg btn-danger" href="/map">EXPLORE
+                                btn-lg btn-danger" href="{{pathFor route='app.show'
+                appId=Meteor.settings.public.appConfig.appId}}">EXPLORE
                                 THE MAP</a> <a class="mbr-buttons__btn
-                        btn btn-lg btn-danger" href="/add-to-map">ADD TO THE MAP</a></div>
+                        btn btn-lg btn-danger" href="{{pathFor route='app.show' appId=Meteor.settings.public.appConfig.appId}}">ADD TO THE MAP</a></div>
                     </div>
                 </div>
                 

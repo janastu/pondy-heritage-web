@@ -30,7 +30,7 @@ Meteor.methods({
           } else {
             console.log("result", result.data);
             Session.set('userSession', result.data);
-            Router.go('/map');
+            Router.go('/mapp');
             Session.set('loginSpinner', false);
             Session.set('showDialog', true);
             Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser+result.data.token.split(":")[0], function(err, response){
