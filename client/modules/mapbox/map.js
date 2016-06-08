@@ -79,31 +79,12 @@
 
                                     }
                                     marker.bindPopup(content);
-
-                                    //side bar for geo json data
-                                    //TODO: needs more tweaking
-                                    var listings = document.getElementById('listings');
-                                    var listing = listings.appendChild(document.createElement('div'));
-                                    listing.className = 'item';
-
-                                    var link = listing.appendChild(document.createElement('a'));
-                                    link.href = '#';
-                                    link.className = 'title';
-                                    link.innerHTML = '<h3>'+feature.properties.title+'</h3>';
-                                    var description = listing.appendChild(document.createElement('p'));
-
-                                    description.innerHTML = '<p>'+feature.properties.description+'</p>';
-
-                                    link.onclick = function() {
-                                     // 1. Toggle an active class for `listing`. View the source in the demo link for example.
-
-                                    // 2. When a menu item is clicked, animate the map to center
-                                    // its associated locale and open its popup.
-                                     map.setView(marker.getLatLng(), 20);
-                                     marker.openPopup();
-                                }
+ 
+                                                                
 
                                 });
+
+  
 
 //center map position when user clicks on marker
                      /*myLayer.on('click', function(e) {
@@ -124,13 +105,45 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
                  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
 // call to only use its marker data once we know it is actually loaded.
 myLayer.on('ready', function(e) {
-    // The clusterGroup gets each marker in the group added to it
+
+     // The clusterGroup gets each marker in the group added to it
     // once loaded, and then is added to the map
     var clusterGroup = new L.MarkerClusterGroup();
     e.target.eachLayer(function(layer) {
         clusterGroup.addLayer(layer);
     });
     map.addLayer(clusterGroup);
+
+
+//side bar for geo json data
+                                      //TODO: needs more tweaking
+    myLayer.eachLayer(function(layer) {
+     var listings = document.getElementById('listings');
+                                    var listing = listings.appendChild(document.createElement('div'));
+                                    listing.className = 'item';
+
+                                    var link = listing.appendChild(document.createElement('a'));
+                                    link.href = '#';
+                                    link.className = 'title';
+                                    link.innerHTML = '<h3>'+layer.toGeoJSON().properties.title+'</h3>';
+                                    var description = listing.appendChild(document.createElement('p'));
+
+                                    description.innerHTML = '<p>'+layer.toGeoJSON().properties.description+'</p>';
+
+                                    link.onclick = function() {
+                                     // 1. Toggle an active class for `listing`. View the source in the demo link for example.
+
+                                    // 2. When a menu item is clicked, animate the map to center
+                                    // its associated locale and open its popup.
+                                    console.log(layer);
+                                     map.setView(layer.getLatLng(), 16);
+                                     //map.panTo(marker.getLatLng());
+                                     layer.openPopup();
+                                }
+                            });
+
+   
+
 });
 
 
