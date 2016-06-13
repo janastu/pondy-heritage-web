@@ -27,13 +27,13 @@
 });*/
 
 
-
  Template.Map.onRendered(function () {
     Mapbox.debug = true;
     Mapbox.load({
         plugins: ['markercluster', 'heat', 'draw']
     });
     this.autorun(function () {
+
         if (Mapbox.loaded()) {
                 L.mapbox.accessToken = 'pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g';
                 var map = L.mapbox.map('map', 'mapbox.pirates')
@@ -41,9 +41,20 @@
                 .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
                     //global context for map object to change bounding box
                     window.MAP=map;
+        //for testing geojson
+ GeoJson = window.GeoJson;
+ Meteor.http.call("GET", Meteor.settings.public.apis.getFeatures, function(err, res){
+    //this.unblock();
+    if(!err){
+        GeoJson = res.data;
+    } else {
+        GeoJson = null;
+    }
+});
+ 
 
-
-                    var myLayer = L.mapbox.featureLayer();
+ overlays = L.layerGroup().addTo(map);
+                    myLayer = L.mapbox.featureLayer();
 
 
 
@@ -101,18 +112,75 @@ myLayer.on('popupopen', function(e) {
 
 //Load map features from api url
 myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
-
+//L.map.setGeoJSON(GeoJson);
                  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
 // call to only use its marker data once we know it is actually loaded.
 myLayer.on('ready', function(e) {
+   
+    overlays.clearLayers()
+    
 
+     // create a new MarkerClusterGroup that will show special-colored
+    // numbers to indicate the category
+    function makeGroup(color) {
+      return new L.MarkerClusterGroup({
+        /*iconCreateFunction: function(cluster) {
+          return new L.divIcon({
+           
+            iconSize: [20, 20],
+            html: '<div style="text-align:center;color:#fff;background:' +
+            color + '">' + cluster.getChildCount() + '</div>'
+          });
+        }*/
+        iconCreateFunction: function(cluster) {
+        return L.mapbox.marker.icon({
+          // show the number of markers in the cluster on the icon.
+          'marker-symbol': cluster.getChildCount(),
+          'marker-color': color.toString()
+        });
+      }
+      }).addTo(overlays);
+    }
+    // create a marker cluster group for each category
+    var groups = {
+      "Built Heritage": makeGroup('#d24646'),
+      "Urban Life": makeGroup('#f97352'),
+      "Intangible Cultural Heritage": makeGroup('#FFEB3B'),
+      "French Influence": makeGroup('#536DFE'),
+      "Tamil Culture": makeGroup('#FF5722'),
+      "Natural Heritage": makeGroup('#00796B'),
+      "Spiritual Practice": makeGroup('#FFC107'),
+      "Village Life": makeGroup('#F44336')
+    };
+    
      // The clusterGroup gets each marker in the group added to it
     // once loaded, and then is added to the map
     var clusterGroup = new L.MarkerClusterGroup();
     e.target.eachLayer(function(layer) {
-        clusterGroup.addLayer(layer);
+      // add each rail station to its specific group.
+            var data;
+            //var data = ["Built Heritage", "Urban Life", "Intangible Cultural Heritage", "French Influence", 
+            //"Tamil Culture", "Natural Heritage", "Spiritual Practice"];
+            if(!Session.get("categoryFilter")) {
+            data =  Session.get("categoryList");
+          } else {
+            data = Session.get("categoryFilter");
+
+          }
+            if(data){
+        if (data.indexOf(layer.feature.properties.category) !== -1) {
+            
+            groups[layer.feature.properties.category].addLayer(layer);
+        }
+        }
+   
+
     });
-    map.addLayer(clusterGroup);
+
+  
+  
+
+    //map.addLayer(myLayer);
 
 
 //side bar for geo json data

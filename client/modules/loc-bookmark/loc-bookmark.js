@@ -11,6 +11,11 @@ Template.LocBookmark.helpers({
                 Session.set('Groups', allApps[0].groups);
                 Session.set('Categories', allApps[0].categorys);
                 Session.set('Languages', allApps[0].languages)
+                Session.set("categoryList",
+                 _.map(Session.get('Categories'), function(cat){
+                    return cat.categoryName;
+                }));
+               
                 //return allApps[0].regions;
             } else {
                 console.log("error getting apps", err);
