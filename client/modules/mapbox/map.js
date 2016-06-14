@@ -182,11 +182,24 @@ myLayer.on('ready', function(e) {
 
     //map.addLayer(myLayer);
 
+var heading = $('.sidebar');
+     var searchForm = document.createElement('div');
+     searchForm.className = 'filter-form';
+     var inputField = document.createElement('input');
+     
+     var inputType = document.createAttribute("type");
+        inputType.value = "text";
+     inputField.setAttributeNode(inputType);
+     inputField.value = Session.get('categoryFilter');
+     searchForm.appendChild(inputField);
+     heading.append(searchForm);
+     
 
 //side bar for geo json data
                                       //TODO: needs more tweaking
     myLayer.eachLayer(function(layer) {
      var listings = document.getElementById('listings');
+     
                                     var listing = listings.appendChild(document.createElement('div'));
                                     listing.className = 'item';
 

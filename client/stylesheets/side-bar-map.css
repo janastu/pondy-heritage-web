@@ -123,3 +123,13 @@ a:hover { color:#101010; }
   padding:10px;
 }
 .leaflet-container .leaflet-marker-icon { cursor:pointer; }
+
+.filter-form{
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    width:100%;
+  }
+  .filter-form input {
+    width:100%;
+  }
