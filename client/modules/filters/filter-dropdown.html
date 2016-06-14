@@ -15,11 +15,20 @@
       <span class="sr-only">Toggle Dropdown</span>
     </button>
     <ul class="dropdown-menu">
+    <li><form role="form">
       {{#each categories}}
-      <li><a href="#" style="text-decoration: none;">{{categoryName}}</a></li>
-      {{/each}}
-    </ul>
+      <div class="checkbox">
+      
+       <label >
+        <input type="checkbox" name="{{categoryName}}" checked>{{categoryName}}
+    </label>
   </div>
+      <!--li><a href="#" style="text-decoration: none;">{{categoryName}}</a></li-->
+      {{/each}}
+   
+  </form></li>
+</ul>
+</div>
 
    <div class="btn-group"  role="group" style="margin-top:105px; z-index: 100;" >
       <button type="button" class="btn btn-primary" style="background-color: #fff;
