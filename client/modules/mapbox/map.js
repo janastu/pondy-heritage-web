@@ -210,6 +210,8 @@ var heading = $('.sidebar');
                                     var description = listing.appendChild(document.createElement('p'));
 
                                     description.innerHTML = '<p>'+layer.toGeoJSON().properties.description+'</p>';
+                                    /*var thumbnail = '<img class="img-responsive"'+'src='+layer.toGeoJSON().properties.url+'/>'
+                                    description.appendChild(thumbnail);*/
 
                                     link.onclick = function() {
                                      // 1. Toggle an active class for `listing`. View the source in the demo link for example.
