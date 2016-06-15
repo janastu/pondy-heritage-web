@@ -115,11 +115,15 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
 //L.map.setGeoJSON(GeoJson);
                  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
 // call to only use its marker data once we know it is actually loaded.
+
+
 myLayer.on('ready', function(e) {
    
     overlays.clearLayers()
     
-
+    // The clusterGroup gets each marker in the group added to it
+    // once loaded, and then is added to the map
+    clusterGroup = new L.MarkerClusterGroup();
      // create a new MarkerClusterGroup that will show special-colored
     // numbers to indicate the category
     function makeGroup(color) {
@@ -142,7 +146,7 @@ myLayer.on('ready', function(e) {
       }).addTo(overlays);
     }
     // create a marker cluster group for each category
-    var groups = {
+    groups = {
       "Built Heritage": makeGroup('#d24646'),
       "Urban Life": makeGroup('#f97352'),
       "Intangible Cultural Heritage": makeGroup('#FFEB3B'),
@@ -153,16 +157,15 @@ myLayer.on('ready', function(e) {
       "Village Life": makeGroup('#F44336')
     };
     
-     // The clusterGroup gets each marker in the group added to it
-    // once loaded, and then is added to the map
-    var clusterGroup = new L.MarkerClusterGroup();
-    e.target.eachLayer(function(layer) {
+     
+    myLayer.eachLayer(function(layer) {
       // add each rail station to its specific group.
             var data;
             //var data = ["Built Heritage", "Urban Life", "Intangible Cultural Heritage", "French Influence", 
             //"Tamil Culture", "Natural Heritage", "Spiritual Practice"];
-            if(!Session.get("categoryFilter")) {
-            data =  Session.get("categoryList");
+            if(Session.get("categoryFilter") == undefined) {
+            data =  ["Built Heritage", "Urban Life", "Intangible Cultural Heritage", "French Influence", 
+            "Tamil Culture", "Natural Heritage", "Spiritual Practice"];
           } else {
             data = Session.get("categoryFilter");
 
@@ -175,29 +178,28 @@ myLayer.on('ready', function(e) {
         }
    
 
-    });
-
-  
-  
-
-    //map.addLayer(myLayer);
-
-var heading = $('.sidebar');
+//side bar for geo json data
+                                      //TODO: needs more tweaking
+    
+ var heading = $('.sidebar');
      var searchForm = document.createElement('div');
      searchForm.className = 'filter-form';
      var inputField = document.createElement('input');
-     
      var inputType = document.createAttribute("type");
-        inputType.value = "text";
+     inputType.value = "text";
      inputField.setAttributeNode(inputType);
+     var tagsInputAttr = document.createAttribute("data-role");
+     tagsInputAttr.value ="tagsinput";
+     inputField.setAttributeNode(tagsInputAttr);
      inputField.value = Session.get('categoryFilter');
+
      searchForm.appendChild(inputField);
      heading.append(searchForm);
      
+ $("#listings").empty();
+overlays.eachLayer(function(layer) {
 
-//side bar for geo json data
-                                      //TODO: needs more tweaking
-    myLayer.eachLayer(function(layer) {
+  _.each(layer.toGeoJSON().features, function(feature){
      var listings = document.getElementById('listings');
      
                                     var listing = listings.appendChild(document.createElement('div'));
@@ -206,10 +208,10 @@ var heading = $('.sidebar');
                                     var link = listing.appendChild(document.createElement('a'));
                                     link.href = '#';
                                     link.className = 'title';
-                                    link.innerHTML = '<h3>'+layer.toGeoJSON().properties.title+'</h3>';
+                                    link.innerHTML = '<h3>'+feature.properties.title+'</h3>';
                                     var description = listing.appendChild(document.createElement('p'));
 
-                                    description.innerHTML = '<p>'+layer.toGeoJSON().properties.description+'</p>';
+                                    description.innerHTML = '<p>'+feature.properties.description+'</p>';
                                     /*var thumbnail = '<img class="img-responsive"'+'src='+layer.toGeoJSON().properties.url+'/>'
                                     description.appendChild(thumbnail);*/
 
@@ -224,6 +226,15 @@ var heading = $('.sidebar');
                                      layer.openPopup();
                                 }
                             });
+});
+  
+    });
+
+  
+  
+
+    //map.addLayer(myLayer);
+
 
    
 
