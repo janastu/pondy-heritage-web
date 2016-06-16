@@ -7,9 +7,9 @@ Meteor.methods({
     heritagGeoJson: function(){
       this.unblock();
       var response = Meteor.http.call("GET","http://pondy.openrun.com:8080/heritageweb/api/allGeoTagHeritageEntitysGeoJson", 
-        function(result){
-          if(result){
-            return result;
+        function(err, data){
+          if(!err){
+            return data;
           }
         });
       return response;
@@ -29,14 +29,18 @@ Meteor.methods({
             }, 5000);
           } else {
             console.log("result", result.data);
-            Session.set('userSession', result.data);
-            Router.go('/mapp');
-            Session.set('loginSpinner', false);
-            Session.set('showDialog', true);
+            //storing in browser
+            sessionStorage.setItem('userSession', JSON.stringify(result.data));
+
+            
             Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser+result.data.token.split(":")[0], function(err, response){
               if(!err){
                 console.log(response.data);
-                Session.set("Groupinfo", response.data);           }
+                Session.set("Groupinfo", response.data);  
+
+                Router.go('/mapp');
+                Session.set('showDialog', true);
+                Session.set('loginSpinner', false);         }
               });
           }
         });
@@ -69,13 +73,13 @@ Meteor.methods({
         });
 
     },
+
     getGroupForUser: function(request){
      var response = Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser, function(err, data){
               if(!err){
-                console.log(data);
-                Session.set("Groupinfo", response);           }
+                
+                Session.set("Groupinfo", data);           }
               });
-     console.log(response);
-     return response;
+     
    }
 });

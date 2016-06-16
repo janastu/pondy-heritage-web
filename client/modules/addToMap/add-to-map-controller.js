@@ -98,7 +98,7 @@ Template.AddToMapDialog.events({
        
         fd.append("userAgent", null);
         //credentials from config file
-		fd.append("appId", Meteor.settings.public.appConfig.appId);
+		fd.append("appId", appName);
         fd.append("groupId", event.target.group.value);
         fd.append("userName", userId);
         //new xmlhttp request

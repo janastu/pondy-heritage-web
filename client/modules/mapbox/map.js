@@ -10,21 +10,7 @@
     //Session variable for error alert when signin fails
     Session.set("errorAlert", false);
 
-    //Bookmarked regions with bound data
-    //set sesstion variable after api request completed
-    window.allApps = {};
-   /* HTTP.get(Meteor.settings.public.apis.getApps, function(err, success) {
-        console.log(success.data);
-        if(success) {
-            console.log("no error");
-            allApps = success.data;
-            Session.set('Regions', allApps[0].regions);
-            Session.set('Groups', allApps[0].groups);
-            Session.set('Categories', allApps[0].categories);
-        } else {
-            console.log("error getting apps", err);
-        }
-});*/
+   
 
 
  Template.Map.onRendered(function () {
@@ -41,19 +27,10 @@
                 .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
                     //global context for map object to change bounding box
                     window.MAP=map;
-        //for testing geojson
- GeoJson = window.GeoJson;
- Meteor.http.call("GET", Meteor.settings.public.apis.getFeatures, function(err, res){
-    //this.unblock();
-    if(!err){
-        GeoJson = res.data;
-    } else {
-        GeoJson = null;
-    }
-});
+      
  
 
- overlays = L.layerGroup().addTo(map);
+                    overlays = L.layerGroup().addTo(map);
                     myLayer = L.mapbox.featureLayer();
 
 
@@ -115,7 +92,8 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
 //L.map.setGeoJSON(GeoJson);
                  // Since featureLayer is an asynchronous method, we use the `.on('ready'`
 // call to only use its marker data once we know it is actually loaded.
-
+//var geoJsonLayer = L.geoJson(GeoJson.features);
+//myLayer.addLayer(geoJsonLayer);
 
 myLayer.on('ready', function(e) {
    
@@ -154,7 +132,10 @@ myLayer.on('ready', function(e) {
       "Tamil Culture": makeGroup('#FF5722'),
       "Natural Heritage": makeGroup('#00796B'),
       "Spiritual Practice": makeGroup('#FFC107'),
-      "Village Life": makeGroup('#F44336')
+      "Village Life": makeGroup('#F44336'),
+      "Lived Experience": makeGroup('#F44334'),
+      "Other Indian Influence": makeGroup('#F44332'),
+      "Other Foreign Influence": makeGroup('#F44330')
     };
     
      
