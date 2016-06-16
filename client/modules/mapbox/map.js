@@ -77,7 +77,7 @@ var updateSearchForm = function(){
 
 }
 
-//if user is logged in, add draw controls to add marker
+      //if user is logged in, add draw controls to add marker
 
 addDrawControl = function(map){
   
@@ -85,7 +85,7 @@ addDrawControl = function(map){
                 if(Session.get('userSession')){
 
 
-                   var featureGroup = L.featureGroup(); 
+                   var featureGroup = L.featureGroup().addTo(map); 
 
                     //initialize draw control without shapes buttons
                     var drawControl = new L.Control.Draw({
@@ -130,7 +130,7 @@ addDrawControl = function(map){
           
       baselayer = addBaseLayer();
       //check logged in status and add draw control
-      addDrawControl(MAP);   
+        addDrawControl(MAP);   
 
         // Feature layer to load GeoJson from api server
                     myLayer = L.mapbox.featureLayer();
