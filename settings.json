@@ -20,7 +20,8 @@
             "postFeature": "http://pondy.openrun.com:8080/heritageweb/api/createNewMediaHeritageForm2/"
         },
         "appConfig": {
-            "appId": "PondyMap"
+            "appId": "PondyMap",
+            "mapBoxToken": "pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g"
         }
     }
 }

@@ -42,8 +42,16 @@ Template.AddToMapDialog.helpers({
 	languages: function() {
 		return Session.get('Languages');
 	},
+	//user group info resets on refresh if the user tries to post
 	groupInfo: function() {
-		return Session.get('Groupinfo');
+		    // user session if saved in browser session storage
+		if(sessionStorage.userGroups){
+            var userGroups = JSON.parse(sessionStorage.userGroups);
+            Session.set('Groupinfo', userGroups);
+            
+
+}
+			return Session.get('Groupinfo');
 	}
 });
 

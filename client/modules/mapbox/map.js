@@ -21,19 +21,19 @@
     this.autorun(function () {
 
         if (Mapbox.loaded()) {
-                L.mapbox.accessToken = 'pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g';
+         // Add base layer 
+           L.mapbox.accessToken = Meteor.settings.public.appConfig.mapBoxToken;
                 var map = L.mapbox.map('map', 'mapbox.pirates')
                 .setView([11.972157926492702, 79.81773376464844], 12)
                 .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
                     //global context for map object to change bounding box
                     window.MAP=map;
       
- 
-
-                    overlays = L.layerGroup().addTo(map);
+        // Feature layer to load GeoJson from api server
                     myLayer = L.mapbox.featureLayer();
 
-
+        //Marker cluster group - to add grouped features
+                   overlays = L.layerGroup().addTo(map);
 
                                 // Set a custom icon on each marker based on feature
                                 // properties.
@@ -106,14 +106,7 @@ myLayer.on('ready', function(e) {
     // numbers to indicate the category
     function makeGroup(color) {
       return new L.MarkerClusterGroup({
-        /*iconCreateFunction: function(cluster) {
-          return new L.divIcon({
-           
-            iconSize: [20, 20],
-            html: '<div style="text-align:center;color:#fff;background:' +
-            color + '">' + cluster.getChildCount() + '</div>'
-          });
-        }*/
+       
         iconCreateFunction: function(cluster) {
         return L.mapbox.marker.icon({
           // show the number of markers in the cluster on the icon.
@@ -140,7 +133,7 @@ myLayer.on('ready', function(e) {
     
      
     myLayer.eachLayer(function(layer) {
-      // add each rail station to its specific group.
+      // add each feature to its specific group.
             var data;
             //var data = ["Built Heritage", "Urban Life", "Intangible Cultural Heritage", "French Influence", 
             //"Tamil Culture", "Natural Heritage", "Spiritual Practice"];
@@ -160,7 +153,7 @@ myLayer.on('ready', function(e) {
    
 
 //side bar for geo json data
-                                      //TODO: needs more tweaking
+//TODO: needs more tweaking
     
  var heading = $('.sidebar');
      var searchForm = document.createElement('div');

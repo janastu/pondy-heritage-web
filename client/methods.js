@@ -37,7 +37,7 @@ Meteor.methods({
               if(!err){
                 console.log(response.data);
                 Session.set("Groupinfo", response.data);  
-
+                sessionStorage.setItem('userGroups', JSON.stringify(response.data));
                 Router.go('/mapp');
                 Session.set('showDialog', true);
                 Session.set('loginSpinner', false);         }

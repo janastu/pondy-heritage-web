@@ -5,7 +5,7 @@ appName = Meteor.settings.public.appConfig.appId;
 appConfig = {};
 //Map features
 GeoJson = {};
-    // user session if saved in browser session storage
+// user session if saved in browser session storage
 if(sessionStorage.userSession){
             var userSession = JSON.parse(sessionStorage.userSession);
             Session.set('userSession', userSession);
