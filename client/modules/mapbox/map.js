@@ -1,17 +1,121 @@
 //Global scripts, variables and Session items
 
-    //to add lightbox for the map popup box in this view
-    $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+//to add lightbox for the map popup box in this view
+$(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
         event.preventDefault();
         $(this).ekkoLightbox();
-    });
+});
     //bootstarp dropdown call
    
-    //Session variable for error alert when signin fails
-    Session.set("errorAlert", false);
+//Session variable for error alert when signin fails
+Session.set("errorAlert", false);
 
-   
 
+// Add map base layer - map theme and set view
+ addBaseLayer = function(){
+                var map = L.mapbox.map('map', 'mapbox.pirates')
+                .setView(Meteor.settings.public.appConfig.mapInitialView, 12)
+                .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
+                    //global context for map object to change bounding box
+                   return window.MAP=map;
+            }
+
+
+//search form in sidebar should sync with the category filter 
+var updateSearchForm = function(){
+        //side bar for geo json data
+//TODO: needs more tweaking
+    
+      var heading = $('.sidebar');
+     var searchForm = document.createElement('div');
+     searchForm.className = 'filter-form';
+     var inputField = document.createElement('input');
+     var inputType = document.createAttribute("type");
+     inputType.value = "text";
+     inputField.setAttributeNode(inputType);
+     var tagsInputAttr = document.createAttribute("data-role");
+     tagsInputAttr.value ="tagsinput";
+     inputField.setAttributeNode(tagsInputAttr);
+     inputField.value = Session.get('categoryFilter');
+
+     searchForm.appendChild(inputField);
+     heading.append(searchForm);
+     
+      
+       }
+
+ var updateSideBarContent = function(){
+        $("#listings").empty();
+        overlays.eachLayer(function(layer) {
+
+           _.each(layer.toGeoJSON().features, function(feature){
+                   var listings = document.getElementById('listings');
+     
+                                    var listing = listings.appendChild(document.createElement('div'));
+                                    listing.className = 'item';
+
+                                    var link = listing.appendChild(document.createElement('a'));
+                                    link.href = '#';
+                                    link.className = 'title';
+                                    link.innerHTML = '<h3>'+feature.properties.title+'</h3>';
+                                    var description = listing.appendChild(document.createElement('p'));
+
+                                    description.innerHTML = '<p>'+feature.properties.description+'</p>';
+                                    /*var thumbnail = '<img class="img-responsive"'+'src='+layer.toGeoJSON().properties.url+'/>'
+                                    description.appendChild(thumbnail);*/
+
+                                    link.onclick = function() {
+                                    // When a menu item is clicked, animate the map to center
+                                    // its associated locale and open its popup.
+                                    
+                                     map.setView(layer.getLatLng(), 16);
+                                     //map.panTo(marker.getLatLng());
+                                     layer.openPopup();
+                                }
+                            });
+});
+
+}
+
+//if user is logged in, add draw controls to add marker
+
+addDrawControl = function(map){
+  
+                
+                if(Session.get('userSession')){
+
+
+                   var featureGroup = L.featureGroup(); 
+
+                    //initialize draw control without shapes buttons
+                    var drawControl = new L.Control.Draw({
+                        draw:{         
+
+                            polyline: false, 
+                            polygon: false, 
+                            circle: false, 
+                            rectangle:false
+                        },
+                        edit: {featureGroup: featureGroup}
+                    }).addTo(baselayer);
+                      //declaring global context to disable upon signout
+            window.DRAWCNTRL = drawControl;
+           //Draw control for adding markers by logged in user
+            
+            // Set the button title text for the marker button
+            L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
+            map.on('draw:created', function(e) {
+                var marker = e.layer;
+                var popupContent = "<p>Click on <b>ADD TO MAP</b> button to add picture, video, audio and text to the map location</p>";
+                marker.bindPopup(popupContent);
+                featureGroup.addLayer(marker);
+                e.layer.openPopup();
+                var latlng = marker.getLatLng();
+                Session.set('mapClick', latlng);
+
+            });
+        }
+}
 
  Template.Map.onRendered(function () {
     Mapbox.debug = true;
@@ -23,17 +127,19 @@
         if (Mapbox.loaded()) {
          // Add base layer 
            L.mapbox.accessToken = Meteor.settings.public.appConfig.mapBoxToken;
-                var map = L.mapbox.map('map', 'mapbox.pirates')
-                .setView([11.972157926492702, 79.81773376464844], 12)
-                .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
-                    //global context for map object to change bounding box
-                    window.MAP=map;
-      
+          
+      baselayer = addBaseLayer();
+      //check logged in status and add draw control
+      addDrawControl(MAP);   
+
         // Feature layer to load GeoJson from api server
                     myLayer = L.mapbox.featureLayer();
 
         //Marker cluster group - to add grouped features
-                   overlays = L.layerGroup().addTo(map);
+                   overlays = L.layerGroup().addTo(baselayer);
+
+
+
 
                                 // Set a custom icon on each marker based on feature
                                 // properties.
@@ -95,8 +201,8 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
 //var geoJsonLayer = L.geoJson(GeoJson.features);
 //myLayer.addLayer(geoJsonLayer);
 
-myLayer.on('ready', function(e) {
-   
+//myLayer.on('ready', function(e) {
+  myLayer.on('ready', function(e){ 
     overlays.clearLayers()
     
     // The clusterGroup gets each marker in the group added to it
@@ -151,105 +257,15 @@ myLayer.on('ready', function(e) {
         }
         }
    
-
-//side bar for geo json data
-//TODO: needs more tweaking
-    
- var heading = $('.sidebar');
-     var searchForm = document.createElement('div');
-     searchForm.className = 'filter-form';
-     var inputField = document.createElement('input');
-     var inputType = document.createAttribute("type");
-     inputType.value = "text";
-     inputField.setAttributeNode(inputType);
-     var tagsInputAttr = document.createAttribute("data-role");
-     tagsInputAttr.value ="tagsinput";
-     inputField.setAttributeNode(tagsInputAttr);
-     inputField.value = Session.get('categoryFilter');
-
-     searchForm.appendChild(inputField);
-     heading.append(searchForm);
-     
- $("#listings").empty();
-overlays.eachLayer(function(layer) {
-
-  _.each(layer.toGeoJSON().features, function(feature){
-     var listings = document.getElementById('listings');
-     
-                                    var listing = listings.appendChild(document.createElement('div'));
-                                    listing.className = 'item';
-
-                                    var link = listing.appendChild(document.createElement('a'));
-                                    link.href = '#';
-                                    link.className = 'title';
-                                    link.innerHTML = '<h3>'+feature.properties.title+'</h3>';
-                                    var description = listing.appendChild(document.createElement('p'));
-
-                                    description.innerHTML = '<p>'+feature.properties.description+'</p>';
-                                    /*var thumbnail = '<img class="img-responsive"'+'src='+layer.toGeoJSON().properties.url+'/>'
-                                    description.appendChild(thumbnail);*/
-
-                                    link.onclick = function() {
-                                     // 1. Toggle an active class for `listing`. View the source in the demo link for example.
-
-                                    // 2. When a menu item is clicked, animate the map to center
-                                    // its associated locale and open its popup.
-                                    console.log(layer);
-                                     map.setView(layer.getLatLng(), 16);
-                                     //map.panTo(marker.getLatLng());
-                                     layer.openPopup();
-                                }
-                            });
-});
-  
-    });
-
-  
-  
-
-    //map.addLayer(myLayer);
-
-
-   
+      //call update search form to update the map filter state
+      
+       updateSearchForm();
+       //update content in side bar, according to category filter
+       updateSideBarContent();
+       //if user is logged in, add draw controls to add marker
+   });
 
 });
-
-
-                //if user is logged in, add draw controls to add marker
-                if(Session.get('userSession')){
-
-
-                   var featureGroup = L.featureGroup().addTo(map); 
-
-                    //initialize draw control without shapes buttons
-                    var drawControl = new L.Control.Draw({
-                        draw:{         
-
-                            polyline: false, 
-                            polygon: false, 
-                            circle: false, 
-                            rectangle:false
-                        },
-                        edit: {featureGroup: featureGroup}
-                    }).addTo(map);
-            //declaring global context to disable upon signout
-            window.DRAWCNTRL = drawControl;
-            // Set the button title text for the marker button
-            L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
-            map.on('draw:created', function(e) {
-                var marker = e.layer;
-                var popupContent = "<p>Click on <b>ADD TO MAP</b> button to add picture, video, audio and text to the map location</p>";
-                marker.bindPopup(popupContent);
-                featureGroup.addLayer(marker);
-                e.layer.openPopup();
-                var latlng = marker.getLatLng();
-                Session.set('mapClick', latlng);
-
-            });
-
-
-        }
-
     }
 });
 
