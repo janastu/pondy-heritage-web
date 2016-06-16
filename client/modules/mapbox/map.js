@@ -262,7 +262,7 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
        updateSearchForm();
        //update content in side bar, according to category filter
        updateSideBarContent();
-       //if user is logged in, add draw controls to add marker
+       
    });
 
 });

@@ -4,7 +4,10 @@ Template.FilterUI.helpers({
 	},
 	groups: function() {
 		return Session.get('Groups');
-	}
+	},
+  checkedItems:function() {
+    return Session.get('categoryFilter');
+  }
 });
 
 Template.FilterUI.events({
