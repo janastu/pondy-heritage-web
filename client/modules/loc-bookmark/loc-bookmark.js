@@ -2,26 +2,6 @@
 Template.LocBookmark.helpers({
 
     locations: function(){
-        HTTP.get(Meteor.settings.public.apis.getApps, function(err, success) {
-            console.log(success.data);
-            if(success) {
-                console.log("no error");
-                allApps = success.data;
-                Session.set('Regions', allApps[0].regions);
-                Session.set('Groups', allApps[0].groups);
-                Session.set('Categories', allApps[0].categorys);
-                Session.set('Languages', allApps[0].languages)
-                Session.set("categoryList",
-                 _.map(Session.get('Categories'), function(cat){
-                    return cat.categoryName;
-                }));
-               
-                //return allApps[0].regions;
-            } else {
-                console.log("error getting apps", err);
-            }
-        });
-
         return Session.get('Regions');
     }
 });

@@ -12,7 +12,16 @@ Template.mainLayout.helpers({
 
 Template.LoggedUser.helpers({
 
+
   userSession: function(){
+    // user session if saved in browser session storage
+if(sessionStorage.userSession){
+            var userSession = JSON.parse(sessionStorage.userSession);
+            Session.set('userSession', userSession);
+            Session.set('showDialog', true);
+
+}
+
     if(Session.get('userSession')){
       var userStr = Session.get('userSession').token;
       var usrArray = userStr.split(":");
@@ -26,7 +35,9 @@ Template.LoggedUser.helpers({
 });
 Template.LoggedUser.events({
   "click li": function() {
+    sessionStorage.userSession = "";
     Session.set('userSession', "");
+    Session.set('showDialog', false);
     MAP.removeControl(DRAWCNTRL);
 
   }
