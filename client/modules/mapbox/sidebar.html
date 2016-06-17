@@ -1,0 +1,14 @@
+<template name="sidebar">
+	{{#each content}}
+<div class="item">
+	<a href="#" class="title thumbnail"> <h3>{{properties.title}}</h3> <img class="img-responsive" src={{properties.url}} />
+	</a>
+</div>
+{{/each}}
+</template>
+
+<template name="filterForm">
+	<div class="filter-form">
+		<input type="text" data-role="tagsinput" value={{content}}>
+	</div>
+	</template>

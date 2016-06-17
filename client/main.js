@@ -2,9 +2,10 @@
   //network report high TTFB - need to check server response timing
 
 appName = Meteor.settings.public.appConfig.appId;
+// To store the app config like, regions, categories and groups
 appConfig = {};
-//Map features
-GeoJson = {};
+//Map features to store a filter set of features by appName
+GeoJson = new ReactiveDict();
 // user session if saved in browser session storage
 if(sessionStorage.userSession){
             var userSession = JSON.parse(sessionStorage.userSession);
@@ -54,11 +55,19 @@ if(sessionStorage.userSession){
 //for testing geojson
 
  Meteor.http.call("GET", Meteor.settings.public.apis.getFeatures, function(err, res){
-    //this.unblock();
+    //Filter response data by appName - such that only context
+    // specific features are displayed
     if(!err){
-        GeoJson = res.data;
+        GeoJson.set('Features', {'type': 'FeatureCollection', 
+        'features':_.compact(_.map(res.data.features, function(feature){ 
+         if(feature.properties.appname === appName){
+            return feature;
+        }
+    }))
+    });
+        
     } else {
-        GeoJson = {};
+       console.log('shudnt come here');
     }
 });
 

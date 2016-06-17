@@ -7,13 +7,12 @@ $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
 });
     //bootstarp dropdown call
    
-//Session variable for error alert when signin fails
-Session.set("errorAlert", false);
+
 
 
 // Add map base layer - map theme and set view
  addBaseLayer = function(){
-                var map = L.mapbox.map('map', 'mapbox.pirates')
+                var map = L.mapbox.map('map', Meteor.settings.public.appConfig.tileLayer)
                 .setView(Meteor.settings.public.appConfig.mapInitialView, 12)
                 .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
                     //global context for map object to change bounding box
@@ -44,6 +43,7 @@ var updateSearchForm = function(){
       
        }
 
+     
  var updateSideBarContent = function(){
         $("#listings").empty();
         overlays.eachLayer(function(layer) {
@@ -68,7 +68,7 @@ var updateSearchForm = function(){
                                     // When a menu item is clicked, animate the map to center
                                     // its associated locale and open its popup.
                                     
-                                     map.setView(layer.getLatLng(), 16);
+                                     MAP.setView(layer.getLatLng(), 16);
                                      //map.panTo(marker.getLatLng());
                                      layer.openPopup();
                                 }
@@ -144,6 +144,7 @@ addDrawControl = function(map){
                                 // Set a custom icon on each marker based on feature
                                 // properties.
                                 myLayer.on('layeradd', function(e) {
+                                  console.log("layer added");
                                     var marker = e.layer,
                                     feature = marker.feature;
                                     var content = "";
@@ -181,25 +182,21 @@ addDrawControl = function(map){
   
 
 //center map position when user clicks on marker
-                     /*myLayer.on('click', function(e) {
-                                    map.panTo(e.layer.getLatLng());
-                                });*/
 
 myLayer.on('popupopen', function(e) {
-    var px = map.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
+    var px = MAP.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
     px.y -= e.popup._container.clientHeight/2 // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-    map.panTo(map.unproject(px),{animate: true}); // pan to new center
+    MAP.panTo(MAP.unproject(px),{animate: true}); // pan to new center
 
 });
 
 
 //Load map features from api url
+// TODO: add GeoJson filtered by appName to the map
+// bug: unable to get the events to fire like on ready
+
 myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
-//L.map.setGeoJSON(GeoJson);
-                 // Since featureLayer is an asynchronous method, we use the `.on('ready'`
-// call to only use its marker data once we know it is actually loaded.
-//var geoJsonLayer = L.geoJson(GeoJson.features);
-//myLayer.addLayer(geoJsonLayer);
+
 
 //myLayer.on('ready', function(e) {
   myLayer.on('ready', function(e){ 
@@ -259,9 +256,9 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
    
       //call update search form to update the map filter state
       
-       updateSearchForm();
+      // updateSearchForm();
        //update content in side bar, according to category filter
-       updateSideBarContent();
+      // updateSideBarContent();
        
    });
 

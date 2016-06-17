@@ -44,6 +44,11 @@ Template.LoggedUser.events({
 
 });
 
+Template.dismissibleAlert.onCreated(function(){
+  //Session variable for error alert when signin fails
+  Session.set("errorAlert", false);
+});
+
 Template.dismissibleAlert.helpers({
 
   errorAlert: function() {
