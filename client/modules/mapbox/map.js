@@ -133,7 +133,7 @@ addDrawControl = function(map){
         addDrawControl(MAP);   
 
         // Feature layer to load GeoJson from api server
-                    myLayer = L.mapbox.featureLayer();
+                    myLayer = L.mapbox.featureLayer().addTo(MAP);
 
         //Marker cluster group - to add grouped features
                    overlays = L.layerGroup().addTo(baselayer);
@@ -217,7 +217,7 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
           'marker-color': color.toString()
         });
       }
-      }).addTo(overlays);
+      });//.addTo(overlays);
     }
     // create a marker cluster group for each category
     groups = {
@@ -242,7 +242,8 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
             //"Tamil Culture", "Natural Heritage", "Spiritual Practice"];
             if(Session.get("categoryFilter") == undefined) {
             data =  ["Built Heritage", "Urban Life", "Intangible Cultural Heritage", "French Influence", 
-            "Tamil Culture", "Natural Heritage", "Spiritual Practice"];
+            "Tamil Culture", "Natural Heritage", "Spiritual Practice", "Village Life", "Lived Experience",
+            "Other Indian Influence", "Other Foreign Influence"];
           } else {
             data = Session.get("categoryFilter");
 

@@ -1,4 +1,5 @@
 <template name="FilterUI">
+  
 	 <div class="btn-group"  role="group" style="margin-top:105px; z-index: 100;" >
       <button type="button" class="btn btn-primary" style="background-color: #fff;
       color: rgba(0, 0, 0, 0.745);
@@ -19,17 +20,20 @@
       {{#each categories}}
       <div class="checkbox">
       
-       <label >
+       <label style="margin-left:5px;">
         
-        <input type="checkbox" name="{{categoryName}}" checked>{{categoryName}}
-
+        <input type="checkbox" name="{{categoryName}}" checked={{checkedItems categoryName}}
+      >
+      {{categoryName}}
     </label>
   </div>
       <!--li><a href="#" style="text-decoration: none;">{{categoryName}}</a></li-->
       {{/each}}
+
    
   </form></li>
 </ul>
+
 </div>
 
    <div class="btn-group"  role="group" style="margin-top:105px; z-index: 100;" >
@@ -54,7 +58,7 @@
     </ul>
   </div>
 
-  <div class="btn-group"  role="group" style="margin-top:105px; z-index: 100;" >
+  <!--div class="btn-group"  role="group" style="margin-top:105px; z-index: 100;" >
       <button type="button" class="btn btn-primary" style="background-color: #fff;
       color: rgba(0, 0, 0, 0.745);
           border: 1px solid rgba(0, 0, 0, 0.4);
@@ -75,5 +79,6 @@
      
     </ul>
   </div>
-  <nav id='filters' class='filter-ui'></nav>
+  <nav id='filters' class='filter-ui'></nav-->
+
 </template>
