@@ -48,7 +48,7 @@ Meteor.methods({
         });
     },
     Register: function(request){
-      var response = Meteor.http.call("POST", Meteor.settings.public.apis.login.register, 
+      var response = Meteor.http.call("POST", Meteor.settings.public.apis.register, 
         {content: 'username='+request.username+'&'+'password='+request.password+'&'+
         'emailId='+request.emailId+'&'+
         'residentstatus='+request.residentstatus+'&'+

@@ -13,6 +13,45 @@
         }
     });
 
+    Template.Register.onRendered(function(){
+      console.log("rendered register", Template.instance().$('form'));
+      Template.instance().$('form').validate({
+        onsubmit: false,
+        onfocusout: function(element, event){
+          $(element).valid();
+        },
+        
+        rules:{
+          username:{
+            required: true,
+            minlength: 5
+          },
+          email:{
+            required:true,
+            email:true
+          },
+          password: {
+            required:true,
+            minlength: 5
+          },
+          confirmPassword:{
+            required:true,
+            minlength:5,
+            equalTo: '[name="password"]'
+          },
+          ageGroup:{
+            required:true
+          },
+          residentStatus: {
+            required:true
+          },
+          messages: {
+            username: "Require username with atleast 5 characters",
+            password: "Doesnot match the password"
+          }
+        }
+        });
+    });
     Template.Register.helpers({
         loaded: function() {
             return Session.get('registerSpinner');
