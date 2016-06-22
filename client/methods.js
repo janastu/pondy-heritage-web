@@ -39,8 +39,8 @@ Meteor.methods({
                 Session.set("Groupinfo", response.data);  
                 sessionStorage.setItem('userGroups', JSON.stringify(response.data));
                 //Router.go('/mapp');
-                Router.go('app.show',{}, {'query': {'groups': Session.get('groupFilter').toString(),
-                'categories': Session.get('categoryFilter').toString()}})
+                Router.go('app.show',{}, {'query': {'groups': _.map(Session.get('Groups'), function(item){return item.name}).toString(),
+                'categories': Session.get('categoryList').toString()}});
                 Session.set('showDialog', true);
                 Session.set('loginSpinner', false);         }
               });
