@@ -20,62 +20,6 @@ $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
             }
 
 
-//search form in sidebar should sync with the category filter 
-var updateSearchForm = function(){
-        //side bar for geo json data
-//TODO: needs more tweaking
-    
-      var heading = $('.sidebar');
-     var searchForm = document.createElement('div');
-     searchForm.className = 'filter-form';
-     var inputField = document.createElement('input');
-     var inputType = document.createAttribute("type");
-     inputType.value = "text";
-     inputField.setAttributeNode(inputType);
-     var tagsInputAttr = document.createAttribute("data-role");
-     tagsInputAttr.value ="tagsinput";
-     inputField.setAttributeNode(tagsInputAttr);
-     inputField.value = Session.get('categoryFilter');
-
-     searchForm.appendChild(inputField);
-     heading.append(searchForm);
-     
-      
-       }
-
-     
- var updateSideBarContent = function(){
-        $("#listings").empty();
-        overlays.eachLayer(function(layer) {
-
-           _.each(layer.toGeoJSON().features, function(feature){
-                   var listings = document.getElementById('listings');
-     
-                                    var listing = listings.appendChild(document.createElement('div'));
-                                    listing.className = 'item';
-
-                                    var link = listing.appendChild(document.createElement('a'));
-                                    link.href = '#';
-                                    link.className = 'title';
-                                    link.innerHTML = '<h3>'+feature.properties.title+'</h3>';
-                                    var description = listing.appendChild(document.createElement('p'));
-
-                                    description.innerHTML = '<p>'+feature.properties.description+'</p>';
-                                    /*var thumbnail = '<img class="img-responsive"'+'src='+layer.toGeoJSON().properties.url+'/>'
-                                    description.appendChild(thumbnail);*/
-
-                                    link.onclick = function() {
-                                    // When a menu item is clicked, animate the map to center
-                                    // its associated locale and open its popup.
-                                    
-                                     MAP.setView(layer.getLatLng(), 16);
-                                     //map.panTo(marker.getLatLng());
-                                     layer.openPopup();
-                                }
-                            });
-});
-
-}
 
       //if user is logged in, add draw controls to add marker
 
@@ -133,7 +77,7 @@ addDrawControl = function(map){
         addDrawControl(MAP);   
 
         // Feature layer to load GeoJson from api server
-                    myLayer = L.mapbox.featureLayer().addTo(MAP);
+                    myLayer = L.mapbox.featureLayer();//.addTo(MAP);
 
         //Marker cluster group - to add grouped features
                    overlays = L.layerGroup().addTo(baselayer);
@@ -204,20 +148,21 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
     
     // The clusterGroup gets each marker in the group added to it
     // once loaded, and then is added to the map
-    clusterGroup = new L.MarkerClusterGroup();
+    clusterGroup = new L.featureGroup();
      // create a new MarkerClusterGroup that will show special-colored
     // numbers to indicate the category
     function makeGroup(color) {
       return new L.MarkerClusterGroup({
        
-        iconCreateFunction: function(cluster) {
+       iconCreateFunction: function(cluster) {
+         
         return L.mapbox.marker.icon({
           // show the number of markers in the cluster on the icon.
           'marker-symbol': cluster.getChildCount(),
           'marker-color': color.toString()
         });
       }
-      });//.addTo(overlays);
+      }).addTo(overlays);
     }
     // create a marker cluster group for each category
     groups = {
@@ -237,25 +182,17 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
      
     myLayer.eachLayer(function(layer) {
       // add each feature to its specific group.
-            var data;
-            //var data = ["Built Heritage", "Urban Life", "Intangible Cultural Heritage", "French Influence", 
-            //"Tamil Culture", "Natural Heritage", "Spiritual Practice"];
-            if(Session.get("categoryFilter") == undefined) {
-            data =  ["Built Heritage", "Urban Life", "Intangible Cultural Heritage", "French Influence", 
-            "Tamil Culture", "Natural Heritage", "Spiritual Practice", "Village Life", "Lived Experience",
-            "Other Indian Influence", "Other Foreign Influence"];
-          } else {
-            data = Session.get("categoryFilter");
-
-          }
-            if(data){
-        if (data.indexOf(layer.feature.properties.category) !== -1) {
+            var categoryFilter= Session.get("categoryFilter");
+            var groupFilter = Session.get('groupFilter');
+          
+            if(groupFilter.indexOf(layer.feature.properties.groupname) !== -1){
+              if (categoryFilter.indexOf(layer.feature.properties.category) !== -1) {
             
-            groups[layer.feature.properties.category].addLayer(layer);
+                groups[layer.feature.properties.category].addLayer(layer);
         }
         }
    
-      //call update search form to update the map filter state
+      //DEPRECATED: call update search form to update the map filter state
       
       // updateSearchForm();
        //update content in side bar, according to category filter
@@ -281,3 +218,61 @@ Template.Map.helpers({
 });
 
 
+//Deprecated code
+/*
+//search form in sidebar should sync with the category filter 
+var updateSearchForm = function(){
+        //side bar for geo json data
+//TODO: needs more tweaking
+    
+      var heading = $('.sidebar');
+     var searchForm = document.createElement('div');
+     searchForm.className = 'filter-form';
+     var inputField = document.createElement('input');
+     var inputType = document.createAttribute("type");
+     inputType.value = "text";
+     inputField.setAttributeNode(inputType);
+     var tagsInputAttr = document.createAttribute("data-role");
+     tagsInputAttr.value ="tagsinput";
+     inputField.setAttributeNode(tagsInputAttr);
+     inputField.value = Session.get('categoryFilter');
+
+     searchForm.appendChild(inputField);
+     heading.append(searchForm);
+     
+      
+       }
+
+     
+ var updateSideBarContent = function(){
+        $("#listings").empty();
+        overlays.eachLayer(function(layer) {
+
+           _.each(layer.toGeoJSON().features, function(feature){
+                   var listings = document.getElementById('listings');
+     
+                                    var listing = listings.appendChild(document.createElement('div'));
+                                    listing.className = 'item';
+
+                                    var link = listing.appendChild(document.createElement('a'));
+                                    link.href = '#';
+                                    link.className = 'title';
+                                    link.innerHTML = '<h3>'+feature.properties.title+'</h3>';
+                                    var description = listing.appendChild(document.createElement('p'));
+
+                                    description.innerHTML = '<p>'+feature.properties.description+'</p>';
+                                    /*var thumbnail = '<img class="img-responsive"'+'src='+layer.toGeoJSON().properties.url+'/>'
+                                    description.appendChild(thumbnail);
+
+                                    link.onclick = function() {
+                                    // When a menu item is clicked, animate the map to center
+                                    // its associated locale and open its popup.
+                                    
+                                     MAP.setView(layer.getLatLng(), 16);
+                                     //map.panTo(marker.getLatLng());
+                                     layer.openPopup();
+                                }
+                            });
+});
+
+}*/

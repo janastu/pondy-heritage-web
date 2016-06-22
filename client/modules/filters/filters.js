@@ -6,21 +6,20 @@ Template.FilterUI.helpers({
 	groups: function() {
 		return Session.get('Groups');
 	},
-  checkedItems: function(category) {
+  checkedCategories: function(arg) {
     
     var filterArray = Session.get('categoryFilter');
-    if(filterArray.indexOf(category) !== -1){
-      console.log(category, "true");
-      return true;
-    }
-    /*return _.each(filterArray, function(item){
+    if(filterArray.indexOf(arg) !== -1){
       
-       if(category === item ) {
-        console.log(category, item, "true");
-        return true;
-      }
-    });*/
-   
+      return true;
+    }   
+  },
+  checkedGroups: function(arg){
+    var filteredGroups = Session.get('groupFilter');
+    if(filteredGroups.indexOf(arg) !== -1){
+      console.log(arg, "true");
+      return true;
+    } else console.log("fail");  
   }
 });
 
@@ -38,7 +37,7 @@ Template.FilterUI.helpers({
 
 
 Template.FilterUI.events({
-	'change input': function(event, template) {
+	'change .category-filter-event input': function(event, template) {
     event.preventDefault();
     var x = template;
     console.log(template.state, Template.instance());
@@ -62,8 +61,30 @@ Template.FilterUI.events({
   		}
      
  		myLayer.fireEvent('ready');
-     Router.go('app.show',{}, {'query': {'categories': cats.toString()}});
+     Router.go('app.show',{}, {'query': {'groups': Router.current().params.query.groups,
+      'categories': cats.toString()}});
      return false; 
   	
- 	}
+ 	},
+  'change .group-filter-event input': function(event, template){
+     event.preventDefault();
+     var x = event.target.checked;
+     var filteredGroups = Session.get('groupFilter');
+     if(x == true){
+        console.log("checked");
+        filteredGroups.push(event.target.name);
+        Session.set("groupFilter", filteredGroups);
+
+      } else {
+        console.log("unchecked");
+        var clickIndex = filteredGroups.indexOf(event.target.name);
+        filteredGroups.splice(clickIndex, 1);
+        Session.set("groupFilter", filteredGroups);
+      }
+      console.log(filteredGroups);
+     myLayer.fireEvent('ready');
+     Router.go('app.show',{}, {'query': {'groups': filteredGroups.toString(),
+      'categories': Router.current().params.query.categories}});
+     return false; 
+  }
 });

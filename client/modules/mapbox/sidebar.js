@@ -3,29 +3,62 @@
 
 Template.sidebar.helpers({
   content: function(){
-    console.log("calling");
-    console.log(Router.current().params);
+    
     var filters = Session.get('categoryFilter');
-    var filteredFeatures = _.compact(_.map(GeoJson.get('Features').features, function(item) {
-      if(filters.indexOf(item.properties.category) !== -1){
+    var groupFilter = Session.get('groupFilter');
+    filteredFeatures = _.compact(_.map(GeoJson.get('Features').features, function(item) {
+      if(filters.indexOf(item.properties.category) !== -1 && groupFilter.indexOf(item.properties.groupname) !== -1){
         
         return item
       } 
     }));
     console.log(filteredFeatures, GeoJson);
+
     return filteredFeatures;
    
   }
+  
 });
 
+Template.sidebarHeader.helpers({
+   content: function(){
+    
+    var filters = Session.get('categoryFilter');
+    var groupFilter = Session.get('groupFilter');
+    filteredFeatures = _.compact(_.map(GeoJson.get('Features').features, function(item) {
+     
+            if(filters.indexOf(item.properties.category) !== -1 && groupFilter.indexOf(item.properties.groupname) !== -1){
+                    return item;
+      } 
+   
+    }));
+    console.log(filteredFeatures, GeoJson);
+
+    return filteredFeatures;
+   
+  },
+  filterCategory: function(){
+    return Session.get('categoryFilter');
+  },
+  filterCount: function(arg){
+    console.log(arg.length);
+        return arg.length;
+    
+  }
+});
 Template.sidebar.events({
-  'click a':function(event){
+  'click img':function(event){
     var features = GeoJson.get("Features");
     var featureId = event.target.getAttribute('for');
     myLayer.eachLayer(function(layer){
       if(layer.feature.id === featureId){
+        //TODO: map zoom is too high - to make the popup to open
+        //since marker is in a clustergroup
+        MAP.setView(layer.getLatLng(), 20);
+        //map.panTo(marker.getLatLng());
         layer.openPopup();
-            console.log(layer.feature);
+        
+            console.log(layer.getLatLng());
           }
     });
     

@@ -1,12 +1,19 @@
 <template name="sidebar">
+	
 	{{#each content}}
 <div class="item" >
-	<a href="#" class="title thumbnail" > <h3 for={{id}}>{{properties.title}}</h3> <img class="img-responsive" src={{properties.url}} />
+	<a href="#" class="title thumbnail" > <h3 >{{properties.title}}</h3> <img for={{id}} class="img-responsive" src={{properties.url}} />
 	</a>
 	<span>by user {{properties.user}} on {{properties.uploadTime}}</span>
 </div>
 {{/each}}
 </template>
+
+<template name="sidebarHeader">
+	<h2 class="title"><span>{{filterCount content}}</span> pins found!!
+	
+	</h2>
+	</template>
 
 <template name="filterForm">
 	<div class="filter-form">
