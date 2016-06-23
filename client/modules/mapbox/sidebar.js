@@ -61,10 +61,19 @@ Template.sidebar.events({
             console.log(layer.getLatLng());
           }
     });
-    
-    console.log(event.target);
+  },
+  'click .content-show-event': function(event, template){
+    event.preventDefault();
+      template.$('div.card-reveal[data-rel=' + event.target.getAttribute('data-rel') + ']').slideToggle('slow');
+  },
+  'click .card-reveal .close': function(event, template){
+    event.preventDefault();
+      template.$('div.card-reveal[data-rel=' + event.target.getAttribute('data-rel') + ']').slideToggle('slow');
   }
+
 });
+
+
 
 /* disabled: TODO: Feature incomplete
 // sidebar form item for filter with TODO: type ahead

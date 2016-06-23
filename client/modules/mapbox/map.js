@@ -99,9 +99,9 @@ addDrawControl = function(map){
                                     switch(feature.properties.mediatype) {
                                         case 'IMAGE':
                                         content = 
-                                        '<div class="map-content"><a href="'+feature.properties.url+'" data-toggle="lightbox"> <img class="img-responsive" style="width:280px;" src="' +
+                                        '<div class="map-content"><a href="'+feature.properties.url+'" data-toggle="lightbox"> <img class="img-responsive"  src="' +
                                         feature.properties.url+ '" /></a>'+'<h2>'+feature.properties.title+'</h2>' +
-                                        feature.properties.description+'</div>';
+                                        /*feature.properties.description+*/'</div>';
                                         break;
                                         case 'VIDEO':
                                         content = '<div class="map-content"> <p><video style="width:280px;" controls autobuffer>'+

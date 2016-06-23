@@ -1,11 +1,34 @@
 <template name="sidebar">
-	
+
 	{{#each content}}
-<div class="item" >
-	<a href="#" class="title thumbnail" > <h3 >{{properties.title}}</h3> <img for={{id}} class="img-responsive" src={{properties.url}} />
-	</a>
-	<span>by user {{properties.user}} on {{properties.uploadTime}}</span>
+	<div class="item" >
+ <div class="card">
+<div class="card-image">
+<img class="img-responsive" for={{id}} src={{properties.url}}>
 </div>
+<!-- card image -->
+<div class="card-content">
+<span class="card-title">{{properties.title}}</span>
+<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #333;" data-rel={{id}}> 
+	<i class="glyphicon glyphicon-option-vertical" data-rel={{id}}></i> </button>
+</div>
+<!-- card content -->
+<div class="card-action">
+	<a href="#" target="new_blank">READ MORE</a> 
+	<a href="#" target="new_blank">EDIT</a> 
+	<a href="#" target="new_blank">DELETE</a> 
+ </div>
+ <!-- card actions -->
+ <div class="card-reveal" data-rel={{id}}> 
+ <span class="card-title">{{properties.title}}</span> 
+ <button type="button" class="close" data-dismiss="modal" data-rel={{id}} aria-label="Close">
+
+ 	<span data-rel={{id}} aria-hidden="true">×</span></button>
+ <p>{{properties.description}}</p>
+ </div><!-- card reveal -->
+ </div>
+ </div>
+
 {{/each}}
 </template>
 
