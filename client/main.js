@@ -4,8 +4,9 @@
 appName = Meteor.settings.public.appConfig.appId;
 // To store the app config like, regions, categories and groups
 appConfig = new ReactiveDict();
-if(sessionStorage.getItem('appConfig')){
-appConfig.set('appConfig', JSON.parse(sessionStorage.getItem('appConfig')));
+
+updateAppConfig = function(){
+
    Session.set('Regions', appConfig.get('appConfig').regions);
     Session.set('Groups', appConfig.get('appConfig').groups);
     Session.set('Categories', appConfig.get('appConfig').categorys);
@@ -16,7 +17,14 @@ appConfig.set('appConfig', JSON.parse(sessionStorage.getItem('appConfig')));
                 function(cat){
                     return cat.categoryName;
                 }));
+
 }
+
+if(sessionStorage.getItem('appConfig')){
+    appConfig.set('appConfig', JSON.parse(sessionStorage.getItem('appConfig')));
+    updateAppConfig();
+}
+
 //Map features to store a filter set of features by appName
 GeoJson = new ReactiveDict();
 // user session if saved in browser session storage
@@ -49,6 +57,7 @@ if(sessionStorage.userSession){
         if(app.name == appName){
             
             sessionStorage.setItem('appConfig', JSON.stringify(app));
+            updateAppConfig();
         }
     });
     
