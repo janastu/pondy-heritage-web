@@ -24,8 +24,8 @@ a:hover { color:#101010; }
 .sidebar {
   position:absolute;
   width: 389px;
-    height: 437px;
-    top: 142px;
+    height: 81vh;
+    top: 100px;
   right:0;
   overflow:hidden;
   border-left:1px solid rgba(0,0,0,0.25);
@@ -47,15 +47,17 @@ a:hover { color:#101010; }
 }
 .heading {
   background:#fff;
-  border-bottom:1px solid #eee;
-  height:60px;
-  line-height:60px;
+  /*border-bottom:1px solid #eee;*/
+  height:50px;
+  line-height:30px;
   padding:0 10px;
 }
 .listings {
   height:100%;
   overflow:auto;
   padding-bottom:60px;
+    margin-top: -19px;
+    border-top: 1px solid #eee;
 }
 .listings .item {
   display:block;
@@ -139,11 +141,22 @@ a:hover { color:#101010; }
       padding: 0 10px;
       margin-top: -100px;
   }
+  .logged-user {
+  position: fixed;
+    top: 105px;
+    display: block;
+    z-index: 10000;
+    right: 15px;
+}
+.filter-count{
+  margin: 10px -10px;
+      border-top: 0.3px solid #eee;
+    line-height: 30px;
+}
 
 
   /*cards css */
-  @import url(http://fonts.googleapis.com/css?family=Roboto:400,300); 
-@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
+
 .card .card-image{ 
     overflow: hidden;
     -webkit-transform-style: preserve-3d; 

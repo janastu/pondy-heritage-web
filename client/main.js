@@ -4,13 +4,14 @@
 appName = Meteor.settings.public.appConfig.appId;
 // To store the app config like, regions, categories and groups
 appConfig = new ReactiveDict();
-
-updateAppConfig = function(){
-
-   Session.set('Regions', appConfig.get('appConfig').regions);
-    Session.set('Groups', appConfig.get('appConfig').groups);
-    Session.set('Categories', appConfig.get('appConfig').categorys);
-    Session.set('Languages', appConfig.get('appConfig').languages);
+var browserSessionconfig = sessionStorage.getItem('appConfig');
+updateAppConfig = function(arg){
+    var sessionObj = JSON.parse(arg);
+    
+   Session.set('Regions', sessionObj.regions);
+    Session.set('Groups', sessionObj.groups);
+    Session.set('Categories', sessionObj.categorys);
+    Session.set('Languages', sessionObj.languages);
                 
     Session.set("categoryList",
             _.map(Session.get('Categories'), 
@@ -20,9 +21,9 @@ updateAppConfig = function(){
 
 }
 
-if(sessionStorage.getItem('appConfig')){
+if(browserSessionconfig){
     appConfig.set('appConfig', JSON.parse(sessionStorage.getItem('appConfig')));
-    updateAppConfig();
+    updateAppConfig(browserSessionconfig);
 }
 
 //Map features to store a filter set of features by appName
@@ -57,7 +58,7 @@ if(sessionStorage.userSession){
         if(app.name == appName){
             
             sessionStorage.setItem('appConfig', JSON.stringify(app));
-            updateAppConfig();
+            updateAppConfig(sessionStorage.getItem('appConfig'));
         }
     });
     
