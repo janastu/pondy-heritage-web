@@ -6,18 +6,24 @@ Template.sidebar.helpers({
     
     var filters = Session.get('categoryFilter');
     var groupFilter = Session.get('groupFilter');
-    filteredFeatures = _.compact(_.map(GeoJson.get('Features').features, function(item) {
+    var featuresByDate = _.sortBy(GeoJson.get("Features").features, function(item){
+      return item.properties.uploadTime;
+    });
+    filteredFeatures = _.compact(_.map(featuresByDate, function(item) {
       if(filters.indexOf(item.properties.category) !== -1 && groupFilter.indexOf(item.properties.groupname) !== -1){
         
         return item
       } 
     }));
-    console.log(filteredFeatures, GeoJson);
-
     return filteredFeatures;
-   
+ },
+ isOwner: function(arg){
+  var user = Session.get('userSession').token.split(":")[0].trim();
+  if(user == arg){
+    return true
   }
-  
+
+ }
 });
 
 Template.sidebarHeader.helpers({
@@ -32,8 +38,7 @@ Template.sidebarHeader.helpers({
       } 
    
     }));
-    console.log(filteredFeatures, GeoJson);
-
+    
     return filteredFeatures;
    
   },

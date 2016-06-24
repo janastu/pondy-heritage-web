@@ -1,16 +1,18 @@
-
+<!-- mapp with sidebar-->
 <template name="Map">
 
+{{> sidebarLayout}}
+<div id="map" class="mapbox"></div>
+	
+</template>
+
+<!-- sidebar components in it's layout-->
+<template name="sidebarLayout">
+
       <div  class="row" >
-
-
-   
-    
     {{> AddToMapBtn}}
     </div>
-    
-
-<div class='sidebar'>
+  <div class='sidebar'>
   
   <div class="btn-group filter-control" role="group">
      {{> LocBookmark}}
@@ -27,7 +29,5 @@
   {{> sidebar}}
 </div>
 </div>
-	<div id="map" class="mapbox"></div>
-	
 </template>
 

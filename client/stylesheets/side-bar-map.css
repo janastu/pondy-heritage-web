@@ -26,7 +26,7 @@ a:hover { color:#101010; }
   width: 389px;
     height: 81vh;
     top: 100px;
-  right:0;
+  right:5px;
   overflow:hidden;
   border-left:1px solid rgba(0,0,0,0.25);
   border-top: 1px solid rgba(0,0,0,0.25);

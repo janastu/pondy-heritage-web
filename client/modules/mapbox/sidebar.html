@@ -3,29 +3,37 @@
 	{{#each content}}
 	<div class="item" >
  <div class="card">
+
+<div class="card-content">
+<span class="card-title">{{properties.title}}</span>
+<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #333;     margin-top: -12px;
+    padding: 10px 10px 0px;" data-rel={{id}}> 
+	<span class="glyphicon glyphicon-option-vertical" data-rel={{id}}></span> </button>
+</div>
+<!-- card content -->
+
 <div class="card-image">
 <img class="img-responsive" for={{id}} src={{properties.url}}>
 </div>
 <!-- card image -->
-<div class="card-content">
-<span class="card-title">{{properties.title}}</span>
-<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #333;" data-rel={{id}}> 
-	<i class="glyphicon glyphicon-option-vertical" data-rel={{id}}></i> </button>
-</div>
-<!-- card content -->
+
+{{#if isOwner  properties.user}}
 <div class="card-action">
-	<a href="#" target="new_blank">READ MORE</a> 
-	<a href="#" target="new_blank">EDIT</a> 
-	<a href="#" target="new_blank">DELETE</a> 
+	
+	<a href="#" >EDIT</a> 
+	<a href="#" >DELETE</a> 
+	
  </div>
- <!-- card actions -->
+ {{/if}}
+<!-- card actions -->
+
  <div class="card-reveal" data-rel={{id}}> 
  <span class="card-title">{{properties.title}}</span> 
  <button type="button" class="close" data-dismiss="modal" data-rel={{id}} aria-label="Close">
 
  	<span data-rel={{id}} aria-hidden="true">×</span></button>
  <p>{{properties.description}}</p>
- </div><!-- card reveal -->
+ </div><!-- card reveal - more content -->
  </div>
  </div>
 
