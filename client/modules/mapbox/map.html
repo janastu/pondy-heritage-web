@@ -6,28 +6,3 @@
 	
 </template>
 
-<!-- sidebar components in it's layout-->
-<template name="sidebarLayout">
-
-      <div  class="row" >
-    {{> AddToMapBtn}}
-    </div>
-  <div class='sidebar'>
-  
-  <div class="btn-group filter-control" role="group">
-     {{> LocBookmark}}
-  {{> FilterUI}}
-</div>
-  <div class='heading'>
-    
-    <div class="filter-count">
-      {{> sidebarHeader}}
-    </div>
-  </div>
-  <div id='listings' class='listings'>
-  <!-- feature incomplete {{> filterForm}} -->
-  {{> sidebar}}
-</div>
-</div>
-</template>
-

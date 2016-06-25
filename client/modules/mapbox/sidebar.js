@@ -26,6 +26,13 @@ Template.sidebar.helpers({
  }
 });
 
+Template.sidebarLayout.onRendered(function(){
+  $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+});
+
 Template.sidebarHeader.helpers({
    content: function(){
     

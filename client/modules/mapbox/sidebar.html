@@ -41,17 +41,60 @@
 </template>
 
 <template name="sidebarHeader">
-	<b style="padding-left: 11px;"><span>{{filterCount content}}</span> pins found!!
+	<b style="padding-left: 11px;"><span>{{filterCount content}}</span> pins found in applied filters!!
 	
 	</b>
 	</template>
 
-<template name="filterForm">
-	<div class="filter-form">
-	
-		<input type="text" data-role="tagsinput" value={{content}}>
-		
-	</div>
+
+<!-- sidebar components in it's layout-->
+<template name="sidebarLayout">
+   <nav class="navbar navbar-default no-margin">
+    <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header fixed-brand" style="margin-top: 90px;">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle" style="z-index:100">
+                      <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                    </button>
+                   
+                </div><!-- navbar-header-->
+ 
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+                            </ul>
+                </div><!-- bs-example-navbar-collapse-1 -->
+    </nav>
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+           <div class="sidebar-wrapper" >
+      
+  <div class='sidebar'>
+  
+  <div class="btn-group filter-control" role="group">
+     {{> LocBookmark}}
+  {{> FilterUI}}
+</div>
+  <div class='heading'>
+    
+    <div class="filter-count">
+      {{> sidebarHeader}}
+    </div>
+  </div>
+  <div id='listings' class='listings'>
+  <!-- feature incomplete {{> filterForm}} -->
+  {{> sidebar}}
+</div>
+</div>
+</div>
+
+        </div><!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div  class="row" >
+    {{> AddToMapBtn}}
+    </div>
+    </div>
 
 
-	</template>
+</template>
