@@ -143,8 +143,8 @@ a:hover { color:#101010; }
       margin-top: -100px;
   }
   .logged-user {
-  position: fixed;
-    top: 105px;
+  position: absolute;
+    top: 125px;
     display: block;
     z-index: 101;
     right: 15px;
