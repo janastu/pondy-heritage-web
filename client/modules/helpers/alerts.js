@@ -47,6 +47,14 @@ Template.LoggedUser.events({
 Template.dismissibleAlert.onCreated(function(){
   //Session variable for error alert when signin fails
   Session.set("errorAlert", false);
+  Session.set("registerSuccess", false);
+});
+
+Template.dismissibleAlert.onRendered(function(){
+  var instance = Template.instance();
+  Meteor.setTimeout(function(){
+    Session.set("registerSuccess", false);
+}, 5000);
 });
 
 Template.dismissibleAlert.helpers({
@@ -60,6 +68,9 @@ Template.dismissibleAlert.helpers({
   },
   markerAlert: function(){
     return Session.get('markerAlert');
+  },
+  registerSuccess: function(){
+    return Session.get('registerSuccess');
   }
 });
 

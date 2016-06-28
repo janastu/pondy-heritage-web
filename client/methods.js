@@ -66,8 +66,8 @@ Meteor.methods({
             
             
           } else {
-            console.log(result);
-            //Router.go('/login/');
+            Session.set('registerSuccess', true);
+            Router.go('/login');
             Session.set('registerSpinner', false);
 
           }
