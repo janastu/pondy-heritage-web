@@ -72,7 +72,7 @@ Template.AddToMapDialog.events({
 		console.log(file);
 		//find file mediatype to add to request data
 		if(file == undefined) {
-				fd.append("mediatype", "3");
+				fd.append("mediatype", "4");
 				var dummyFileReq = new XMLHttpRequest();
 
 // Use JSFiddle logo as a sample image to avoid complicating
