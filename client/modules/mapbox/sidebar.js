@@ -22,8 +22,9 @@ Template.sidebar.helpers({
   if(user == arg){
     return true
   }
+}
 
- }
+ 
 });
 
 Template.sidebarLayout.onRendered(function(){
@@ -31,6 +32,14 @@ Template.sidebarLayout.onRendered(function(){
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+});
+
+Template.sidebarLayout.helpers({
+
+  showDialog: function() {
+    return Session.get('showDialog');
+
+  }
 });
 
 Template.sidebarHeader.helpers({
@@ -85,6 +94,39 @@ Template.sidebar.events({
 
 });
 
+Template.LoggedUser.helpers({
+
+
+  userSession: function(){
+    // user session if saved in browser session storage
+if(sessionStorage.userSession){
+            var userSession = JSON.parse(sessionStorage.userSession);
+            Session.set('userSession', userSession);
+            Session.set('showDialog', true);
+
+}
+
+    if(Session.get('userSession')){
+      var userStr = Session.get('userSession').token;
+      var usrArray = userStr.split(":");
+      var loggedUser = usrArray[0].toUpperCase();
+      return {"loggedUser": loggedUser};
+
+    } else {
+      console.log("log in");
+    }
+  }
+});
+Template.LoggedUser.events({
+  "click li": function() {
+    sessionStorage.userSession = "";
+    Session.set('userSession', "");
+    Session.set('showDialog', false);
+    MAP.removeControl(DRAWCNTRL);
+
+  }
+
+});
 
 
 /* disabled: TODO: Feature incomplete

@@ -143,11 +143,11 @@ a:hover { color:#101010; }
       margin-top: -100px;
   }
   .logged-user {
-  position: absolute;
-    top: 125px;
+  position: relative;
+    top: 102px;
     display: block;
     z-index: 101;
-    right: 15px;
+    
 }
 .filter-count{
   margin: 10px -10px;

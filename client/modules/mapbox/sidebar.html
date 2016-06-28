@@ -73,9 +73,14 @@
   <div class='sidebar'>
   
   <div class="btn-group filter-control" role="group">
+       <!-- user logged in state-->
+  {{#if showDialog}}
+  {{> LoggedUser}}
+  {{/if}}
      {{> LocBookmark}}
   {{> FilterUI}}
-</div>
+
+ </div>
   <div class='heading'>
     
     <div class="filter-count">
