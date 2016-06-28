@@ -69,10 +69,38 @@ Template.AddToMapDialog.events({
 		var fd = new FormData();
 		//extract file from dom
 		var file = template.find('input:file').files[0];
+		console.log(file);
 		//find file mediatype to add to request data
-		if(file.type){
+		if(file == undefined) {
+				fd.append("mediatype", "3");
+				var dummyFileReq = new XMLHttpRequest();
+
+// Use JSFiddle logo as a sample image to avoid complicating
+// this example with cross-domain issues.
+dummyFileReq.open( "GET", "http://"+window.location.host+"/images/temp-img.png", true );
+
+// Ask for the result as an ArrayBuffer.
+//xhr.responseType = "arraybuffer";
+
+dummyFileReq.onload = function( e ) {
+    // Obtain a blob: URL for the image data.
+    var arrayBufferView = this.response;
+    var blob = new Blob( [ arrayBufferView ]);
+   /* var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL( blob );
+    var img = document.querySelector( "#photo" );
+    img.src = imageUrl;*/
+    console.log(blob);
+    file = blob;
+    fd.append("picture", file);
+};
+
+dummyFileReq.send();	
+		}      
+		 else if(file.type){
 			var mediaType = file.type.split("/")[0];
 			switch(mediaType){
+
 				case "image":
 				fd.append("mediatype", "1");
 				break;
@@ -85,10 +113,13 @@ Template.AddToMapDialog.events({
 				fd.append("mediatype", "3");
 				break;
 			}
+			fd.append("picture", file);
 
-		}                                                                                                                                                                                                             
+		}
+
 		else {
 			fd.append("mediatype", "4");
+			fd.append("picture", file);
 		}
         
         
@@ -98,7 +129,7 @@ Template.AddToMapDialog.events({
 		fd.append("longitude", lng);
 		fd.append("category", event.target.category.value);
 		fd.append("language", event.target.language.value);
-		fd.append("picture", file);
+		//fd.append("picture", file);
         fd.append("uploadTime", new Date().toString());
         
         //is empty now
@@ -130,8 +161,10 @@ Template.AddToMapDialog.events({
         xhr.setRequestHeader("Accept", "application/json");
         //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         //xhr.setRequestHeader("X-AUTH-TOKEN", Session.get('userSession').token.toString());
+        Meteor.setTimeout(function(){
+        	xhr.send(fd);
+        }, 5000);
         
-        xhr.send(fd);
 		xhr.addEventListener("error", function(e){
 			Session.set('uploadSpin', false);
 			Meteor.setTimeout(function(){
