@@ -53,7 +53,7 @@ Template.sidebarHeader.helpers({
     return Session.get('categoryFilter');
   },
   filterCount: function(arg){
-    console.log(arg.length);
+   
         return arg.length;
     
   }

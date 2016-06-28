@@ -6,9 +6,9 @@
 
 <div class="card-content">
 <span class="card-title">{{properties.title}}</span>
-<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #333;     margin-top: -12px;
+<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #555;     margin-top: -10px;
     padding: 10px 10px 0px;" data-rel={{id}}> 
-	<span class="glyphicon glyphicon-option-vertical" data-rel={{id}}></span> </button>
+	<i class="fa fa-info-circle" aria-hidden="true" data-rel={{id}} title="MORE INFO"></i>  </button>
 </div>
 <!-- card content -->
 
@@ -20,8 +20,8 @@
 {{#if isOwner  properties.user}}
 <div class="card-action">
 	
-	<a href="#" >EDIT</a> 
-	<a href="#" >DELETE</a> 
+	<a href="#" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i><!--span>EDIT</span--></a> 
+	<a href="#" ><i class="fa fa-trash" aria-hidden="true"></i><!--DELETE--></a> 
 	
  </div>
  {{/if}}
