@@ -147,12 +147,18 @@ dummyFileReq.send();
 		xhr.addEventListener("load", function(e){
 			Session.set('uploadSpin', false);
 			event.target.reset();
-			Session.set('uploadMedia', true);
+			//Session.set('uploadMedia', true);
 			$('#add-heritage').modal('toggle');
-			Meteor.setTimeout(function(){
-				Session.set("uploadMedia", false);
-
-			}, 5000);
+			
+			Bert.alert({
+                    title: 'Upload Succes!',
+                     message: 'Your pin is added to map!',
+                    type: 'success',
+                    style: 'growl-top-right',
+                    icon: 'fa-check'
+                });
+			overlays.clearLayers();
+			myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
 		});
 		
 		//posting to server endpoint
@@ -166,11 +172,18 @@ dummyFileReq.send();
         }, 5000);
         
 		xhr.addEventListener("error", function(e){
-			Session.set('uploadSpin', false);
+			Bert.alert({
+                    title: 'Post Failed',
+                     message: 'Something went wrong, try again!',
+                    type: 'danger',
+                    style: 'growl-top-right',
+                    icon: 'fa-remove'
+                });
+			/*Session.set('uploadSpin', false);
 			Meteor.setTimeout(function(){
 				Session.set("errorAlert", true);
 
-			}, 5000);
+			}, 5000);*/
 		});
 
 

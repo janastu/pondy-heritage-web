@@ -53,7 +53,7 @@ Meteor.methods({
                 Session.set('loginSpinner', false);
                 Bert.alert({
                     title: 'Login Succes',
-                     message: 'Hi '+result.data.token.split(":")[0]+'!',
+                     message: 'Hi '+result.data.token.split(":")[0].toUpperCase()+'!',
                     type: 'success',
                     style: 'growl-top-right',
                     icon: 'fa-check'
