@@ -4,7 +4,10 @@
       'submit form': function(event){
         event.preventDefault();
         Session.set('loginSpinner', true);
-        Meteor.call('Login', {username: event.target.username.value, password: event.target.password.value});
+        Meteor.call('Login', 
+          {username: event.target.username.value, 
+            password: event.target.password.value
+          });
       }
     });
     Template.Login.helpers({

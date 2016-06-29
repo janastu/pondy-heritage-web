@@ -21,14 +21,22 @@ Meteor.methods({
         headers:{"Content-Type":"application/x-www-form-urlencoded", "Accept":"application/json"}}, 
         function(err, result){
           if(err){
-            Session.set("errorAlert", true);
+            Bert.alert({
+                    title: 'Login Failed',
+                     message: 'Something went wrong, try again!',
+                    type: 'danger',
+                    style: 'growl-top-right',
+                    icon: 'fa-remove'
+                });
+            Session.set('loginSpinner', false);
+            /*Session.set("errorAlert", true);
             
             Meteor.setTimeout(function(){
               Session.set("errorAlert", false);
-              Session.set('loginSpinner', false);
-            }, 5000);
+              
+            }, 5000);*/
           } else {
-            console.log("result", result.data);
+           
             //storing in browser
             sessionStorage.setItem('userSession', JSON.stringify(result.data));
 
@@ -42,8 +50,17 @@ Meteor.methods({
                 Router.go('app.show',{}, {'query': {'groups': _.map(Session.get('Groups'), function(item){return item.name}).toString(),
                 'categories': Session.get('categoryList').toString()}});
                 Session.set('showDialog', true);
-                Session.set('loginSpinner', false);         }
+                Session.set('loginSpinner', false);
+                Bert.alert({
+                    title: 'Login Succes',
+                     message: 'Hi '+result.data.token.split(":")[0]+'!',
+                    type: 'success',
+                    style: 'growl-top-right',
+                    icon: 'fa-check'
+                });
+                }
               });
+              
           }
         });
     },
@@ -57,19 +74,32 @@ Meteor.methods({
         headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':"application/json"}},
         function(err, result){
           if(err){
-            Session.set("errorAlert", true);
+            Bert.alert({
+                    title: 'Register Failed',
+                     message: 'Something went wrong, try again!',
+                    type: 'danger',
+                    style: 'growl-top-right',
+                    icon: 'fa-remove'
+                });
+            //Session.set("errorAlert", true);
             Session.set('loginSpinner', false);
-            Meteor.setTimeout(function(){
+           /* Meteor.setTimeout(function(){
               Session.set("errorAlert", false);
 
-            }, 5000);
+            }, 5000);*/
             
             
           } else {
-            Session.set('registerSuccess', true);
+            //Session.set('registerSuccess', true);
             Router.go('/login');
             Session.set('registerSpinner', false);
-
+             Bert.alert({
+                    title: 'Register Succes',
+                     message: 'You can now Login and add to mapp!',
+                    type: 'success',
+                    style: 'growl-top-right',
+                    icon: 'fa-check'
+                });
           }
 
         });
