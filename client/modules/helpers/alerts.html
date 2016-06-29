@@ -1,12 +1,14 @@
 <template name="dismissibleAlert">
 <!--Error alert for no marker drawn-->
 {{#if markerAlert}}
-<div class="dismiss-alert-wrap">
+
+<div class="dismiss-alert-wrap" style="left:145px;">
 <div class="alert alert-danger" role="alert">
   
-  <strong>Please draw marker from left control and try Again!</strong> 
+  <strong>Click on marker icon from above control to draw a marker on the map</strong> 
 </div>
 </div>
+
 {{/if}}
 <!-- Error alert for signin-->
 {{#if errorAlert}}

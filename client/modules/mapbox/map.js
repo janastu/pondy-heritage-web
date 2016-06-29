@@ -47,7 +47,7 @@ addDrawControl = function(map){
            //Draw control for adding markers by logged in user
             
             // Set the button title text for the marker button
-            L.drawLocal.draw.toolbar.buttons.marker = 'Draw a sexy marker!';
+            L.drawLocal.draw.toolbar.buttons.marker = 'Draw a marker on the map!';
             map.on('draw:created', function(e) {
                 var marker = e.layer;
                 var popupContent = "<p>Click on <b>ADD TO MAP</b> button to add picture, video, audio and text to the map location</p>";

@@ -19,7 +19,7 @@ Template.AddToMapBtn.events({
                 	Meteor.setTimeout(function(){
                 		Session.set("markerAlert", false);
 
-                	}, 5000);
+                	}, 10000);
                 }
             } else {
             	Router.go('login.static');
@@ -74,8 +74,8 @@ Template.AddToMapDialog.events({
 		if(file == undefined) {
 				fd.append("mediatype", "4");
 				file = new File(["%PNG\r\n"], 'empty.png');
-    console.log(file);
-    fd.append("picture", file);
+    			
+    			fd.append("picture", file);
 				/*var dummyFileReq = new XMLHttpRequest();
 
 // Use JSFiddle logo as a sample image to avoid complicating

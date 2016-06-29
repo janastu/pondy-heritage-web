@@ -29,7 +29,7 @@ Template.sidebar.helpers({
 
 Template.sidebar.onRendered(function(){
   Session.set('uploadSpin', false);
-  sideBarTour = new Tour({
+  /*sideBarTour = new Tour({
     container: "body",
     smartPlacement: true,
   steps: [
@@ -53,7 +53,7 @@ Template.sidebar.onRendered(function(){
     title: "Filters",
     content: "Filter pins by Categories."
   }
-]});
+]});*/
   //sideBarTour.init();
   //sideBarTour.start();
 });

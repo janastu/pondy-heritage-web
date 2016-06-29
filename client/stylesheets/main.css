@@ -59,3 +59,7 @@ div#footer {
 .leaflet-popup-content{
   width:100%;
 }
+.marker-alert-wrap{
+  position: : absolute;
+  left:10px;
+}
