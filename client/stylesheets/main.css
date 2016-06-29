@@ -55,3 +55,7 @@ div#footer {
     position: absolute;
     left: 36%;
 }
+
+.leaflet-popup-content{
+  width:100%;
+}

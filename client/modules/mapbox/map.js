@@ -99,7 +99,8 @@ addDrawControl = function(map){
                                     switch(feature.properties.mediatype) {
                                         case 'IMAGE':
                                         content = 
-                                        '<div class="map-content"><a href="'+feature.properties.url+'" data-toggle="lightbox"> <img class="img-responsive"  src="' +
+                                        '<div class="map-content"><a href="'+feature.properties.url+'" data-toggle="lightbox" data-title="'+
+                                        feature.properties.title+'"> <img class="img-responsive"  src="' +
                                         feature.properties.url+ '" /></a>'+'<h2>'+feature.properties.title+'</h2>' +
                                         /*feature.properties.description+*/'</div>';
                                         break;
@@ -116,7 +117,8 @@ addDrawControl = function(map){
                                         '<h2>'+feature.properties.title+'</h2>' +feature.properties.description+'</div>';
                                         break;
                                         case 'TEXT':
-                                        content = '<div class="map-content"><iframe width="280" height="200" src="'+feature.properties.url+'" frameborder="0" allowfullscreen></iframe>'+
+
+                                        content = '<div class="map-content"><iframe width="280" height="250" src="'+feature.properties.url+'" frameborder="0" allowfullscreen></iframe>'+
                                         '<h2>'+feature.properties.title+'</h2>' +
                                         '</div>';
 

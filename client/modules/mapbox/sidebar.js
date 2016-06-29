@@ -29,6 +29,32 @@ Template.sidebar.helpers({
 
 Template.sidebar.onRendered(function(){
   Session.set('uploadSpin', false);
+  sideBarTour = new Tour({
+    container: "body",
+  steps: [
+  {
+    element: "#sidebar-login-tour",
+    title: "Login",
+    content: "You have to be signed in to add to Mapp."
+  },
+  {
+    element: "#sidebar-loc-bookmark",
+    title: "Bookmarks",
+    content: "Saved Locations for quick navigation."
+  },
+  {
+    element: "#group-filter-tour",
+    title: "Filters",
+    content: "Filter pins by Groups."
+  },
+  {
+    element: "#category-filter-tour",
+    title: "Filters",
+    content: "Filter pins by Categories."
+  }
+]});
+  sideBarTour.init();
+  sideBarTour.start();
 });
 
 Template.sidebarLayout.onRendered(function(){
