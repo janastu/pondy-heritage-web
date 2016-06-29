@@ -31,6 +31,7 @@ Template.sidebar.onRendered(function(){
   Session.set('uploadSpin', false);
   sideBarTour = new Tour({
     container: "body",
+    smartPlacement: true,
   steps: [
   {
     element: "#sidebar-login-tour",
@@ -53,8 +54,8 @@ Template.sidebar.onRendered(function(){
     content: "Filter pins by Categories."
   }
 ]});
-  sideBarTour.init();
-  sideBarTour.start();
+  //sideBarTour.init();
+  //sideBarTour.start();
 });
 
 Template.sidebarLayout.onRendered(function(){
