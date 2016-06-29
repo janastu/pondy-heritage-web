@@ -115,6 +115,10 @@ addDrawControl = function(map){
                                         feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></audio>'+
                                         '<h2>'+feature.properties.title+'</h2>' +feature.properties.description+'</div>';
                                         break;
+                                        case 'TEXT':
+                                        content = '<div class="map-content"><iframe width="280" height="200" src="'+feature.properties.url+'" frameborder="0" allowfullscreen></iframe>'+
+                                        '<h2>'+feature.properties.title+'</h2>' +
+                                        '</div>';
 
                                     }
                                     marker.bindPopup(content);
