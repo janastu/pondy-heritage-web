@@ -22,7 +22,7 @@
             "getUser": "http://196.12.53.138:8080/heritageweb/api/users/",
             "getGroupForUser": "http://196.12.53.138:8080/heritageweb/api/getUserGroups/user/",
             "getFeatures": "http://196.12.53.138:8080/heritageweb/api/mapp",
-            "postFeature": "http://pondy.openrun.com:8080/heritageweb/api/createNewMediaHeritageForm2/"
+            "postFeature": "http://196.12.53.138:8080/heritageweb/api/createNewMediaHeritageForm2/"
         },
         "appConfig": {
             "appId": "PondyMap",
