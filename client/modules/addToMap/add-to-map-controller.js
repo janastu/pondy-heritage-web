@@ -73,7 +73,10 @@ Template.AddToMapDialog.events({
 		//find file mediatype to add to request data
 		if(file == undefined) {
 				fd.append("mediatype", "4");
-				var dummyFileReq = new XMLHttpRequest();
+				file = new File(["%PNG\r\n"], 'empty.png');
+    console.log(file);
+    fd.append("picture", file);
+				/*var dummyFileReq = new XMLHttpRequest();
 
 // Use JSFiddle logo as a sample image to avoid complicating
 // this example with cross-domain issues.
@@ -90,12 +93,13 @@ dummyFileReq.onload = function( e ) {
     var imageUrl = urlCreator.createObjectURL( blob );
     var img = document.querySelector( "#photo" );
     img.src = imageUrl;*/
-    console.log(blob);
-    file = blob;
+    
+    /*file = "‰PNG\r\n";
+    console.log(file);
     fd.append("picture", file);
 };
 
-dummyFileReq.send();	
+dummyFileReq.send();*/	
 		}      
 		 else if(file.type){
 			var mediaType = file.type.split("/")[0];
