@@ -179,8 +179,8 @@ dummyFileReq.send();
                     style: 'growl-top-right',
                     icon: 'fa-remove'
                 });
-			/*Session.set('uploadSpin', false);
-			Meteor.setTimeout(function(){
+			Session.set('uploadSpin', false);
+			/*Meteor.setTimeout(function(){
 				Session.set("errorAlert", true);
 
 			}, 5000);*/

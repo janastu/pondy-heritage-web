@@ -39,6 +39,9 @@ Template.sidebarLayout.helpers({
   showDialog: function() {
     return Session.get('showDialog');
 
+  },
+  loaded: function() {
+    return Session.get('uploadSpin');
   }
 });
 
