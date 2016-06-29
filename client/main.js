@@ -85,4 +85,16 @@ if(sessionStorage.userSession){
     }
 });
 
-   
+Template.contactForm.events({
+    "submit form": function(event){
+        Meteor.setTimeout(function(){
+            Bert.alert({
+                    title: 'Email sent',
+                     message: 'Thanks for your feedback',
+                    type: 'success',
+                    style: 'growl-top-right',
+                    icon: 'fa-check'
+                });
+    }, 1000);
+    }
+})

@@ -1,4 +1,8 @@
 {
+
+    "contactForm": {
+        "emailTo": "bhanu@servelots.com"
+        }, 
     "kadira": {
         "appId": "rCPwr3YYdfqiNu427",
         "appSecret": "d83f81f7-1d7a-49c1-8075-0f25bfc2be1b"
@@ -10,6 +14,7 @@
                 "people": true
             }
         },
+
         "apis": {
             "getApps": "http://196.12.53.138:8080/heritageweb/api/heritageAppsMob",
             "login": "http://196.12.53.138:8080/heritageweb/api/authenticate",
