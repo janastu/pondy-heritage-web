@@ -50,3 +50,8 @@ div#footer {
 .bert-alert{
   display:none;
 }
+
+.spin-wrap {
+    position: absolute;
+    left: 36%;
+}

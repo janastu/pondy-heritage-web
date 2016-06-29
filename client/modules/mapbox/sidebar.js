@@ -27,6 +27,10 @@ Template.sidebar.helpers({
  
 });
 
+Template.sidebar.onRendered(function(){
+  Session.set('uploadSpin', false);
+});
+
 Template.sidebarLayout.onRendered(function(){
   $("#menu-toggle").click(function(e) {
         e.preventDefault();
@@ -43,6 +47,10 @@ Template.sidebarLayout.helpers({
   loaded: function() {
     return Session.get('uploadSpin');
   }
+});
+
+Template.sidebarLayout.onCreated(function(){
+  Session.set('uploadSpin', true);
 });
 
 Template.sidebarHeader.helpers({
