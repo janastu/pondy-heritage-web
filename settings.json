@@ -1,0 +1,35 @@
+{
+
+    "contactForm": {
+        "emailTo": "bhanu@servelots.com"
+        }, 
+    "kadira": {
+        "appId": "rCPwr3YYdfqiNu427",
+        "appSecret": "d83f81f7-1d7a-49c1-8075-0f25bfc2be1b"
+    },
+    "public": {
+        "analyticsSettings": {
+            "Mixpanel": {
+                "token":"d9435c9b09ba82ba272d1847f9242228",
+                "people": true
+            }
+        },
+
+        "apis": {
+            "getApps": "http://196.12.53.138:8080/heritageweb/api/heritageAppsMob",
+            "login": "http://196.12.53.138:8080/heritageweb/api/authenticate",
+            "register": "http://196.12.53.138:8080/heritageweb/api/registerForMobile",
+            "getUser": "http://196.12.53.138:8080/heritageweb/api/users/",
+            "getGroupForUser": "http://196.12.53.138:8080/heritageweb/api/getUserGroups/user/",
+            "getFeatures": "http://196.12.53.138:8080/heritageweb/api/mapp",
+            "postFeature": "http://196.12.53.138:8080/heritageweb/api/createNewMediaHeritageForm2/"
+        },
+        "appConfig": {
+            "appId": "PondyMap",
+            "mapBoxToken": "pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g",
+            "tileLayer": "mapbox.pirates",
+            "mapInitialView": [11.972157926492702, 79.81773376464844]
+            
+        }
+    }
+}

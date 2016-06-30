@@ -1,0 +1,123 @@
+<template name="sidebar">
+
+	{{#each content}}
+	<div class="item" >
+ <div class="card">
+
+<div class="card-content">
+<span class="card-title">{{properties.title}}</span>
+<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #555;     margin-top: -10px;
+    padding: 10px 10px 0px;" data-rel={{id}}> 
+	<i class="fa fa-info-circle" aria-hidden="true" data-rel={{id}} title="MORE INFO"></i>  </button>
+</div>
+<!-- card content -->
+
+<div class="card-image">
+<img class="img-responsive" for={{id}} src={{properties.url}}>
+</div>
+<!-- card image -->
+
+{{#if isOwner  properties.user}}
+<div class="card-action">
+	
+	<a href="#" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i><!--span>EDIT</span--></a> 
+	<a href="#" ><i class="fa fa-trash" aria-hidden="true"></i><!--DELETE--></a> 
+	
+ </div>
+ {{/if}}
+<!-- card actions -->
+
+ <div class="card-reveal" data-rel={{id}}> 
+ <span class="card-title">{{properties.title}}</span> 
+ <button type="button" class="close" data-dismiss="modal" data-rel={{id}} aria-label="Close">
+
+ 	<span data-rel={{id}} aria-hidden="true">×</span></button>
+ <p>{{properties.description}}</p>
+ </div><!-- card reveal - more content -->
+ </div>
+ </div>
+
+{{/each}}
+</template>
+
+<template name="sidebarHeader">
+	<b style="padding-left: 11px;"><span>{{filterCount content}}</span> pins found in applied filters!!
+	
+	</b>
+	</template>
+
+
+<!-- sidebar components in it's layout-->
+<template name="sidebarLayout">
+  <div class="spinWrap">
+  <!-- todo add spinner -->
+  </div>
+   <nav class="navbar navbar-default no-margin">
+    <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header fixed-brand" style="margin-top: 90px;">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle" style="z-index:100">
+                      <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                    </button>
+                   
+                </div><!-- navbar-header-->
+ 
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+                            </ul>
+                </div><!-- bs-example-navbar-collapse-1 -->
+    </nav>
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+           <div class="sidebar-wrapper" >
+      
+  <div class='sidebar'>
+  
+  <div class="btn-group filter-control" role="group">
+       <!-- user logged in state-->
+
+<div  class="logged-user">
+  {{#if showDialog}}
+  {{> LoggedUser}}
+  {{else}}
+  <!-- if not logged in - provide sign in link -->
+  <div class="btn-group" role="group">
+  
+  <a type="button" id="sidebar-login-tour" class="btn btn-primary"  href="/login" >
+    <i class="fa fa-user" aria-hidden="true" ></i>
+    <span>LOGIN</span>
+   
+  </a>
+ 
+</div>
+{{/if}}
+  </div>
+  
+     {{> LocBookmark}}
+  {{> FilterUI}}
+
+ </div>
+  <div class='heading'>
+    
+    <div class="filter-count">
+      {{> sidebarHeader}}
+    </div>
+  </div>
+  <div id='listings' class='listings'>
+  <!-- feature incomplete {{> filterForm}} -->
+  {{> sidebar}}
+</div>
+</div>
+</div>
+
+        </div><!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div  class="row" >
+    {{> AddToMapBtn}}
+    </div>
+    </div>
+
+
+</template>

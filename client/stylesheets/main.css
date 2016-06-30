@@ -8,12 +8,12 @@
     height: auto;
 }
 
-#__flow-root {
+/*#__flow-root {
   margin-top:85px;
 }
 .margin-adjust{
   margin-top: -100px;
-}
+}*/
 .dismiss-alert-wrap{
   position: fixed;
     top: 50%;
@@ -23,17 +23,12 @@
     margin-left:-130px;
   
 }
-.logged-user {
-  position: fixed;
-    top: 100px;
-    display: block;
-    z-index: 100;
-    right: 15px;
-}
+
 #map.mapbox {
   top:95px;
   
 }
+
 .leaflet-popup-pane{
   margin-top: 25px;
 }
@@ -51,4 +46,28 @@ div#footer {
 .btn-default {
     background-color: #ccc;
     opacity: 0.8;
+  }
+.bert-alert{
+  display:none;
+}
+
+.spin-wrap {
+    position: absolute;
+    left: 36%;
+}
+
+.leaflet-popup-content{
+  width:100%;
+}
+.marker-alert-wrap{
+  position: absolute;
+  left:10px;
+}
+
+/* form validation*/
+label.error{
+    background-color: #f97352;
+    border-color: #f97352;
+    color: #ffffff;
+    position: relative;
   }

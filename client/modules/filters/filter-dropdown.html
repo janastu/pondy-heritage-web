@@ -1,0 +1,67 @@
+<template name="FilterUI">
+ 
+   <div class="btn-group group-filter-event"  role="group" style="margin-top:105px; z-index: 100;" >
+      
+      <button type="button" id="group-filter-tour" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+      style="background-color: #fff;
+      color: rgba(0, 0, 0, 0.745);
+          border: 1px solid rgba(0, 0, 0, 0.4);
+              border-radius: 3px;
+      "><i class="fa fa-users" aria-hidden="true" title="GROUPS"></i>
+      <span class="caret"></span>
+     
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+      {{#each groups}}
+      <div class="checkbox">
+      
+       <label style="margin-left:5px;">
+        
+        <input type="checkbox" name="{{name}}" checked={{checkedGroups name}}
+      >
+      {{name}}
+    </label>
+  </div>
+      {{/each}}
+    </ul>
+  </div>
+
+	 <div class="btn-group category-filter-event"  role="group" style="margin-top:105px; z-index: 100;" >
+     
+      <button type="button" id="category-filter-tour" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+      style="background-color: #fff;
+      color: rgba(0, 0, 0, 0.745);
+          border: 1px solid rgba(0, 0, 0, 0.4);
+              border-radius: 3px;
+      "><i class="fa fa-tags" aria-hidden="true" title="CATEGORIES"></i>
+      <span class="caret"></span>
+      
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+    <li><form role="form">
+      {{#each categories}}
+      <div class="checkbox">
+      
+       <label style="margin-left:5px;">
+        
+        <input type="checkbox" name="{{categoryName}}" checked={{checkedCategories categoryName}}
+      >
+      {{categoryName}}
+    </label>
+  </div>
+      <!--li><a href="#" style="text-decoration: none;">{{categoryName}}</a></li-->
+      {{/each}}
+
+   
+  </form></li>
+</ul>
+
+</div>
+
+  
+
+  
+
+</template>

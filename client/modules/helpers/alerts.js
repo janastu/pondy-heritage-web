@@ -1,36 +1,18 @@
 //controller for alerts
 
 
-Template.body.helpers({
-  showDialog: function() {
-    return Session.get('showDialog');
 
-  }
-
+Template.dismissibleAlert.onCreated(function(){
+  //Session variable for error alert when signin fails
+  Session.set("errorAlert", false);
+  Session.set("registerSuccess", false);
 });
 
-
-Template.LoggedUser.helpers({
-
-  userSession: function(){
-    if(Session.get('userSession')){
-      var userStr = Session.get('userSession').token;
-      var usrArray = userStr.split(":");
-      var loggedUser = usrArray[0].toUpperCase();
-      return {"loggedUser": loggedUser};
-
-    } else {
-      console.log("log in");
-    }
-  }
-});
-Template.LoggedUser.events({
-  "click li": function() {
-    Session.set('userSession', "");
-    MAP.removeControl(DRAWCNTRL);
-
-  }
-
+Template.dismissibleAlert.onRendered(function(){
+  var instance = Template.instance();
+  Meteor.setTimeout(function(){
+    Session.set("registerSuccess", false);
+}, 5000);
 });
 
 Template.dismissibleAlert.helpers({
@@ -44,6 +26,9 @@ Template.dismissibleAlert.helpers({
   },
   markerAlert: function(){
     return Session.get('markerAlert');
+  },
+  registerSuccess: function(){
+    return Session.get('registerSuccess');
   }
 });
 

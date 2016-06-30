@@ -13,15 +13,15 @@
                         	<form >
                             
                             	<div class="form-group">
-                                	<input type="text" class="form-control" name="username" required="" placeholder="USERNAME">
+                                	<input type="text" pattern="[a-z0-9 ]+" class="form-control" name="username"  placeholder="USERNAME">
                             	</div>
                             	<div class="form-group">
-                                	<input type="email" class="form-control" name="email" required="" placeholder="Email">
+                                	<input type="email" class="form-control" name="email"  placeholder="Email">
                             	</div>
                             	<div class="form-group">
 
                     	
-                    			<input type="password" class="form-control" id="password" name="password" placeholder="PASSWORD"                      required>
+                    			<input type="password" class="form-control" id="password" name="password" placeholder="PASSWORD" >
                             	</div>
                             	<div class="form-group">
                     	
@@ -29,16 +29,16 @@
                             	</div>
                             	<div class="form-group">
                             	<label class="control-label" for="ageGroup"  >Age Group</label> <br />
-                            	<input type="radio" class="ageGroup" name='ageGroup'  value="Child" required>  Child <br/>
-								<input type="radio" name='ageGroup'  class="ageGroup"  value="Youth" required> Youth <br/>
-								<input type="radio" name='ageGroup'  class="ageGroup"  value="Adult" required> Adult <br/>
-								<input type="radio" name='ageGroup'  class="ageGroup"  value="Elderly" required> Elderly <br/>
+                            	<input type="radio" class="ageGroup" name='ageGroup'  value="Child" >  Child <br/>
+								<input type="radio" name='ageGroup'  class="ageGroup"  value="Youth" > Youth <br/>
+								<input type="radio" name='ageGroup'  class="ageGroup"  value="Adult" > Adult <br/>
+								<input type="radio" name='ageGroup'  class="ageGroup"  value="Elderly" > Elderly <br/>
                             	</div>
                             	<div class="form-group">
                     				<label class="control-label" for="residentStatus"  >What is your Resident Status </label> <br />
                     
-                    				<input type="radio" class="residentStatus" name='residentStatus' value="true" required> I am a  Resident <br/>
-									<input type="radio" name='residentStatus'  class="residentStatus"  value="false" required> I am a  Visitor <br/>
+                    				<input type="radio" class="residentStatus" name='residentStatus' value="true" > I am a  Resident <br/>
+									<input type="radio" name='residentStatus'  class="residentStatus"  value="false" > I am a  Visitor <br/>
 								</div>
 								<div class="form-group">
                                 	<input type="text" class="form-control" name="specialmessage" placeholder="SPECIAL MESSAGE">

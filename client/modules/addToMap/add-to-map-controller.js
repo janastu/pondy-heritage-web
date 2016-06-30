@@ -19,10 +19,10 @@ Template.AddToMapBtn.events({
                 	Meteor.setTimeout(function(){
                 		Session.set("markerAlert", false);
 
-                	}, 5000);
+                	}, 10000);
                 }
             } else {
-            	FlowRouter.go('/login');
+            	Router.go('login.static');
             }
         }
     });
@@ -35,6 +35,23 @@ Template.AddToMapDialog.helpers({
 	},
 	loaded: function() {
 		return Session.get('uploadSpin');
+	},
+	categories: function() {
+		return Session.get('Categories');
+	},
+	languages: function() {
+		return Session.get('Languages');
+	},
+	//user group info resets on refresh if the user tries to post
+	groupInfo: function() {
+		    // user session if saved in browser session storage
+		if(sessionStorage.userGroups){
+            var userGroups = JSON.parse(sessionStorage.userGroups);
+            Session.set('Groupinfo', userGroups);
+            
+
+}
+			return Session.get('Groupinfo');
 	}
 });
 
@@ -43,12 +60,51 @@ Template.AddToMapDialog.events({
 	'submit form': function(event, template){
 		event.preventDefault();
 		Session.set('uploadSpin', true);
+        
+        var userId = Session.get('userSession').token.split(":")[0].trim().toString();
+       
+        var lat = Session.get('mapClick').lat;
+        var lng = Session.get('mapClick').lng;
+        //create multiform data
 		var fd = new FormData();
+		//extract file from dom
 		var file = template.find('input:file').files[0];
-		if(file.type){
-			
+		console.log(file);
+		//find file mediatype to add to request data
+		if(file == undefined) {
+				fd.append("mediatype", "4");
+				file = new File(["%PNG\r\n"], 'empty.png');
+    			
+    			fd.append("picture", file);
+				/*var dummyFileReq = new XMLHttpRequest();
+
+// Use JSFiddle logo as a sample image to avoid complicating
+// this example with cross-domain issues.
+dummyFileReq.open( "GET", "http://"+window.location.host+"/images/temp-img.png", true );
+
+// Ask for the result as an ArrayBuffer.
+//xhr.responseType = "arraybuffer";
+
+dummyFileReq.onload = function( e ) {
+    // Obtain a blob: URL for the image data.
+    var arrayBufferView = this.response;
+    var blob = new Blob( [ arrayBufferView ]);
+   /* var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL( blob );
+    var img = document.querySelector( "#photo" );
+    img.src = imageUrl;*/
+    
+    /*file = "‰PNG\r\n";
+    console.log(file);
+    fd.append("picture", file);
+};
+
+dummyFileReq.send();*/	
+		}      
+		 else if(file.type){
 			var mediaType = file.type.split("/")[0];
 			switch(mediaType){
+
 				case "image":
 				fd.append("mediatype", "1");
 				break;
@@ -61,46 +117,77 @@ Template.AddToMapDialog.events({
 				fd.append("mediatype", "3");
 				break;
 			}
+			fd.append("picture", file);
 
-		}                                                                                                                                                                                                             
-		
+		}
+
 		else {
 			fd.append("mediatype", "4");
+			fd.append("picture", file);
 		}
-		
-		var lat = Session.get('mapClick').lat;
-		var lng = Session.get('mapClick').lng;
-		
-		
-		
-		fd.append("title", event.target.title.value);
-		fd.append("description", event.target.description.value);
+        
+        
+        fd.append("title", event.target.title.value);
+        fd.append("description", event.target.description.value);
 		fd.append("latitude", lat);
 		fd.append("longitude", lng);
 		fd.append("category", event.target.category.value);
-		
 		fd.append("language", event.target.language.value);
-		fd.append("picture", file);
-		var xhr = new XMLHttpRequest;
+		//fd.append("picture", file);
+        fd.append("uploadTime", new Date().toString());
+        
+        //is empty now
+        fd.append("fileOrURLLink", event.target.url.value);
+       
+        fd.append("userAgent", null);
+        //credentials from config file
+		fd.append("appId", appName);
+        fd.append("groupId", event.target.group.value);
+        fd.append("userName", userId);
+        //new xmlhttp request
+		var xhr = new XMLHttpRequest();
+        
+        //loader
 		xhr.addEventListener("load", function(e){
 			Session.set('uploadSpin', false);
 			event.target.reset();
-			Session.set('uploadMedia', true);
+			//Session.set('uploadMedia', true);
 			$('#add-heritage').modal('toggle');
-			Meteor.setTimeout(function(){
-				Session.set("uploadMedia", false);
-
-			}, 5000);
+			
+			Bert.alert({
+                    title: 'Upload Succes!',
+                     message: 'Your pin is added to map!',
+                    type: 'success',
+                    style: 'growl-top-right',
+                    icon: 'fa-check'
+                });
+			overlays.clearLayers();
+			myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
 		});
-		xhr.open('POST', 'http://pondy.openrun.com:8080/heritageweb/api/createAnyMediaGeoTagHeritageFromWeb', true);
-		xhr.send(fd);
-
+		
+		//posting to server endpoint
+        xhr.open('POST', Meteor.settings.public.apis.postFeature);
+        xhr.withCredentials = true;
+        xhr.setRequestHeader("Accept", "application/json");
+        //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        //xhr.setRequestHeader("X-AUTH-TOKEN", Session.get('userSession').token.toString());
+        Meteor.setTimeout(function(){
+        	xhr.send(fd);
+        }, 5000);
+        
 		xhr.addEventListener("error", function(e){
+			Bert.alert({
+                    title: 'Post Failed',
+                     message: 'Something went wrong, try again!',
+                    type: 'danger',
+                    style: 'growl-top-right',
+                    icon: 'fa-remove'
+                });
 			Session.set('uploadSpin', false);
-			Meteor.setTimeout(function(){
+			/*Meteor.setTimeout(function(){
 				Session.set("errorAlert", true);
 
-			}, 5000);
+			}, 5000);*/
 		});
 
 

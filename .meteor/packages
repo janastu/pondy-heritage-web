@@ -6,13 +6,10 @@
 richsilv:semantic-ui
 pauloborges:mapbox
 
-meteorhacks:flow-router
-meteorhacks:flow-layout
 http
 twbs:bootstrap
 tsega:bootstrap3-lightbox
 sacha:spin
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -26,3 +23,17 @@ random
 ejson
 spacebars
 check
+meteorhacks:kadira
+okgrow:analytics
+iron:router
+standard-minifier-css
+standard-minifier-js
+ajduke:bootstrap-tagsinput
+reactive-dict
+themeteorchef:jquery-validation
+tomi:upload-jquery
+fortawesome:fontawesome
+themeteorchef:bert
+bredikhin:contact-form
+email
+flowkey:bootstrap-tour

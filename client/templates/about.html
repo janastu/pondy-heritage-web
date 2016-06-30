@@ -7,9 +7,14 @@
                 <div class="row"><div class=" col-sm-6 col-sm-offset-6">
                     <div class="mbr-hero animated fadeInUp">
                         <h1 class="mbr-hero__text">A PEOPLE'S MAPPING PROJECT</h1>
-                        <p class="mbr-hero__subtext">Heritage consists of the environment and cultural traditions we pass from one generation to the next. &nbsp;It is not for experts and scholars to tell use what our heritage is. &nbsp;We know it instinctively.&nbsp;<br><br>This map is developed 100% from the contributions of people like you. &nbsp;Residents and visitors alike share the things they find worthy of passing-down from generation to generation. The map will be richer if you also contribute!</p>
+                        <p class="mbr-hero__subtext">Heritage consists of the environment and cultural traditions we pass from one generation to the next. &nbsp;It is not for experts and scholars to tell us what our heritage is. &nbsp;We know it instinctively.&nbsp;<br><br>This map is developed 100% from the contributions of people like you. &nbsp;Residents and visitors alike share the things they find worthy of passing-down from generation to generation. The map will be richer if you also contribute!</p>
                     </div>
-                    <div class="mbr-buttons btn-inverse mbr-buttons--left"><a class="mbr-buttons__btn btn btn-lg btn-danger animated fadeInUp delay" href="/map">EXPLORE THE MAP</a> <a class="mbr-buttons__btn btn btn-lg animated fadeInUp delay btn-danger" href="/add-to-map">ADD TO THE MAP</a>  </div>
+                    <div class="mbr-buttons btn-inverse mbr-buttons--left"
+                    ><a class="mbr-buttons__btn btn btn-lg btn-danger animated fadeInUp delay" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">EXPLORE THE MAP</a> 
+                <a class="mbr-buttons__btn btn btn-lg animated fadeInUp delay btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">ADD TO THE MAP</a>
+                  </div>
                 </div></div>
             </div></div>
         </div>
@@ -34,7 +39,12 @@
                                     <h1 class="mbr-hero__text">ACKNOWLEDGMENTS</h1>
                                     <p class="mbr-hero__subtext"><br><strong>Dreaming the map</strong>. The Kaveri Heritage Map was the fever-dream of Murali and Mark Jobs, who have never been convinced that the identification of heritage is best left to experts or cultural elites. &nbsp;They wanted a tool to allow the "ordinary people" to identify those aspects of Pondicherry's cultural traditions and threatened natural environment that are important to them -- and to share their priorities with others.<br><br><strong>Building the map</strong>. The heroes of this project are found at Janastu, a very special Bangalore techology NGO that has built IT solutions for social good for more than a decade. &nbsp;TB Dinesh, Murali HR, Shalini A, and Nikitha Bharadhwaj worked long, hard hours and, somehow, managed to maintain their creativity, humour, and zeal for this project.<br><br><strong>Supporting the map</strong>. &nbsp;&nbsp;&nbsp;<br><br><strong>Special appreciation</strong>. This project is built on an open-source platform provided by the mapping giants at Open Street Map and made to look gorgeous by the artists at Mapbox. &nbsp;The support of Jhipster was of great assistance to the developers at Janastu. &nbsp;And thanks to IIT Hyderabad, who provided hosting support for this shoestring project.<br><br><strong>Most special appreciation</strong>. Of all the people to whom this project is indebted, the highest gratitude and appreciation goes out to the folks who have contributed their "dots" to the map, thereby enriching our undertsanding of Pondicherry's unique place in this world. &nbsp;If you have not yet participated, it's never too late!<br><br><br><br></p>
                                 </div>
-                                <div class="mbr-buttons btn-inverse mbr-buttons--center"><a class="mbr-buttons__btn btn btn-lg btn-danger" href="/map">EXPLORE THE MAP</a> <a class="mbr-buttons__btn btn btn-lg btn-danger" href="/add-to-map">ADD TO THE MAPP</a></div>
+                                <div class="mbr-buttons btn-inverse mbr-buttons--center">
+                                    <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">EXPLORE THE MAP</a> 
+                                    <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">ADD TO THE MAPP</a>
+                                </div>
                             </div></div>
                         </div>
                     </div>
