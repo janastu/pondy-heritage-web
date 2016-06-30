@@ -147,7 +147,7 @@ if(sessionStorage.userSession){
     if(Session.get('userSession')){
       var userStr = Session.get('userSession').token;
       var usrArray = userStr.split(":");
-      var loggedUser = usrArray[0].toUpperCase();
+      var loggedUser = usrArray[0].toLowerCase();
       return {"loggedUser": loggedUser};
 
     } else {

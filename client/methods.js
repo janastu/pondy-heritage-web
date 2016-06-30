@@ -72,8 +72,10 @@ Meteor.methods({
         'agestatus='+request.agestatus+'&'+
         'specialmessage='+request.specialmessage,
         headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':"application/json"}},
-        function(err, result){
+        function(err, response){
+           console.log(response, err);
           if(err){
+            Session.set('loginSpinner', false);
             Bert.alert({
                     title: 'Register Failed',
                      message: 'Something went wrong, try again!',
@@ -81,25 +83,32 @@ Meteor.methods({
                     style: 'growl-top-right',
                     icon: 'fa-remove'
                 });
-            //Session.set("errorAlert", true);
-            Session.set('loginSpinner', false);
-           /* Meteor.setTimeout(function(){
-              Session.set("errorAlert", false);
-
-            }, 5000);*/
+           
             
-            
-          } else {
-            //Session.set('registerSuccess', true);
-            Router.go('/login');
+          } 
+          else if(response.data.code === 200){
+           
             Session.set('registerSpinner', false);
              Bert.alert({
-                    title: 'Register Succes',
-                     message: 'You can now Login and add to mapp!',
+                    title: 'Register success',
+                     message: response.data.message,
                     type: 'success',
                     style: 'growl-top-right',
                     icon: 'fa-check'
                 });
+             Router.go('/login');
+          }
+          else if(response.data.code === 402 || response.data.code === 403){
+             Session.set('loginSpinner', false);
+             Bert.alert({
+                    title: 'Register Failed',
+                     message: response.data.message,
+                    type: 'danger',
+                    style: 'growl-top-right',
+                    icon: 'fa-remove'
+                });
+           
+           
           }
 
         });
