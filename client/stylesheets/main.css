@@ -8,12 +8,12 @@
     height: auto;
 }
 
-#__flow-root {
+/*#__flow-root {
   margin-top:85px;
 }
 .margin-adjust{
   margin-top: -100px;
-}
+}*/
 .dismiss-alert-wrap{
   position: fixed;
     top: 50%;
@@ -60,6 +60,14 @@ div#footer {
   width:100%;
 }
 .marker-alert-wrap{
-  position: : absolute;
+  position: absolute;
   left:10px;
 }
+
+/* form validation*/
+label.error{
+    background-color: #f97352;
+    border-color: #f97352;
+    color: #ffffff;
+    position: relative;
+  }

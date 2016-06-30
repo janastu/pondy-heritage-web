@@ -58,7 +58,9 @@
     Template.Register.onRendered(function(){
       
       Template.instance().$('form').validate({
-        onsubmit: false,
+        onsubmit: function(form){
+          form.valid();
+        },
         onfocusout: function(element, event){
           $(element).valid();
         },
