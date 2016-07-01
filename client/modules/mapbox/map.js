@@ -124,8 +124,7 @@ addDrawControl = function(map){
 
                                     }
                                     marker.bindPopup(content);
- 
-                                                                
+              
 
                                 });
 
@@ -137,6 +136,7 @@ myLayer.on('popupopen', function(e) {
     var px = MAP.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
     px.y -= e.popup._container.clientHeight/2 // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
     MAP.panTo(MAP.unproject(px),{animate: true}); // pan to new center
+    console.log("marker clocked", this.id, e.layer.feature.id);
 
 });
 
