@@ -43,7 +43,7 @@ Meteor.methods({
             
             Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser+result.data.token.split(":")[0], function(err, response){
               if(!err){
-                console.log(response.data);
+               
                 Session.set("Groupinfo", response.data);  
                 sessionStorage.setItem('userGroups', JSON.stringify(response.data));
                 //Router.go('/mapp');
@@ -73,7 +73,7 @@ Meteor.methods({
         'specialmessage='+request.specialmessage,
         headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':"application/json"}},
         function(err, response){
-           console.log(response, err);
+          
           if(err){
             Session.set('loginSpinner', false);
             Bert.alert({

@@ -17,9 +17,9 @@ Template.FilterUI.helpers({
   checkedGroups: function(arg){
     var filteredGroups = Session.get('groupFilter');
     if(filteredGroups.indexOf(arg) !== -1){
-      console.log(arg, "true");
+     
       return true;
-    } else console.log("fail");  
+    }
   }
 });
 
@@ -40,7 +40,7 @@ Template.FilterUI.events({
 	'change .category-filter-event input': function(event, template) {
     event.preventDefault();
     var x = template;
-    console.log(template.state, Template.instance());
+   
   		var x = event.target.checked;
   		var cats = [];
   		if(Session.get("categoryFilter") == undefined){
@@ -49,12 +49,12 @@ Template.FilterUI.events({
   			cats = Session.get("categoryFilter")
   		}
   		if(x == true){
-  			console.log("checked");
+  		
   			cats.push(event.target.name);
   			Session.set("categoryFilter", cats);
 
   		} else {
-  			console.log("unchecked");
+  			
   			var clickIndex = cats.indexOf(event.target.name);
  			cats.splice(clickIndex, 1);
  			Session.set("categoryFilter", cats);
@@ -71,17 +71,17 @@ Template.FilterUI.events({
      var x = event.target.checked;
      var filteredGroups = Session.get('groupFilter');
      if(x == true){
-        console.log("checked");
+       
         filteredGroups.push(event.target.name);
         Session.set("groupFilter", filteredGroups);
 
       } else {
-        console.log("unchecked");
+        
         var clickIndex = filteredGroups.indexOf(event.target.name);
         filteredGroups.splice(clickIndex, 1);
         Session.set("groupFilter", filteredGroups);
       }
-      console.log(filteredGroups);
+    
      myLayer.fireEvent('ready');
      Router.go('app.show',{}, {'query': {'groups': filteredGroups.toString(),
       'categories': Router.current().params.query.categories}});
