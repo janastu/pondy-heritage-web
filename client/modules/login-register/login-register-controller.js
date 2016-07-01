@@ -59,7 +59,8 @@
       
       Template.instance().$('form').validate({
         onsubmit: function(form){
-          form.valid();
+          var validator = form.valid();
+          validator.form();
         },
         onfocusout: function(element, event){
           $(element).valid();
