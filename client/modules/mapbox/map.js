@@ -88,7 +88,7 @@ addDrawControl = function(map){
                                 // Set a custom icon on each marker based on feature
                                 // properties.
                                 myLayer.on('layeradd', function(e) {
-                                  console.log("layer added");
+                                  
                                     var marker = e.layer,
                                     feature = marker.feature;
                                     var content = "";

@@ -38,9 +38,9 @@ if(sessionStorage.userSession){
 
 //Get app config from server api and set globals   
   Meteor.http.call("GET", Meteor.settings.public.apis.getApps,  function(err, success) {
-            console.log(success.data);
+            
             if(!err) {
-                console.log("no error");
+               
                 allApps = success.data;
                 setGlobals(allApps);
                  
@@ -80,8 +80,6 @@ if(sessionStorage.userSession){
     }))
     });
         
-    } else {
-       console.log('shudnt come here');
     }
 });
 
