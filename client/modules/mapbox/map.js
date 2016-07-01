@@ -7,7 +7,22 @@ $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
 });
     //bootstarp dropdown call
    
-
+//click handler to scroll to card when marker is clicked
+updateSidebarView = function(marker){
+  var $sidebarParent = $('#listings');
+  var $sideBarElements = $('#listings .item');
+  var $scrollToEl = _.find($sideBarElements, function(item) { 
+    if($(item).data('id') == marker.feature.id){
+      return $(item);
+    }
+  
+  });
+  
+   /* $sidebarParent.animate({
+        scrollTop: $($scrollToEl).offset().top
+    }, 2000);*/
+  //scrollToEl.scrollIntoView({block: "start", behavior: "smooth"});
+}
 
 
 // Add map base layer - map theme and set view
@@ -104,11 +119,9 @@ addDrawControl = function(map){
                                         feature.properties.url+ '" /></a>'+'<h2>'+feature.properties.title+'</h2>' +
                                         /*feature.properties.description+*/'</div>';
                                         break;
-                                        case 'VIDEO':
-                                        content = '<div class="map-content"> <p><video style="width:280px;" controls autobuffer>'+
-                                        '<source src="'+feature.properties.url+'"type=""/> <code>Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
-                                        feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></video>'+
-                                        '<h2>'+feature.properties.title+'</h2>' + feature.properties.description+'</div>';
+                                        case 'TEXT':
+                                        content = '<div class="map-content"><h2>'+feature.properties.title+'</h2>' +
+                                        feature.properties.description+'</div>';
                                         break;
                                         case 'AUDIO':
                                         content =  '<div class="map-content"><audio style="width:280px;" controls autobuffer>'+
@@ -116,7 +129,7 @@ addDrawControl = function(map){
                                         feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></audio>'+
                                         '<h2>'+feature.properties.title+'</h2>' +feature.properties.description+'</div>';
                                         break;
-                                        case 'TEXT':
+                                        case 'VIDEO':
 
                                         content = '<div class="map-content"><iframe width="280" height="250" src="'+feature.properties.url+'" frameborder="0" allowfullscreen></iframe>'+
                                         '<h2>'+feature.properties.title+'</h2>' +
@@ -136,7 +149,8 @@ myLayer.on('popupopen', function(e) {
     var px = MAP.project(e.popup._latlng); // find the pixel location on the map where the popup anchor is
     px.y -= e.popup._container.clientHeight/2 // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
     MAP.panTo(MAP.unproject(px),{animate: true}); // pan to new center
-    console.log("marker clocked", this.id, e.layer.feature.id);
+    //scroll in the sidebar to the related content
+    updateSidebarView(e.layer);
 
 });
 

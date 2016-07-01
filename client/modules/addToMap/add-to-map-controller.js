@@ -69,37 +69,17 @@ Template.AddToMapDialog.events({
 		var fd = new FormData();
 		//extract file from dom
 		var file = template.find('input:file').files[0];
-		console.log(file);
+		
 		//find file mediatype to add to request data
 		if(file == undefined) {
-				fd.append("mediatype", "4");
-				file = new File(["%PNG\r\n"], 'empty.png');
-    			
-    			fd.append("picture", file);
-				/*var dummyFileReq = new XMLHttpRequest();
-
-// Use JSFiddle logo as a sample image to avoid complicating
-// this example with cross-domain issues.
-dummyFileReq.open( "GET", "http://"+window.location.host+"/images/temp-img.png", true );
-
-// Ask for the result as an ArrayBuffer.
-//xhr.responseType = "arraybuffer";
-
-dummyFileReq.onload = function( e ) {
-    // Obtain a blob: URL for the image data.
-    var arrayBufferView = this.response;
-    var blob = new Blob( [ arrayBufferView ]);
-   /* var urlCreator = window.URL || window.webkitURL;
-    var imageUrl = urlCreator.createObjectURL( blob );
-    var img = document.querySelector( "#photo" );
-    img.src = imageUrl;*/
-    
-    /*file = "‰PNG\r\n";
-    console.log(file);
-    fd.append("picture", file);
-};
-
-dummyFileReq.send();*/	
+			file = new File(["%PNG\r\n"], 'empty.png');
+			if(event.target.url.value){
+				fd.append("mediatype", "3");
+    		} else {
+    			fd.append("mediatype", "4");
+				fd.append("picture", file);
+    		}
+			fd.append("picture", file);	
 		}      
 		 else if(file.type){
 			var mediaType = file.type.split("/")[0];
@@ -121,10 +101,10 @@ dummyFileReq.send();*/
 
 		}
 
-		else {
+		/*else {
 			fd.append("mediatype", "4");
 			fd.append("picture", file);
-		}
+		}*/
         
         
         fd.append("title", event.target.title.value);
