@@ -66,8 +66,11 @@ div#footer {
 
 /* form validation*/
 label.error{
-    background-color: #f97352;
-    border-color: #f97352;
+    /*background-color: #f97352;
+    border-color: #f97352;*/
     color: #ffffff;
     position: relative;
+    border-top: 2px solid red;
+    width: 100%;
+    padding: 2px;
   }

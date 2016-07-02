@@ -13,8 +13,11 @@
                         	<form >
                             
                             	<div class="form-group">
+                                 
+                                        
                                 	<input type="text" pattern="[a-z0-9 ]+" class="form-control" name="username"  placeholder="USERNAME">
                                      <span class="help-block" style="color: #444;">Username can contain any letters or numbers, without spaces</span>
+                       
                             	</div>
                             	<div class="form-group">
                                 	<input type="email" class="form-control" name="email"  placeholder="Email">
@@ -29,11 +32,27 @@
                     			<input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="CONFIRM PASSWORD"                      required>
                             	</div>
                             	<div class="form-group">
-                            	<label class="control-label" for="ageGroup"  >Age Group</label> <br />
-                            	<input type="radio" class="ageGroup" name='ageGroup'  value="Child" >  Child <br/>
-								<input type="radio" name='ageGroup'  class="ageGroup"  value="Youth" > Youth <br/>
-								<input type="radio" name='ageGroup'  class="ageGroup"  value="Adult" > Adult <br/>
-								<input type="radio" name='ageGroup'  class="ageGroup"  value="Elderly" > Elderly <br/>
+                       
+                                   <label for='ageGroup'>Age Group</label> <br />
+                                    <!-- Display the validation error message here instead -->
+               
+                               
+                                    <input type="radio" class=" ageGroup" name='ageGroup' id="ageGroup_child" value="Child" >
+                                    Child<br />
+                          
+                                
+                                <input type="radio" id="ageGroup_youth" name='ageGroup'  class=" ageGroup"  value="Youth" > 
+                                Youth<br />
+								
+                          
+                                
+								<input type="radio" id="ageGroup_adult" name='ageGroup'  class=" ageGroup"  value="Adult" > 
+                                Adult<br />
+                           
+                                
+								<input type="radio" id="ageGroup_elderly" name='ageGroup'  class=" ageGroup"  value="Elderly" > 
+                                Elderly<br />
+                       
                             	</div>
                             	<div class="form-group">
                     				<label class="control-label" for="residentStatus"  >What is your Resident Status </label> <br />

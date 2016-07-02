@@ -56,7 +56,7 @@
     });
     //register component
     Template.Register.onRendered(function(){
-      
+      var instance = Template.instance();
       Template.instance().$('form').validate({
         onsubmit: function(form){
           var validator = form.valid();
@@ -65,7 +65,14 @@
         onfocusout: function(element, event){
           $(element).valid();
         },
-        
+        errorPlacement: function(error, element) {
+        if (element.is(":radio"))
+          error.appendTo(element.parent());
+        else if (element.is(":checkbox"))
+          error.appendTo(element.parent());
+        else
+          error.appendTo(element.parent());
+  },
         rules:{
           username:{
             required: true,
