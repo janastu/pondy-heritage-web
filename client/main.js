@@ -116,7 +116,7 @@ postToServer = function(fd){
             //refresh sidebar
             getFeatures();
             //clear mapclick session value
-            Session.set('mapclick', "");
+            Session.set('mapClick', "");
         });
         
         //posting to server endpoint

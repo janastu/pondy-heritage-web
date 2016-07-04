@@ -19,7 +19,7 @@ Template.AddToMapBtn.events({
                 	Meteor.setTimeout(function(){
                 		Session.set("markerAlert", false);
 
-                	}, 10000);
+                	}, 5000);
                 }
             } else {
             	Router.go('login.static');
@@ -121,6 +121,7 @@ Template.AddToMapDialog.events({
 		fd.append("appId", appName);
         fd.append("groupId", event.target.group.value);
         fd.append("userName", userId);
+        //call the posting function
         postToServer(fd);
         //reset form
         event.target.reset();
