@@ -74,10 +74,12 @@ Template.AddToMapDialog.events({
 		if(file == undefined) {
 			file = new File(["%PNG\r\n"], 'empty.png');
 			if(event.target.url.value){
+				//mediatype 3 is for video
 				fd.append("mediatype", "3");
     		} else {
+    			//mediatype 4 is for text
     			fd.append("mediatype", "4");
-				fd.append("picture", file);
+				
     		}
 			fd.append("picture", file);	
 		}      

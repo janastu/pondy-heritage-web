@@ -1,4 +1,4 @@
-<template name="sidebar">
+<template name="sidebarItems">
 
 	{{#each content}}
 	<div class="item" data-id={{id}}>
@@ -6,22 +6,37 @@
 
 <div class="card-content">
 <span class="card-title">{{properties.title}}</span>
+
 <button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #555;     margin-top: -10px;
     padding: 10px 10px 0px;" data-rel={{id}}> 
-	<i class="fa fa-info-circle" aria-hidden="true" data-rel={{id}} title="MORE INFO"></i>  </button>
+  <i class="fa fa-info-circle" aria-hidden="true" data-rel={{id}} title="MORE INFO"></i>  </button>
 </div>
 <!-- card content -->
+{{#if isText properties.mediatype}}
+<div class="sidebar-text-wrap" >
 
+<p>{{properties.description}}</p>
+ <p>by {{properties.user}}<br />
+  on {{dateTime properties.uploadTime}}</p>
+</div>
+{{/if}}
+
+{{#if isImage properties.mediatype}}
 <div class="card-image">
 <img class="img-responsive" for={{id}} src={{properties.url}}>
 </div>
+{{/if}}
+
+{{#if isVideo properties.mediatype}}
+<iframe width="100%" height="100%" src={{properties.url}} frameborder="0" allowfullscreen></iframe>
+{{/if}}
 <!-- card image -->
 
 {{#if isOwner  properties.user}}
 <div class="card-action">
 	
-	<a href="#" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i><!--span>EDIT</span--></a> 
-	<a href="#" ><i class="fa fa-trash" aria-hidden="true"></i><!--DELETE--></a> 
+	<a href="#" class="edit-feature"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><!--span>EDIT</span--></a> 
+	<a href="#" class="delete-feature"><i class="fa fa-trash " aria-hidden="true"></i><!--DELETE--></a> 
 	
  </div>
  {{/if}}
@@ -33,6 +48,8 @@
 
  	<span data-rel={{id}} aria-hidden="true">×</span></button>
  <p>{{properties.description}}</p>
+ <p>by {{properties.user}}<br />
+  on {{dateTime properties.uploadTime}}</p>
  </div><!-- card reveal - more content -->
  </div>
  </div>
@@ -107,7 +124,7 @@
   </div>
   <div id='listings' class='listings'>
   <!-- feature incomplete {{> filterForm}} -->
-  {{> sidebar}}
+  {{> sidebarItems}}
 </div>
 </div>
 </div>

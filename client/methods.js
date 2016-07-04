@@ -21,6 +21,7 @@ Meteor.methods({
         headers:{"Content-Type":"application/x-www-form-urlencoded", "Accept":"application/json"}}, 
         function(err, result){
           if(err){
+            console.log(err);
             Bert.alert({
                     title: 'Login Failed',
                      message: 'Something went wrong, try again!',
@@ -123,4 +124,6 @@ Meteor.methods({
               });
      
    }
+    
+ 
 });

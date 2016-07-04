@@ -1,14 +1,22 @@
   // testing the meteor way components will be easy to customize
        // TODO: filter function is not working && event click on item should change view in map
+Template.registerHelper( 'dateTime', ( timestamp ) => {
+  if ( timestamp ) {
+    let momentToFormat = moment( timestamp ),
+        date           = momentToFormat.format( 'MMMM Do, YYYY' ),
+        time           = momentToFormat.format( 'hh:mm a' );
 
-Template.sidebar.helpers({
+    return `${ date } at ${ time }`;
+  }
+});
+
+Template.sidebarItems.helpers({
   content: function(){
     
     var filters = Session.get('categoryFilter');
     var groupFilter = Session.get('groupFilter');
-    var featuresByDate = _.sortBy(GeoJson.get("Features").features, function(item){
-      return item.properties.uploadTime;
-    });
+    var featuresByDate = _.sortBy(GeoJson.get("Features").features, 
+      'item.properties.uploadTime').reverse();
     filteredFeatures = _.compact(_.map(featuresByDate, function(item) {
       if(filters.indexOf(item.properties.category) !== -1 && groupFilter.indexOf(item.properties.groupname) !== -1){
         
@@ -19,15 +27,30 @@ Template.sidebar.helpers({
  },
  isOwner: function(arg){
   var user = Session.get('userSession').token.split(":")[0].trim();
-  if(user == arg){
+  if(user === arg){
     return true
+  }
+},
+isImage: function(arg){
+  if(arg === "IMAGE"){
+    return true;
+  }
+},
+isVideo: function(arg){
+  if(arg === "VIDEO"){
+    return true;
+  }
+},
+isText: function(arg){
+   if(arg === "TEXT"){
+    return true;
   }
 }
 
  
 });
 
-Template.sidebar.onRendered(function(){
+Template.sidebarItems.onRendered(function(){
   Session.set('uploadSpin', false);
   /*sideBarTour = new Tour({
     container: "body",
@@ -105,7 +128,7 @@ Template.sidebarHeader.helpers({
     
   }
 });
-Template.sidebar.events({
+Template.sidebarItems.events({
   'click img':function(event){
     var features = GeoJson.get("Features");
     var featureId = event.target.getAttribute('for');
@@ -128,6 +151,46 @@ Template.sidebar.events({
   'click .card-reveal .close': function(event, template){
     event.preventDefault();
       template.$('div.card-reveal[data-rel=' + event.target.getAttribute('data-rel') + ']').slideToggle('slow');
+  },
+  'click .delete-feature': function(event, template){
+    event.preventDefault();
+    var sessionToken = Session.get('userSession').token;
+    var delFeat = event.target;
+    var featureId = delFeat.closest('.item').getAttribute('data-id');
+    var url = Meteor.settings.public.apis.deleteFeature+featureId;
+    new Confirmation({
+    message: "Are you sure you want to Delete?",
+    title: "Confirmation"
+}, function (ok) {
+  // ok is true if the user clicked on "ok", false otherwise
+
+  if(ok){
+    Session.set('uploadSpin', true);
+    console.log(featureId, url, sessionToken);
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", function(e){
+      Session.set('uploadSpin', false);
+      event.target.reset();
+    });
+    xhr.open('DELETE', url);
+        xhr.withCredentials=true;
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("X-Auth-Token", sessionToken);
+        console.log(xhr); 
+        xhr.send();
+    
+  } else {
+    Bert.alert({
+                    title: 'Delete cancelled',
+                     message: '',
+                    type: 'info',
+                    style: 'growl-top-right',
+                    icon: 'fa-info'
+                });
+  }
+});
+    console.log( delFeat, featureId);
+
   }
 
 });
