@@ -121,59 +121,9 @@ Template.AddToMapDialog.events({
 		fd.append("appId", appName);
         fd.append("groupId", event.target.group.value);
         fd.append("userName", userId);
-        //new xmlhttp request
-		var xhr = new XMLHttpRequest();
-        
-        //loader
-		xhr.addEventListener("load", function(e){
-						
-			//alert success
-			Bert.alert({
-                    title: 'Upload Succes!',
-                     message: 'Your pin is added to map!',
-                    type: 'success',
-                    style: 'growl-top-right',
-                    icon: 'fa-check'
-                });
-			//Refresh all views
-			//remove spinner
-			Session.set('uploadSpin', false);
-			//reset form
-			event.target.reset();
-			//remove modal from view
-			$('#add-heritage').modal('toggle');
-			//refresh map data layer 
-			overlays.clearLayers();
-			myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
-			//refresh sidebar
-			getFeatures();
-		});
-		
-		//posting to server endpoint
-        xhr.open('POST', Meteor.settings.public.apis.postFeature);
-        xhr.withCredentials = true;
-        xhr.setRequestHeader("Accept", "application/json");
-        //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        //xhr.setRequestHeader("X-AUTH-TOKEN", Session.get('userSession').token.toString());
-        Meteor.setTimeout(function(){
-        	xhr.send(fd);
-        }, 5000);
-        
-		xhr.addEventListener("error", function(e){
-			Bert.alert({
-                    title: 'Post Failed',
-                     message: 'Something went wrong, try again!',
-                    type: 'danger',
-                    style: 'growl-top-right',
-                    icon: 'fa-remove'
-                });
-			Session.set('uploadSpin', false);
-			/*Meteor.setTimeout(function(){
-				Session.set("errorAlert", true);
-
-			}, 5000);*/
-		});
-
+        postToServer(fd);
+        //reset form
+        event.target.reset();
 
 	}
 });
