@@ -1,8 +1,10 @@
   // testing the meteor way components will be easy to customize
        // TODO: filter function is not working && event click on item should change view in map
+
 Template.registerHelper( 'dateTime', ( timestamp ) => {
+  console.log(timestamp);
   if ( timestamp ) {
-    let momentToFormat = moment( timestamp ),
+    let momentToFormat = moment( timestamp, 'DD-MM-YYYY HH:mm:ss' ),
         date           = momentToFormat.format( 'MMMM Do, YYYY' ),
         time           = momentToFormat.format( 'hh:mm a' );
 
@@ -53,7 +55,7 @@ isText: function(arg){
 Template.sidebarItems.events({
   'click .show-marker-event':function(event){
     event.preventDefault();
-   
+    
     var features = GeoJson.get("Features");
     var featureId = event.target.getAttribute('data-rel');
     myLayer.eachLayer(function(layer){

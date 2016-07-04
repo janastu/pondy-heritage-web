@@ -38,19 +38,20 @@ if(sessionStorage.userSession){
 
 }
 
-//Get app config from server api and set globals   
+//Get app config from server api and set globals  
+getApps = function(){ 
   Meteor.http.call("GET", Meteor.settings.public.apis.getApps,  function(err, success) {
             
             if(!err) {
                
                 allApps = success.data;
-                setGlobals(allApps);
+                setAppConfig(allApps);
                  
             } else {
                 console.log("error getting apps", err);
             }
         });
-  function setGlobals(arg){
+  function setAppConfig(arg){
     //the argument is response data from the call
     //find the app config for the appName from settings
     //and set globals 
@@ -66,7 +67,8 @@ if(sessionStorage.userSession){
     
  
   }
-
+}
+getApps();
   // Get features for Map from api server
 //for testing geojson
 getFeatures = function(){
@@ -123,11 +125,8 @@ postToServer = function(fd){
         xhr.open('POST', Meteor.settings.public.apis.postFeature);
         xhr.withCredentials = true;
         xhr.setRequestHeader("Accept", "application/json");
-        //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        //xhr.setRequestHeader("X-AUTH-TOKEN", Session.get('userSession').token.toString());
-        Meteor.setTimeout(function(){
-            xhr.send(fd);
-        }, 5000);
+        xhr.send(fd);
+   
         
         xhr.addEventListener("error", function(e){
             Bert.alert({
@@ -138,10 +137,7 @@ postToServer = function(fd){
                     icon: 'fa-remove'
                 });
             Session.set('uploadSpin', false);
-            /*Meteor.setTimeout(function(){
-                Session.set("errorAlert", true);
-
-            }, 5000);*/
+    
         });
 }
 
@@ -155,6 +151,6 @@ Template.contactForm.events({
                     style: 'growl-top-right',
                     icon: 'fa-check'
                 });
-    }, 1000);
+    }, 5000);
     }
 })
