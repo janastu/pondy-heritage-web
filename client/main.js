@@ -5,6 +5,10 @@ appName = Meteor.settings.public.appConfig.appId;
 // To store the app config like, regions, categories and groups
 appConfig = new ReactiveDict();
 var browserSessionconfig = sessionStorage.getItem('appConfig');
+
+//Map features to store a filter set of features by appName
+GeoJson = new ReactiveDict();
+
 updateAppConfig = function(arg){
     var sessionObj = JSON.parse(arg);
     
@@ -26,8 +30,6 @@ if(browserSessionconfig){
     updateAppConfig(browserSessionconfig);
 }
 
-//Map features to store a filter set of features by appName
-GeoJson = new ReactiveDict();
 // user session if saved in browser session storage
 if(sessionStorage.userSession){
             var userSession = JSON.parse(sessionStorage.userSession);
@@ -67,7 +69,7 @@ if(sessionStorage.userSession){
 
   // Get features for Map from api server
 //for testing geojson
-
+getFeatures = function(){
  Meteor.http.call("GET", Meteor.settings.public.apis.getFeatures, function(err, res){
     //Filter response data by appName - such that only context
     // specific features are displayed
@@ -82,6 +84,10 @@ if(sessionStorage.userSession){
         
     }
 });
+}
+
+//function call to get data from server and set geojson
+getFeatures();
 
 Template.contactForm.events({
     "submit form": function(event){

@@ -50,6 +50,75 @@ isText: function(arg){
  
 });
 
+Template.sidebarItems.events({
+  'click .show-marker-event':function(event){
+    event.preventDefault();
+   
+    var features = GeoJson.get("Features");
+    var featureId = event.target.getAttribute('data-rel');
+    myLayer.eachLayer(function(layer){
+      if(layer.feature.id === featureId){
+        //TODO: map zoom is too high - to make the popup to open
+        //since marker is in a clustergroup
+        MAP.setView(layer.getLatLng(), 20);
+        //map.panTo(marker.getLatLng());
+        layer.openPopup();
+        
+            console.log(layer.getLatLng());
+          }
+    });
+  },
+  'click .content-show-event': function(event, template){
+    event.preventDefault();
+      template.$('div.card-reveal[data-rel=' + event.target.getAttribute('data-rel') + ']').slideToggle('slow');
+  },
+  'click .card-reveal .close': function(event, template){
+    event.preventDefault();
+      template.$('div.card-reveal[data-rel=' + event.target.getAttribute('data-rel') + ']').slideToggle('slow');
+  },
+  'click .delete-feature': function(event, template){
+    event.preventDefault();
+    var sessionToken = Session.get('userSession').token;
+    var delFeat = event.target;
+    var featureId = delFeat.closest('.item').getAttribute('data-id');
+    var url = Meteor.settings.public.apis.deleteFeature+featureId;
+    new Confirmation({
+    message: "Are you sure you want to Delete?",
+    title: "Confirmation"
+}, function (ok) {
+  // ok is true if the user clicked on "ok", false otherwise
+
+  if(ok){
+    Session.set('uploadSpin', true);
+    console.log(featureId, url, sessionToken);
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", function(e){
+      Session.set('uploadSpin', false);
+      event.target.reset();
+    });
+    xhr.open('DELETE', url);
+        xhr.withCredentials=true;
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("X-Auth-Token", sessionToken);
+        console.log(xhr); 
+        xhr.send();
+    
+  } else {
+    Bert.alert({
+                    title: 'Delete cancelled',
+                     message: '',
+                    type: 'info',
+                    style: 'growl-top-right',
+                    icon: 'fa-info'
+                });
+  }
+});
+    console.log( delFeat, featureId);
+
+  }
+
+});
+
 Template.sidebarItems.onRendered(function(){
   Session.set('uploadSpin', false);
   /*sideBarTour = new Tour({
@@ -128,72 +197,7 @@ Template.sidebarHeader.helpers({
     
   }
 });
-Template.sidebarItems.events({
-  'click img':function(event){
-    var features = GeoJson.get("Features");
-    var featureId = event.target.getAttribute('for');
-    myLayer.eachLayer(function(layer){
-      if(layer.feature.id === featureId){
-        //TODO: map zoom is too high - to make the popup to open
-        //since marker is in a clustergroup
-        MAP.setView(layer.getLatLng(), 20);
-        //map.panTo(marker.getLatLng());
-        layer.openPopup();
-        
-            console.log(layer.getLatLng());
-          }
-    });
-  },
-  'click .content-show-event': function(event, template){
-    event.preventDefault();
-      template.$('div.card-reveal[data-rel=' + event.target.getAttribute('data-rel') + ']').slideToggle('slow');
-  },
-  'click .card-reveal .close': function(event, template){
-    event.preventDefault();
-      template.$('div.card-reveal[data-rel=' + event.target.getAttribute('data-rel') + ']').slideToggle('slow');
-  },
-  'click .delete-feature': function(event, template){
-    event.preventDefault();
-    var sessionToken = Session.get('userSession').token;
-    var delFeat = event.target;
-    var featureId = delFeat.closest('.item').getAttribute('data-id');
-    var url = Meteor.settings.public.apis.deleteFeature+featureId;
-    new Confirmation({
-    message: "Are you sure you want to Delete?",
-    title: "Confirmation"
-}, function (ok) {
-  // ok is true if the user clicked on "ok", false otherwise
 
-  if(ok){
-    Session.set('uploadSpin', true);
-    console.log(featureId, url, sessionToken);
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("load", function(e){
-      Session.set('uploadSpin', false);
-      event.target.reset();
-    });
-    xhr.open('DELETE', url);
-        xhr.withCredentials=true;
-        xhr.setRequestHeader("Accept", "application/json");
-        xhr.setRequestHeader("X-Auth-Token", sessionToken);
-        console.log(xhr); 
-        xhr.send();
-    
-  } else {
-    Bert.alert({
-                    title: 'Delete cancelled',
-                     message: '',
-                    type: 'info',
-                    style: 'growl-top-right',
-                    icon: 'fa-info'
-                });
-  }
-});
-    console.log( delFeat, featureId);
-
-  }
-
-});
 
 Template.LoggedUser.helpers({
 

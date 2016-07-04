@@ -102,12 +102,7 @@ Template.AddToMapDialog.events({
 			fd.append("picture", file);
 
 		}
-
-		/*else {
-			fd.append("mediatype", "4");
-			fd.append("picture", file);
-		}*/
-        
+      
         
         fd.append("title", event.target.title.value);
         fd.append("description", event.target.description.value);
@@ -131,11 +126,8 @@ Template.AddToMapDialog.events({
         
         //loader
 		xhr.addEventListener("load", function(e){
-			Session.set('uploadSpin', false);
-			event.target.reset();
-			//Session.set('uploadMedia', true);
-			$('#add-heritage').modal('toggle');
-			
+						
+			//alert success
 			Bert.alert({
                     title: 'Upload Succes!',
                      message: 'Your pin is added to map!',
@@ -143,8 +135,18 @@ Template.AddToMapDialog.events({
                     style: 'growl-top-right',
                     icon: 'fa-check'
                 });
+			//Refresh all views
+			//remove spinner
+			Session.set('uploadSpin', false);
+			//reset form
+			event.target.reset();
+			//remove modal from view
+			$('#add-heritage').modal('toggle');
+			//refresh map data layer 
 			overlays.clearLayers();
 			myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
+			//refresh sidebar
+			getFeatures();
 		});
 		
 		//posting to server endpoint

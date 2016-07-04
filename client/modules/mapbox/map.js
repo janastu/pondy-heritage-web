@@ -75,7 +75,7 @@ addDrawControl = function(map){
             });
             map.on('draw:edited', function (e) {
               var layers = e.layers;
-              console.log(layers);
+        
               layers.eachLayer(function (layer) {
                 if (layer instanceof L.Marker){
             //set latlng of marker for addtomap dialog
