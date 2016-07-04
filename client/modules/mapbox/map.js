@@ -73,6 +73,17 @@ addDrawControl = function(map){
                 Session.set('mapClick', latlng);
 
             });
+            map.on('draw:edited', function (e) {
+              var layers = e.layers;
+              console.log(layers);
+              layers.eachLayer(function (layer) {
+                if (layer instanceof L.Marker){
+            //set latlng of marker for addtomap dialog
+                var latlng = layer.getLatLng();
+                Session.set('mapClick', latlng);
+         }
+    });
+});
         }
 }
 
@@ -119,19 +130,22 @@ addDrawControl = function(map){
                                         feature.properties.url+ '" /></a>'+'<h2>'+feature.properties.title+'</h2>' +
                                         /*feature.properties.description+*/'</div>';
                                         break;
+
                                         case 'TEXT':
                                         content = '<div class="map-content"><h2>'+feature.properties.title+'</h2>' +
                                         feature.properties.description+'</div>';
                                         break;
+
                                         case 'AUDIO':
                                         content =  '<div class="map-content"><audio style="width:280px;" controls autobuffer>'+
                                         '<source src="'+feature.properties.url+'"type=""/> <code>Sorry, your browser doesnt support embedded videos, but dont worry, you can <a href="'+
                                         feature.properties.url+'">download it</a> and watch it with your favorite video player!</code></audio>'+
                                         '<h2>'+feature.properties.title+'</h2>' +feature.properties.description+'</div>';
                                         break;
+
                                         case 'VIDEO':
 
-                                        content = '<div class="map-content"><iframe width="280" height="250" src="'+feature.properties.url+'" frameborder="0" allowfullscreen></iframe>'+
+                                        content = '<div class="map-content"><iframe width="100%" height="100%" src="'+feature.properties.url+'" frameborder="0" allowfullscreen></iframe>'+
                                         '<h2>'+feature.properties.title+'</h2>' +
                                         '</div>';
 
