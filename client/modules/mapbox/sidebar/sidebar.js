@@ -83,7 +83,8 @@ Template.sidebarItems.events({
     var sessionToken = Session.get('userSession').token;
     var delFeat = event.target;
     var featureId = delFeat.closest('.item').getAttribute('data-id');
-    var url = Meteor.settings.public.apis.deleteFeature+featureId;
+    var url = Meteor.settings.public.apis.deleteLocal+featureId;
+    
     new Confirmation({
     message: "Are you sure you want to Delete?",
     title: "Confirmation"
