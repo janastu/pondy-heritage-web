@@ -2,7 +2,7 @@
        // TODO: filter function is not working && event click on item should change view in map
 
 Template.registerHelper( 'dateTime', ( timestamp ) => {
-  console.log(timestamp);
+
   if ( timestamp ) {
     let momentToFormat = moment( timestamp, 'DD-MM-YYYY HH:mm:ss' ),
         date           = momentToFormat.format( 'MMMM Do, YYYY' ),

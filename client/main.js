@@ -1,6 +1,7 @@
   /* App global configuration*/
   //network report high TTFB - need to check server response timing
-
+  MAPP ={};
+MAPP.API ={};
 appName = Meteor.settings.public.appConfig.appId;
 // To store the app config like, regions, categories and groups
 appConfig = new ReactiveDict();
@@ -39,7 +40,7 @@ if(sessionStorage.userSession){
 }
 
 //Get app config from server api and set globals  
-getApps = function(){ 
+MAPP.API.getApps = function(){ 
   Meteor.http.call("GET", Meteor.settings.public.apis.getApps,  function(err, success) {
             
             if(!err) {
@@ -68,10 +69,10 @@ getApps = function(){
  
   }
 }
-getApps();
+MAPP.API.getApps();
   // Get features for Map from api server
 //for testing geojson
-getFeatures = function(){
+MAPP.API.getFeatures = function(){
  Meteor.http.call("GET", Meteor.settings.public.apis.getFeatures, function(err, res){
     //Filter response data by appName - such that only context
     // specific features are displayed
@@ -89,9 +90,9 @@ getFeatures = function(){
 }
 
 //function call to get data from server and set geojson
-getFeatures();
+MAPP.API.getFeatures();
 
-postToServer = function(fd){
+MAPP.API.postToServer = function(fd){
         //new xmlhttp request
         var xhr = new XMLHttpRequest();
         

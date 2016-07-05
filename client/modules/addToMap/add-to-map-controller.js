@@ -122,7 +122,7 @@ Template.AddToMapDialog.events({
         fd.append("groupId", event.target.group.value);
         fd.append("userName", userId);
         //call the posting function
-        postToServer(fd);
+        MAPP.API.postToServer(fd);
         //reset form
         event.target.reset();
 
