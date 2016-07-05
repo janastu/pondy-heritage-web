@@ -129,6 +129,14 @@ a:hover { color:#101010; }
     line-height: 30px;
 }
 
+.add-to-map-pos{
+  margin-top:16px;
+      z-index: 100; 
+      list-style:none; 
+      display: inline-flex; 
+      position: fixed;
+      bottom: 0px;
+  }
 
   /*cards css */
 
@@ -193,54 +201,7 @@ a:hover { color:#101010; }
   padding:15px;
 }
 /* Sidebar Styles */
- 
-/*.sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    margin-top: 2px;
-}
- 
-.sidebar-nav li {
-    text-indent: 15px;
-    line-height: 40px;
-}
- 
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
-}
- 
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
-    border-left: red 2px solid;
-}
- 
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
-}
- 
-.sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    line-height: 60px;
-}
- 
-.sidebar-nav > .sidebar-brand a {
-    color: #999999;
-}
- 
-.sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
-}*/
+
 .no-margin{
     margin:0;
 }
@@ -260,16 +221,8 @@ a:hover { color:#101010; }
         width: 35vw;
     }
  
-    #wrapper.toggled #sidebar-wrapper {
-        width: 35vw;
-    }
-    #wrapper.toggled-2 #sidebar-wrapper {
-        width: 50px;
-    }
-    #wrapper.toggled-2 #sidebar-wrapper:hover {
-        width: 250px;
-        /*width:35vw;*/
-    }
+  
+    
     .add-to-map-pos{
      right: 35vw; 
     }
@@ -288,7 +241,7 @@ a:hover { color:#101010; }
     }
  
     #sidebar-wrapper {
-        width: 85vw;
+        width: 50vw;
 
     }
  
@@ -306,11 +259,23 @@ a:hover { color:#101010; }
      right: 0px; 
     }
 }
-.add-to-map-pos{
-  margin-top:16px;
-      z-index: 100; 
-      list-style:none; 
-      display: inline-flex; 
-      position: fixed;
-      bottom: 0px;
-  }
+
+@media(max-width: 439px){
+    #wrapper {
+        padding-left: 250px;
+    }
+    .fixed-brand{
+        width: 100%;
+    }
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+ 
+    #sidebar-wrapper {
+        width: 90vw;
+
+    }
+     #wrapper.toggled #sidebar-wrapper {
+        width: 0px;
+    }
+}
