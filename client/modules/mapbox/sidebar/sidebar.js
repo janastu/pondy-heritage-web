@@ -83,7 +83,7 @@ Template.sidebarItems.events({
     var sessionToken = Session.get('userSession').token;
     var delFeat = event.target;
     var featureId = delFeat.closest('.item').getAttribute('data-id');
-    var url = Meteor.settings.public.apis.deleteLocal+featureId;
+    var url = Meteor.settings.public.apis.deleteFeature+featureId;
     
     new Confirmation({
     message: "Are you sure you want to Delete?",
@@ -97,7 +97,11 @@ Template.sidebarItems.events({
     var xhr = new XMLHttpRequest();
     xhr.addEventListener("load", function(e){
       Session.set('uploadSpin', false);
-      event.target.reset();
+      
+      overlays.clearLayers();
+      myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
+      MAPP.API.getFeatures();
+     
     });
     xhr.open('DELETE', url);
         xhr.withCredentials=true;

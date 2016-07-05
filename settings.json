@@ -23,7 +23,7 @@
             "getGroupForUser": "http://196.12.53.138:8080/heritageweb/api/getUserGroups/user/",
             "getFeatures": "http://196.12.53.138:8080/heritageweb/api/mapp",
             "postFeature": "http://196.12.53.138:8080/heritageweb/api/createNewMediaHeritageForm2/",
-            "deleteFeature": "http://196.12.53.138:8080/heritageweb/api/heritageMedias/"
+            "deleteFeature": "http://196.12.53.138:8080/heritageweb/api/deleteNewMediaHeritageForm2/"
         },
         "appConfig": {
             "appId": "PondyMap",

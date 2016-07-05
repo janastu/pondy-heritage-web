@@ -118,7 +118,7 @@ MAPP.API.postToServer = function(fd){
             overlays.clearLayers();
             myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
             //refresh sidebar
-            getFeatures();
+            MAPP.API.getFeatures();
             //clear mapclick session value
             Session.set('mapClick', "");
         });

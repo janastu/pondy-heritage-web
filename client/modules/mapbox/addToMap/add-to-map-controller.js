@@ -118,7 +118,7 @@ Template.AddToMapDialog.events({
        
         fd.append("userAgent", null);
         //credentials from config file
-		fd.append("appId", appName);
+		fd.append("appId", MAPP.appName);
         fd.append("groupId", event.target.group.value);
         fd.append("userName", userId);
         //call the posting function
