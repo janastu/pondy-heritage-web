@@ -1,19 +1,20 @@
   /* App global configuration*/
   //network report high TTFB - need to check server response timing
-  MAPP ={};
+(function() {
+    MAPP ={};
 MAPP.API ={};
-appName = Meteor.settings.public.appConfig.appId;
+MAPP.appName = Meteor.settings.public.appConfig.appId;
 // To store the app config like, regions, categories and groups
-appConfig = new ReactiveDict();
+MAPP.AppConfig = new ReactiveDict();
 var browserSessionconfig = sessionStorage.getItem('appConfig');
 
 //Map features to store a filter set of features by appName
-GeoJson = new ReactiveDict();
+MAPP.GeoJson = new ReactiveDict();
 
 updateAppConfig = function(arg){
     var sessionObj = JSON.parse(arg);
     
-   Session.set('Regions', sessionObj.regions);
+    Session.set('Regions', sessionObj.regions);
     Session.set('Groups', sessionObj.groups);
     Session.set('Categories', sessionObj.categorys);
     Session.set('Languages', sessionObj.languages);
@@ -27,7 +28,7 @@ updateAppConfig = function(arg){
 }
 
 if(browserSessionconfig){
-    appConfig.set('appConfig', JSON.parse(sessionStorage.getItem('appConfig')));
+    MAPP.AppConfig.set('appConfig', JSON.parse(sessionStorage.getItem('appConfig')));
     updateAppConfig(browserSessionconfig);
 }
 
@@ -59,7 +60,7 @@ MAPP.API.getApps = function(){
 
     _.each(arg, function(app){
         
-        if(app.name == appName){
+        if(app.name == MAPP.appName){
             
             sessionStorage.setItem('appConfig', JSON.stringify(app));
             updateAppConfig(sessionStorage.getItem('appConfig'));
@@ -77,9 +78,9 @@ MAPP.API.getFeatures = function(){
     //Filter response data by appName - such that only context
     // specific features are displayed
     if(!err){
-        GeoJson.set('Features', {'type': 'FeatureCollection', 
+        MAPP.GeoJson.set('Features', {'type': 'FeatureCollection', 
         'features':_.compact(_.map(res.data.features, function(feature){ 
-         if(feature.properties.appname === appName){
+         if(feature.properties.appname === MAPP.appName){
             return feature;
         }
     }))
@@ -141,7 +142,7 @@ MAPP.API.postToServer = function(fd){
     
         });
 }
-
+})();
 Template.contactForm.events({
     "submit form": function(event){
         Meteor.setTimeout(function(){

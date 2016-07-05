@@ -17,7 +17,7 @@ Template.sidebarItems.helpers({
     
     var filters = Session.get('categoryFilter');
     var groupFilter = Session.get('groupFilter');
-    var featuresByDate = _.sortBy(GeoJson.get("Features").features, 
+    var featuresByDate = _.sortBy(MAPP.GeoJson.get("Features").features, 
       'item.properties.uploadTime').reverse();
     filteredFeatures = _.compact(_.map(featuresByDate, function(item) {
       if(filters.indexOf(item.properties.category) !== -1 && groupFilter.indexOf(item.properties.groupname) !== -1){
@@ -56,7 +56,7 @@ Template.sidebarItems.events({
   'click .show-marker-event':function(event){
     event.preventDefault();
     
-    var features = GeoJson.get("Features");
+    var features = MAPP.GeoJson.get("Features");
     var featureId = event.target.getAttribute('data-rel');
     myLayer.eachLayer(function(layer){
       if(layer.feature.id === featureId){
