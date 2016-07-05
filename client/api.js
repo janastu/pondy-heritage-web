@@ -1,5 +1,5 @@
-  /* App global configuration*/
-  //network report high TTFB - need to check server response timing
+  /* App global configuration  and local apis for client*/
+  
 (function() {
     MAPP ={};
 MAPP.API ={};
@@ -143,6 +143,8 @@ MAPP.API.postToServer = function(fd){
         });
 }
 })();
+
+//Contact form events
 Template.contactForm.events({
     "submit form": function(event){
         Meteor.setTimeout(function(){
@@ -155,4 +157,4 @@ Template.contactForm.events({
                 });
     }, 5000);
     }
-})
+});

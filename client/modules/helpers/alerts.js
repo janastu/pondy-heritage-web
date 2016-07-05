@@ -1,6 +1,15 @@
 //controller for alerts
 
 
+Template.mainLayout.helpers({
+  showDialog: function() {
+    return Session.get('showDialog');
+
+  }
+
+});
+
+
 
 Template.dismissibleAlert.onCreated(function(){
   //Session variable for error alert when signin fails
