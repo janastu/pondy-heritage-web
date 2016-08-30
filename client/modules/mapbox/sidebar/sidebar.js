@@ -238,7 +238,7 @@ Template.LoggedUser.events({
 
   },
   "click #profile-show": function(event, template){
-    console.log(event.target);
+    event.preventDefault();
     Router.go('profile.show');
   }
 
