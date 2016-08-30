@@ -41,13 +41,7 @@ Meteor.methods({
             //storing in browser
             sessionStorage.setItem('userSession', JSON.stringify(result.data));
 
-            
-            Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser+result.data.token.split(":")[0], function(err, response){
-              if(!err){
-               
-                Session.set("Groupinfo", response.data);  
-                sessionStorage.setItem('userGroups', JSON.stringify(response.data));
-                //Router.go('/mapp');
+            //Router.go('/mapp');
                 Router.go('app.show',{}, {'query': {'groups': _.map(Session.get('Groups'), function(item){return item.name}).toString(),
                 'categories': Session.get('categoryList').toString()}});
                 Session.set('showDialog', true);
@@ -58,12 +52,20 @@ Meteor.methods({
                     type: 'success',
                     style: 'growl-top-right',
                     icon: 'fa-check'
-                });
-                }
-              });
-              
+                });      
+              Meteor.call('getGroupsForUser', {userName: result.data.token.split(":")[0]});
           }
         });
+    },
+    getGroupsForUser: function(arg){
+      Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser+arg.userName, function(err, response){
+              if(!err){
+               
+                Session.set("Groupinfo", response.data);  
+                sessionStorage.setItem('userGroups', JSON.stringify(response.data));
+                
+                }
+              });
     },
     Register: function(request){
       var response = Meteor.http.call("POST", Meteor.settings.public.apis.register, 
@@ -116,14 +118,40 @@ Meteor.methods({
 
     },
 
-    getGroupForUser: function(request){
-     var response = Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser, function(err, data){
-              if(!err){
-                
-                Session.set("Groupinfo", data);           }
-              });
-     
-   }
+    joinGroup: function(request){
+      var apiUrl = Meteor.settings.public.apis.joinGroup+"user/"+request.userName+
+                    "/group/"+request.groupId+"?reason=Request to Join Group";
+      Meteor.http.call("POST", apiUrl, 
+                        {headers:{
+                                  "Content-Type":"application/json", 
+                                  "Accept":"application/json",
+                                  "X-Auth-Token": request.token
+                                }},
+                        function(err, response){
+                          if(!err){
+                            //alert success
+                            Bert.alert({
+                                    title: 'Request Sent!',
+                                    message: 'The Group admin is notified about your Join request',
+                                    type: 'success',
+                                    style: 'growl-top-right',
+                                    icon: 'fa-check'
+                                });
+                          } 
+                          else {
+                            Bert.alert({
+                                    title: 'Unable to send Request',
+                                     message: 'Something went wrong, try again!',
+                                    type: 'danger',
+                                    style: 'growl-top-right',
+                                    icon: 'fa-remove'
+                                });
+                          }
+
+      });
+      console.log(request, apiUrl);
+
+    }
     
  
 });

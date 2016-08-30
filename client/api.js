@@ -142,6 +142,7 @@ MAPP.API.postToServer = function(fd){
     
         });
 }
+
 })();
 
 //Contact form events
