@@ -182,16 +182,16 @@ Template.sidebarLayout.onCreated(function(){
 Template.sidebarHeader.helpers({
    content: function(){
     
-    var filters = Session.get('categoryFilter');
+   var filters = Session.get('categoryFilter');
     var groupFilter = Session.get('groupFilter');
-    filteredFeatures = _.compact(_.map(GeoJson.get('Features').features, function(item) {
-     
-            if(filters.indexOf(item.properties.category) !== -1 && groupFilter.indexOf(item.properties.groupname) !== -1){
-                    return item;
+    var featuresByDate = _.sortBy(MAPP.GeoJson.get("Features").features, 
+      'item.properties.uploadTime').reverse();
+    filteredFeatures = _.compact(_.map(featuresByDate, function(item) {
+      if(filters.indexOf(item.properties.category) !== -1 && groupFilter.indexOf(item.properties.groupname) !== -1){
+        
+        return item
       } 
-   
     }));
-    
     return filteredFeatures;
    
   },
