@@ -1,0 +1,136 @@
+<template name="Profile">
+<div class="profile-wrap">
+<div class="container-fluid">
+	
+	<div class="row">
+        <div class="col-sm-4">
+    		<div class="tile-progress tile-cyan">
+    			<div class="tile-header">
+    				<h3>Your Storage</h3>
+    				<span>so far you have used</span>
+    			</div>
+    			<div class="tile-progressbar">
+    				<span data-fill="65.5%" style="width: 65.5%;"></span>
+    			</div>
+    			<div class="tile-footer">
+    				<h4>
+    					<span class="pct-counter">65.5</span>% increase
+    				</h4>
+    				<span>so far in our blog and our website</span>
+    			</div>
+    		</div>
+    	</div>
+
+    		<div class="col-sm-4">
+    		<div class="tile-progress tile-red">
+    			<div class="tile-header">
+    				<h3>Your Pins</h3>
+    				<span>so far you have added</span>
+    			</div>
+    			<div class="tile-progressbar">
+    				<span data-fill="23.2%" style="width: 23.2%;"></span>
+    			</div>
+    			<div class="tile-footer">
+    				<h4>
+    					<span class="pct-counter">23.2</span>% increase
+    				</h4>
+    				<span>so far in our blog and our website</span>
+    			</div>
+    		</div>
+    	</div>
+
+    	<div class="col-sm-4">
+    		<div class="tile-progress tile-blue">
+    			<div class="tile-header">
+    				<h3>Your Groups</h3>
+    				<span>You are a member of</span>
+    			</div>
+    			<div class="tile-progressbar">
+    				<span data-fill="78%" style="width: 78%;"></span>
+    			</div>
+    			<div class="tile-footer">
+    				<h4>
+    					<span class="pct-counter">78</span>% increase
+    				</h4>
+    				<span>so far in our blog and our website</span>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	{{> myCards}}
+    </div>
+</div>
+
+
+</div>
+</template>
+
+<template name="myCards">
+
+
+	{{#each content}}
+	{{#if isOwner  properties.user}}
+
+	<div class="col-sm-3">
+ <div class="item" data-id={{id}}>
+ <div class="card">
+
+<div class="card-content">
+<span class="card-title">{{properties.title}}</span>
+
+
+<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #555;     margin-top: -10px;
+    padding: 10px 10px 0px;" data-rel={{id}}> 
+  <i class="fa fa-info-circle show-marker-event" aria-hidden="true" data-rel={{id}} title="MORE INFO"></i>  </button>
+</div>
+<!-- card content -->
+{{#if isText properties.mediatype}}
+<div class="sidebar-text-wrap" >
+
+<p>{{properties.description}}</p>
+ <p>by {{properties.user}}<br />
+  on {{dateTime properties.uploadTime}}</p>
+</div>
+{{/if}}
+
+{{#if isImage properties.mediatype}}
+<div class="card-image">
+<img class="img-responsive" for={{id}} src={{properties.url}}>
+</div>
+{{/if}}
+
+{{#if isVideo properties.mediatype}}
+<iframe width="100%" height="100%" src={{properties.url}} frameborder="0" allowfullscreen></iframe>
+{{/if}}
+<!-- card image -->
+
+
+<div class="card-action">
+	
+	<!--a href="#" class="edit-feature"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span>EDIT</span></a--> 
+	<a href="#" class="delete-feature"><i class="fa fa-trash " aria-hidden="true"></i><!--DELETE--></a> 
+	
+ </div>
+ <!-- card actions -->
+ <div class="" style="padding:15px;">
+<p>{{properties.description}}</p>
+ <p>by {{properties.user}}<br />
+  on {{dateTime properties.uploadTime}}</p>
+</div>
+<!-- Card reveal not needed here-->
+ <div class="card-reveal" data-rel={{id}}> 
+ <span class="card-title">{{properties.title}}</span> 
+ <button type="button" class="close" data-dismiss="modal" data-rel={{id}} aria-label="Close">
+
+ 	<span data-rel={{id}} aria-hidden="true">×</span></button>
+ <p>{{properties.description}}</p>
+ <p>by {{properties.user}}<br />
+  on {{dateTime properties.uploadTime}}</p>
+ </div><!-- card reveal - more content -->
+ </div>
+ </div>
+</div>
+ {{/if}}
+{{/each}}
+	</template>
