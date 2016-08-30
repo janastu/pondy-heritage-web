@@ -230,12 +230,16 @@ if(sessionStorage.userSession){
   }
 });
 Template.LoggedUser.events({
-  "click li": function() {
+  "click #logout": function() {
     sessionStorage.userSession = "";
     Session.set('userSession', "");
     Session.set('showDialog', false);
     MAP.removeControl(DRAWCNTRL);
 
+  },
+  "click #profile-show": function(event, template){
+    console.log(event.target);
+    Router.go('profile.show');
   }
 
 });
