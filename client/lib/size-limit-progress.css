@@ -1,6 +1,16 @@
 .profile-wrap{
-	margin-top:100px;
+	margin-top:88px;
 	background-color: rgb(204, 204, 204);
+	padding:15px;
+}
+
+#groupFilter{
+	background-color: #475577;
+	border-radius: 3px;
+}
+
+.tile-header-wrap{
+	margin-left: -20px;
 }
 
 .tile-progress {
@@ -9,6 +19,7 @@ color: #fff;
 }
 .tile-progress {
 background: #00a65b;
+padding:15px;
 color: #fff;
 margin-bottom: 20px;
 -webkit-border-radius: 5px;
