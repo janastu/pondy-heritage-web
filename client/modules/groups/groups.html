@@ -1,27 +1,27 @@
 <!-- Groups template -->
 <template name="Groups">
-
-		<div class="container-fluid" style="margin-top: 100px; background-color:rgb(204, 204, 204); height:100vh;">
+<div class="" style="margin-top: 98px; background-color:rgb(204, 204, 204); height:100vh;">
+		<div class="container">
 		<div class="row">
   {{#each groups}}
   <div class="col-md-3">
-  <div class="item" >
+  <div class="item" style="background-color: #ddd7c9; margin-top: 15px; color: #89837e;">
  <div class="card">
 
 <div class="card-content">
-<span class="card-title">{{name}}</span>
-<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #333;" data-rel={{id}}> 
-  <i class="glyphicon glyphicon-option-vertical" data-rel={{id}}></i> </button>
+<span class="card-title">Group Name: {{name}}</span>
+<!--button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #333;" data-rel={{id}}> 
+  <i class="glyphicon glyphicon-option-vertical" data-rel={{id}}></i> </button-->
 </div>
 <!-- card content -->
 
-<div class="card-image">
+<!--div class="card-image">
 <img class="img-responsive" for={{id}} src="#">
-</div>
+</div-->
 <!-- card image -->
 
 <div class="card-action">
-  <a href="#" class="join-group-action" data-group-id={{id}}>JOIN GROUP</a> 
+  <a href="#" class="mbr-buttons__btn btn join-group-action" data-group-id={{id}}>JOIN GROUP</a> 
   <!--a href="#" >MEMBERS</a> 
   <a href="#" >MAP</a--> 
  </div>
@@ -40,6 +40,6 @@
 
 </div>
 </div>
-
+</div>
 
   </template>
