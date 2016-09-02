@@ -1,89 +1,112 @@
 <template name="Profile">
+{{#if isOwner}}
 <div class="profile-wrap">
-<div class="container-fluid">
+
+<div class="container">
 	
 	<div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
     		<div class="tile-progress tile-cyan">
     			<div class="tile-header">
-    				<h3>Your Storage</h3>
-    				<span>so far you have used</span>
+    				
+    				<img src="http://assets.materialup.com/uploads/bebad102-7f40-4941-99cd-54366113003e/avatar-08.png" class="img-responsive">
     			</div>
     			<div class="tile-progressbar">
-    				<span data-fill="65.5%" style="width: 65.5%;"></span>
+    				<span data-fill="" style=""></span>
     			</div>
     			<div class="tile-footer">
-    				<h4>
-    					<span class="pct-counter">65.5</span>% increase
-    				</h4>
-    				<span>so far in our blog and our website</span>
+    				<h3>{{userName}}</h3>
+                    <span>Avatar</span>
     			</div>
     		</div>
+
     	</div>
 
-    		<div class="col-sm-4">
-    		<div class="tile-progress tile-red">
+    		<div class="col-sm-6">
+    		<div class="tile-progress ">
     			<div class="tile-header">
+                    <div class="tile-header-wrap">
     				<h3>Your Pins</h3>
-    				<span>so far you have added</span>
+    				
+                    {{> myCardHeader}}
+                </div>
     			</div>
+                <div class="row">
+
+                    {{> myCards}}
+                </div>
     			<div class="tile-progressbar">
-    				<span data-fill="23.2%" style="width: 23.2%;"></span>
+    				<span data-fill="" style=""></span>
     			</div>
     			<div class="tile-footer">
-    				<h4>
-    					<span class="pct-counter">23.2</span>% increase
+    				<!--h4>
+    					Total <span class="pct-counter">{{filteredLength}}</span> Pins
     				</h4>
-    				<span>so far in our blog and our website</span>
+    				<span>so far in in this Website</span-->
     			</div>
     		</div>
     	</div>
 
-    	<div class="col-sm-4">
-    		<div class="tile-progress tile-blue">
-    			<div class="tile-header">
-    				<h3>Your Groups</h3>
-    				<span>You are a member of</span>
-    			</div>
-    			<div class="tile-progressbar">
-    				<span data-fill="78%" style="width: 78%;"></span>
-    			</div>
-    			<div class="tile-footer">
-    				<h4>
-    					<span class="pct-counter">78</span>% increase
-    				</h4>
-    				<span>so far in our blog and our website</span>
-    			</div>
-    		</div>
-    	</div>
+          <div class="col-sm-3">
+                <div class="tile-progress tile-cyan">
+                <div class="tile-header">
+                    <h2>Your Storage</h2>
+                    <span>so far you have used <h3>{{storageConsumed.inSi}}</h3></span>
+                     <h4>
+                        <span class="pct-counter">{{storageConsumed.inPercent}}</span> of allowed.
+                    </h4>
+                </div>
+                <div class="tile-progressbar">
+                    <span data-fill="{{storageConsumed.inPercent}}" style="width: {{storageConsumed.inPercent}};"></span>
+                </div>
+                <div class="tile-footer">
+                   
+                    <span>Remaining storage {{storageRemaining}}
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
-    	{{> myCards}}
-    </div>
+    
 </div>
 
-
 </div>
+{{/if}}
 </template>
 
+<template name="myCardHeader">
+    <div class="cardHeader">
+
+<span>filter by Groups</span>
+<select  class="selectpicker" data-style="btn-primary" id="groupFilter" name="groupFilter"  >
+    <option value="all">ALL</option>
+    {{#each userGroups}}
+   
+      <option value={{name}}>{{name}}</option>
+      
+      {{/each}}
+    </select>
+ <h4 style="background-color: #475577;padding: 5px; border-radius: 3px;">{{groupFilterCount}} pins grouped in {{groupString}}, out of {{userPinCount}}.</h4>
+</div>
+
+</template>
 <template name="myCards">
 
 
 	{{#each content}}
 	{{#if isOwner  properties.user}}
 
-	<div class="col-sm-3">
- <div class="item" data-id={{id}}>
+	<div class="col-md-12">
+ <div class="item" data-id={{id}} style="margin-bottom: 15px; background-color: rgba(255,255,255,0.1); border-radius: 3px;">
  <div class="card">
 
-<div class="card-content">
-<span class="card-title">{{properties.title}}</span>
-
-
-<button type="button" class="btn btn-custom pull-right content-show-event" aria-label="Left Align" style="color: #555;     margin-top: -10px;
-    padding: 10px 10px 0px;" data-rel={{id}}> 
-  <i class="fa fa-info-circle show-marker-event" aria-hidden="true" data-rel={{id}} title="MORE INFO"></i>  </button>
-</div>
+<div class="card-action">
+    
+    <a href="#" class="edit-feature"><i class="fa fa-pencil-square-o" aria-hidden="true" data-id={{id}}></i></a> 
+    <a href="#" class="delete-feature" ><i class="fa fa-trash " aria-hidden="true" style="color:white;" data-id={{id}}></i><!--DELETE--></a> 
+    
+ </div>
+ <!-- card actions --> 
 <!-- card content -->
 {{#if isText properties.mediatype}}
 <div class="sidebar-text-wrap" >
@@ -96,23 +119,23 @@
 
 {{#if isImage properties.mediatype}}
 <div class="card-image">
-<img class="img-responsive" for={{id}} src={{properties.url}}>
+<a href={{properties.url}} data-toggle="lightbox" data-title={{properties.title}} data-footer={{properties.description}}>
+    <img class="img-responsive" for={{id}} src={{properties.url}}>
+</a>
 </div>
 {{/if}}
 
 {{#if isVideo properties.mediatype}}
+<a href="properties.url" data-toggle="lightbox" data-title="properties.title">
 <iframe width="100%" height="100%" src={{properties.url}} frameborder="0" allowfullscreen></iframe>
+</a>
 {{/if}}
 <!-- card image -->
 
+ <div class="card-content">
+<span class="card-title">{{properties.title}}</span>
 
-<div class="card-action">
-	
-	<!--a href="#" class="edit-feature"><i class="fa fa-pencil-square-o" aria-hidden="true"></i><span>EDIT</span></a--> 
-	<a href="#" class="delete-feature"><i class="fa fa-trash " aria-hidden="true"></i><!--DELETE--></a> 
-	
- </div>
- <!-- card actions -->
+</div>
  <div class="" style="padding:15px;">
 <p>{{properties.description}}</p>
  <p>by {{properties.user}}<br />

@@ -1,6 +1,7 @@
 //routes for the app
 Router.configure({
-    layoutTemplate: 'mainLayout'
+    layoutTemplate: 'mainLayout',
+    notFoundTemplate: "NotFound"
 });
 Router.route('/', {
     template: 'pondyHome',
@@ -8,11 +9,18 @@ Router.route('/', {
 });
 
 
-Router.route('/me', {
+Router.route('/dashboard', {
     template: 'Profile',
     name: 'profile.show',
-    data: function() {
-       
+    action: function() {
+        console.log(this.params.hash, Session.get('userSession'));
+        if(Session.get('userSession')){
+            this.render();
+        }
+        else {
+            this.next();
+
+        }
     }
 });
 Router.route('/about', {
