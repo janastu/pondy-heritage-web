@@ -1,7 +1,7 @@
   /* App global configuration  and local apis for client*/
   
 (function() {
-    MAPP ={};
+MAPP ={};
 MAPP.API ={};
 MAPP.appName = Meteor.settings.public.appConfig.appId;
 // To store the app config like, regions, categories and groups
@@ -78,17 +78,18 @@ MAPP.API.getFeatures = function(){
     //Filter response data by appName - such that only context
     // specific features are displayed
     if(!err){
-        MAPP.GeoJson.set('Features', {'type': 'FeatureCollection', 
+        MAPP.GeoJson.set('Features', 
+            {'type': 'FeatureCollection', 
         'features':_.compact(_.map(res.data.features, function(feature){ 
          if(feature.properties.appname === MAPP.appName){
             return feature;
-        }
-    }))
-    });
-        
+        }   
+                }))
+            });
     }
 });
 }
+
 
 //function call to get data from server and set geojson
 MAPP.API.getFeatures();
@@ -142,6 +143,81 @@ MAPP.API.postToServer = function(fd){
     
         });
 }
+
+
+MAPP.API.editFeature = function(featureId){
+    console.log("called edit feature api", featureId);
+}
+
+MAPP.API.deleteFeature = function(featureId){
+var sessionToken = Session.get('userSession').token;
+    var url = Meteor.settings.public.apis.deleteFeature+featureId;
+    
+    new Confirmation({
+    message: "Are you sure you want to Delete?",
+    title: "Confirmation"
+}, function (ok) {
+  // ok is true if the user clicked on "ok", false otherwise
+
+  if(ok){
+    Session.set('uploadSpin', true);
+    console.log(featureId, url, sessionToken);
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", function(e){
+      Session.set('uploadSpin', false);
+      
+      overlays.clearLayers();
+      myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
+      MAPP.API.getFeatures();
+     
+    });
+    xhr.open('DELETE', url);
+        xhr.withCredentials=true;
+        xhr.setRequestHeader("Accept", "application/json");
+        xhr.setRequestHeader("X-Auth-Token", sessionToken);
+         
+        xhr.send();
+    
+  } else {
+    Bert.alert({
+                    title: 'Delete cancelled',
+                     message: '',
+                    type: 'info',
+                    style: 'growl-top-right',
+                    icon: 'fa-info'
+                });
+  }
+});
+}
+MAPP.API.getGroupsForUser = function(arg){
+      Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser+arg.userName, function(err, response){
+              if(!err){
+               
+                Session.set("Groupinfo", response.data);  
+                sessionStorage.setItem('userGroups', JSON.stringify(response.data));
+                
+                }
+              });
+    this.getStorageLimit(arg);
+      
+    }
+
+MAPP.API.getStorageLimit = function(arg){
+      var apiUrl = "http://196.12.53.138:8080/heritageweb/api/getCurrentStorageSize/user/"+arg.userName;
+      Meteor.http.call("POST", apiUrl, 
+                        {headers:{
+                                  "Content-Type":"application/json", 
+                                  "Accept":"application/json",
+                                  "X-Auth-Token": Session.get('userSession').token
+                                }},
+                        function(err, response){
+                          if(!err){
+                            Session.set('storageLimit', response.data);
+                            console.log(response);
+                          }
+                        });
+    }
+    
 
 })();
 

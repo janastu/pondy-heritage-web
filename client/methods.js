@@ -40,6 +40,7 @@ Meteor.methods({
            
             //storing in browser
             sessionStorage.setItem('userSession', JSON.stringify(result.data));
+            Session.set('userSession', result.data);
 
             //Router.go('/mapp');
                 Router.go('app.show',{}, {'query': {'groups': _.map(Session.get('Groups'), function(item){return item.name}).toString(),
@@ -53,20 +54,12 @@ Meteor.methods({
                     style: 'growl-top-right',
                     icon: 'fa-check'
                 });      
-              Meteor.call('getGroupsForUser', {userName: result.data.token.split(":")[0]});
+              MAPP.API.getGroupsForUser({userName: result.data.token.split(":")[0]});
+              
           }
         });
     },
-    getGroupsForUser: function(arg){
-      Meteor.http.call("GET", Meteor.settings.public.apis.getGroupForUser+arg.userName, function(err, response){
-              if(!err){
-               
-                Session.set("Groupinfo", response.data);  
-                sessionStorage.setItem('userGroups', JSON.stringify(response.data));
-                
-                }
-              });
-    },
+  
     Register: function(request){
       var response = Meteor.http.call("POST", Meteor.settings.public.apis.register, 
         {content: 'username='+request.username+'&'+'password='+request.password+'&'+
@@ -149,9 +142,5 @@ Meteor.methods({
                           }
 
       });
-      console.log(request, apiUrl);
-
     }
-    
- 
 });
