@@ -80,46 +80,9 @@ Template.sidebarItems.events({
   },
   'click .delete-feature': function(event, template){
     event.preventDefault();
-    var sessionToken = Session.get('userSession').token;
     var delFeat = event.target;
     var featureId = delFeat.closest('.item').getAttribute('data-id');
-    var url = Meteor.settings.public.apis.deleteFeature+featureId;
-    
-    new Confirmation({
-    message: "Are you sure you want to Delete?",
-    title: "Confirmation"
-}, function (ok) {
-  // ok is true if the user clicked on "ok", false otherwise
-
-  if(ok){
-    Session.set('uploadSpin', true);
-    console.log(featureId, url, sessionToken);
-    var xhr = new XMLHttpRequest();
-    xhr.addEventListener("load", function(e){
-      Session.set('uploadSpin', false);
-      
-      overlays.clearLayers();
-      myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
-      MAPP.API.getFeatures();
-     
-    });
-    xhr.open('DELETE', url);
-        xhr.withCredentials=true;
-        xhr.setRequestHeader("Accept", "application/json");
-        xhr.setRequestHeader("X-Auth-Token", sessionToken);
-        console.log(xhr); 
-        xhr.send();
-    
-  } else {
-    Bert.alert({
-                    title: 'Delete cancelled',
-                     message: '',
-                    type: 'info',
-                    style: 'growl-top-right',
-                    icon: 'fa-info'
-                });
-  }
-});
+    MAPP.API.deleteFeature(featureId);
     console.log( delFeat, featureId);
 
   }
@@ -239,7 +202,7 @@ Template.LoggedUser.events({
   },
   "click #profile-show": function(event, template){
     event.preventDefault();
-    Router.go('profile.show');
+    //Router.go('profile.show');
   }
 
 });

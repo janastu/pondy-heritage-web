@@ -145,7 +145,8 @@ addDrawControl = function(map){
 
                                         case 'VIDEO':
 
-                                        content = '<div class="map-content"><iframe width="100%" height="100%" src="'+feature.properties.url+'" frameborder="0" allowfullscreen></iframe>'+
+                                        content = '<div class="map-content"><a href="'+feature.properties.url+'" data-toggle="lightbox" data-title="'+
+                                        feature.properties.title+'"> <iframe width="100%" height="100%" src="'+feature.properties.url+'" frameborder="0" allowfullscreen></iframe>'+
                                         '<h2>'+feature.properties.title+'</h2>' +
                                         '</div>';
 
