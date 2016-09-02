@@ -107,7 +107,8 @@ Template.Profile.helpers({
   },
   storageRemaining: function(){
     var consumed = humanFileSize(Session.get('storageLimit'));
-    return 100-consumed+"MB";
+    var remaining = 100.00-consumed;
+    return remaining.toFixed(2)+"MB";
   }
 });
 
