@@ -11,6 +11,8 @@ var browserSessionconfig = sessionStorage.getItem('appConfig');
 //Map features to store a filter set of features by appName
 MAPP.GeoJson = new ReactiveDict();
 
+
+
 updateAppConfig = function(arg){
     var sessionObj = JSON.parse(arg);
     
@@ -37,8 +39,8 @@ if(sessionStorage.userSession){
             var userSession = JSON.parse(sessionStorage.userSession);
             Session.set('userSession', userSession);
             Session.set('showDialog', true);
-
 }
+
 
 //Get app config from server api and set globals  
 MAPP.API.getApps = function(){ 
@@ -202,6 +204,7 @@ MAPP.API.getGroupsForUser = function(arg){
       
     }
 
+//arg is a object with property userName{userName: string}
 MAPP.API.getStorageLimit = function(arg){
       var apiUrl = "http://196.12.53.138:8080/heritageweb/api/getCurrentStorageSize/user/"+arg.userName;
       Meteor.http.call("POST", apiUrl, 
@@ -217,8 +220,8 @@ MAPP.API.getStorageLimit = function(arg){
                           }
                         });
     }
-    
-
+    console.log(Session.get('userSession').token.split(":")[0]);
+Session.get('storageLimit')?true:MAPP.API.getStorageLimit({userName: Session.get('userSession').token.split(":")[0]});
 })();
 
 //Contact form events
