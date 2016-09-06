@@ -126,7 +126,7 @@ Template.myCardHeader.helpers({
     return filterFeatures(filtered, {group: Session.get('profileFilters') || 'all'}).length;
   },
   groupString: function(){
-    return Session.get('profileFilters');
+    return Session.get('profileFilters') || 'all';
   }
 });
 
