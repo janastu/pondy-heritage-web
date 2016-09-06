@@ -15,6 +15,7 @@ Template.Groups.events({
   },
   'click .join-group-action': function(event, template){
     event.preventDefault();
+   
     console.log(event.target.getAttribute('data-group-id'));
     Meteor.call('joinGroup', {userName: Session.get("userSession").token.split(":")[0],
                               groupId: event.target.getAttribute('data-group-id'),
