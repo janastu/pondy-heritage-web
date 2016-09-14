@@ -52,11 +52,31 @@ Template.AddToMapDialog.helpers({
 
 }
 			return Session.get('Groupinfo');
+	},
+	editState:function(){
+		return Session.get('editFeature');
 	}
 });
 
+Template.AddToMapDialog.rendered = function(){
+	
+	$('#add-heritage').on('hide.bs.modal', function (e) {
+		console.log("cancelled");
+  		$('#groupInfo option:selected').attr('selected', false);
+  		$('#category option:selected').attr('selected', false);
+  		$('#language option:selected').attr('selected', false);
+	});
+ 	$('#add-heritage').on('shown.bs.modal', function(e){
+ 		var editable = Session.get('editFeature');
+ 		console.log("shown", editable);
+		$('#groupinfo option[value='+'"'+editable.properties.groupname+'"'+']').attr("selected", "selected");
+    	$('#category option[value='+'"'+editable.properties.category+'"'+']').attr("selected", "selected");
+    	$('#language option[value='+'"'+editable.properties.language+'"'+']').attr("selected", "selected");
+    });
 
+};
 Template.AddToMapDialog.events({
+	
 	'submit form': function(event, template){
 		event.preventDefault();
 		Session.set('uploadSpin', true);

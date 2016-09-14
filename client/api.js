@@ -146,9 +146,22 @@ MAPP.API.postToServer = function(fd){
         });
 }
 
+function editDropdownUI(editable){
+    console.log(editable);
+    $('#add-heritage').modal({show: true});
+    
 
+    $('#category').change();
+}
 MAPP.API.editFeature = function(featureId){
-    console.log("called edit feature api", featureId);
+    
+    var editable = _.find(MAPP.GeoJson.get("Features").features, function(item){
+     if(item.id==featureId){
+        return item;
+     }
+ });
+    Session.set('editFeature', editable);
+    editDropdownUI(editable);
 }
 
 MAPP.API.deleteFeature = function(featureId){

@@ -20,11 +20,12 @@
 <form name="multiform" id="multiform" enctype="multipart/form-data" >
 <div class="form-group">
 <label>Title:</label>
-<input type="text" class="form-control" name="title" required="" placeholder="Add a title" >
+<input type="text" class="form-control" name="title" required="" placeholder="Add a title" value={{editState.properties.title}}>
 </div>
 <div class="form-group form-group-lg">
 <label>Description:</label>
 <textarea type="text" class="form-control input-lg" name="description" form="multiform" required="" placeholder="Add a description of this place">
+  {{editState.properties.description}}
 </textarea>
 </div>
 <div class="">
@@ -91,7 +92,7 @@ https://www.youtube.com/embed/... </span>
     {{/if}}
 		<button type="submit" class="btn btn-primary" >SUBMIT</button>	
           <!--button type="button" class="btn btn-primary" id="save">Save</button-->
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="reset" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
         </form>													
 
