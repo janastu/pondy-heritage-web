@@ -1,14 +1,14 @@
   // testing the meteor way components will be easy to customize
        // TODO: filter function is not working && event click on item should change view in map
 
-Template.registerHelper( 'dateTime', ( timestamp ) => {
+Template.registerHelper( 'dateTime', function( timestamp ) {
 
   if ( timestamp ) {
-    let momentToFormat = moment( timestamp, 'DD-MM-YYYY HH:mm:ss' ),
+    var momentToFormat = moment( timestamp, 'DD-MM-YYYY HH:mm:ss' ),
         date           = momentToFormat.format( 'MMMM Do, YYYY' ),
         time           = momentToFormat.format( 'hh:mm a' );
 
-    return `${ date } at ${ time }`;
+    return  date +" at "+  time;
   }
 });
 
