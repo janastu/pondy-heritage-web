@@ -52,7 +52,7 @@ MAPP.API.getApps = function(){
                 setAppConfig(allApps);
                  
             } else {
-                console.log("error getting apps", err);
+                //console.log("error getting apps", err);
             }
         });
   function setAppConfig(arg){
@@ -116,7 +116,12 @@ MAPP.API.postToServer = function(fd){
             Session.set('uploadSpin', false);
             
             //remove modal from view
-            $('#add-heritage').modal('toggle');
+            if(Session.get('editFeature')){
+                $('#edit-heritage').modal('toggle');
+            } else {
+                $('#add-heritage').modal('toggle');
+            }
+            
             //refresh map data layer 
             overlays.clearLayers();
             myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
@@ -124,10 +129,17 @@ MAPP.API.postToServer = function(fd){
             MAPP.API.getFeatures();
             //clear mapclick session value
             Session.set('mapClick', "");
+            Session.set('editFeature', "");
         });
         
         //posting to server endpoint
-        xhr.open('POST', Meteor.settings.public.apis.postFeature);
+        if(Session.get('editFeature')){
+            xhr.open('POST', Meteor.settings.public.apis.editFeature);
+
+        } else {
+            xhr.open('POST', Meteor.settings.public.apis.postFeature);
+        }
+        
         xhr.withCredentials = true;
         xhr.setRequestHeader("Accept", "application/json");
         xhr.send(fd);
@@ -146,23 +158,8 @@ MAPP.API.postToServer = function(fd){
         });
 }
 
-function editDropdownUI(editable){
-    console.log(editable);
-    $('#add-heritage').modal({show: true});
-    
 
-    $('#category').change();
-}
-MAPP.API.editFeature = function(featureId){
-    
-    var editable = _.find(MAPP.GeoJson.get("Features").features, function(item){
-     if(item.id==featureId){
-        return item;
-     }
- });
-    Session.set('editFeature', editable);
-    editDropdownUI(editable);
-}
+
 
 MAPP.API.deleteFeature = function(featureId){
 var sessionToken = Session.get('userSession').token;
@@ -176,7 +173,7 @@ var sessionToken = Session.get('userSession').token;
 
   if(ok){
     Session.set('uploadSpin', true);
-    console.log(featureId, url, sessionToken);
+    //console.log(featureId, url, sessionToken);
     var xhr = new XMLHttpRequest();
     xhr.addEventListener("load", function(e){
       Session.set('uploadSpin', false);
@@ -229,12 +226,14 @@ MAPP.API.getStorageLimit = function(arg){
                         function(err, response){
                           if(!err){
                             Session.set('storageLimit', response.data);
-                            console.log(response);
+                            //console.log(response);
                           }
                         });
     }
-    console.log(Session.get('userSession').token.split(":")[0]);
-Session.get('storageLimit')?true:MAPP.API.getStorageLimit({userName: Session.get('userSession').token.split(":")[0]});
+    //console.log(Session.get('userSession').token.split(":")[0]);
+    if(Session.get('userSession')){
+        Session.get('storageLimit')?true:MAPP.API.getStorageLimit({userName: Session.get('userSession').token.split(":")[0]});
+    }
 })();
 
 //Contact form events
