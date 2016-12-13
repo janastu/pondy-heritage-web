@@ -28,7 +28,8 @@ updateSidebarView = function(marker){
 // Add map base layer - map theme and set view
  addBaseLayer = function(){
                 var map = L.mapbox.map('map', Meteor.settings.public.appConfig.tileLayer)
-                .setView(Meteor.settings.public.appConfig.mapInitialView, 12)
+                .setView(Meteor.settings.public.appConfig.mapInitialView, 
+                  Meteor.settings.public.appConfig.initialZoom)
                 .addControl(L.mapbox.geocoderControl('mapbox.places', 'autocomplete'));
                     //global context for map object to change bounding box
                    return window.MAP=map;
