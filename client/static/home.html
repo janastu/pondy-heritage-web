@@ -4,7 +4,21 @@
     <section class="mbr-slider mbr-section mbr-section--no-padding carousel slide mbr-after-navbar margin-adjust" data-ride="carousel" data-wrap="true" data-interval="5000" id="home" style="background-color: rgb(255, 255, 255);">
         <div class="mbr-hero">
             <img src="http://livinglightly.in/wp-content/uploads/2016/11/9.jpg" class="img-responsive"/>
-            <h1 class="mbr-hero__text">Mapping of LivingLightly event and related spaces by participants</h1>
+          
+            <h1 class="mbr-hero__text" style="    background-color: rgba(0,0,0,0.6);
+   
+    min-height: 745px; top: 75px;">Mapping of LivingLightly event and related spaces by participants
+           </h1>
+           <div class="mbr-buttons btn-inverse mbr-buttons--center" style="position: absolute;
+    top: 30%;
+    left: 30%;">
+                                               <a class="mbr-buttons__btn btn btn-lg btn-danger" href={{pathFor route='app.show'
+               query=queryParams}}>EXPLORE THE MAP</a>
+
+                            <a class="mbr-buttons__btn btn btn-lg btn-danger" href="/login">ADD TO THE MAP</a>
+                </div>
+        
+
             <p style="color:#000; padding:15px;">Image Courtesy:<a href="http://livinglightly.in/">livinglightly.in</a></p>
         </div>
     </section>

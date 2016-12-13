@@ -9,3 +9,12 @@ Template.navBar.helpers({
 		return "groups="+Meteor.settings.public.appConfig.groups.join(",")+"&"+"categories="+Meteor.settings.public.appConfig.categories.join(",");
 	}
 });
+
+
+
+Template.pondyHome.helpers({
+
+	queryParams: function(){
+		return "groups="+Meteor.settings.public.appConfig.groups.join(",")+"&"+"categories="+Meteor.settings.public.appConfig.categories.join(",");
+	}
+});
