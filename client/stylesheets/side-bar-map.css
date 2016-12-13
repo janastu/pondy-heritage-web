@@ -1,4 +1,4 @@
-body {
+/*body {
   color:#404040;
   font:400 15px/22px 'Helvetica Neue', Sans-serif;
   margin:0;
@@ -9,8 +9,8 @@ body {
   -webkit-box-sizing:border-box;
   -moz-box-sizing:border-box;
   box-sizing:border-box;
-}
-h1 {
+}*/
+.sidebar h1 {
   font-size:22px;
   margin:0;
   font-weight:400;
