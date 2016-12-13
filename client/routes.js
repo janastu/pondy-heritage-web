@@ -46,14 +46,14 @@ Router.route('/groups', {
 Router.route('/mapp', {
     template: 'Map',
     name: 'app.show',
-  
     action: function(){
-        var filters = this.params.query.categories.split(',');
-        var groups = this.params.query.groups.split(',');
-     
-        Session.set('categoryFilter', filters);
-        Session.set('groupFilter', groups)
-        this.render();
+        //var categories, groups;
+ 
+            var categories = this.params.query.categories.split(',');
+            var groups = this.params.query.groups.split(',');
+            Session.set('categoryFilter', categories);
+            Session.set('groupFilter', groups);
+            this.render();
     }
 });
 

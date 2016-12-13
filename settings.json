@@ -1,19 +1,9 @@
 {
 
     "contactForm": {
-        "emailTo": "bhanu@servelots.com"
-        }, 
-    "kadira": {
-        "appId": "rCPwr3YYdfqiNu427",
-        "appSecret": "d83f81f7-1d7a-49c1-8075-0f25bfc2be1b"
-    },
-    "public": {
-        "analyticsSettings": {
-            "Mixpanel": {
-                "token":"d9435c9b09ba82ba272d1847f9242228",
-                "people": true
-            }
+        "emailTo": "janastu@servelots.com"
         },
+    "public": {
 
         "apis": {
             "getApps": "http://196.12.53.138:8080/heritageweb/api/heritageAppsMob",
@@ -28,11 +18,14 @@
             "editFeature": "http://192.168.1.97:8080/api/editNewMediaHeritageForm2"
         },
         "appConfig": {
-            "appId": "PondyMap",
-            "mapBoxToken": "pk.eyJ1IjoicGF1bG9ib3JnZXMiLCJhIjoicFQ1Sll5ZyJ9.alPGD574u3NOBi2iiIh--g",
-            "tileLayer": "mapbox.pirates",
-            "mapInitialView": [11.972157926492702, 79.81773376464844]
-            
+            "appId": "LivingLightly",
+            "mapBoxToken": "pk.eyJ1Ijoic2FsdXMtc2FnZSIsImEiOiJmZWY5MmM3NGY1ZTQ1MzUzNjg1M2ExMjljNGVhNTFmZCJ9.ZLOgiB35QCkia_yYj-u1qg",
+            "tileLayer": "mapbox.streets",
+            "mapInitialView": [28.606218, 77.213779],
+            "logo": "http://livinglightly.in/wp-content/themes/attend-wp-child/img/icons.png",
+            "appName": "Living Lightly",
+            "groups": ["Exhibitors", "Academic", "Stakeholders", "Default"],
+            "categories": ["Food", "Products", "Journeys", "School", "Heritage", "Breeds", "Academia", "Events", "Others"]            
         }
     }
 }
