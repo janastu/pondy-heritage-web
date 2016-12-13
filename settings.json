@@ -25,7 +25,8 @@
             "logo": "http://livinglightly.in/wp-content/themes/attend-wp-child/img/icons.png",
             "appName": "Living Lightly",
             "groups": ["Exhibitors", "Academic", "Stakeholders", "Default"],
-            "categories": ["Food", "Products", "Journeys", "School", "Heritage", "Breeds", "Academia", "Events", "Others"]            
+            "categories": ["Food", "Products", "Journeys", "School", "Heritage", "Breeds", "Academia", "Events", "Others"],
+            "categoryColors": ["#d24646", "#f97352", "#FFEB3B", "#536DFE", "#FF5722", "#00796B", "#F44336", "#F44334", "#F44332"]            
         }
     }
 }

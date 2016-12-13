@@ -200,7 +200,8 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
       }).addTo(overlays);
     }
     // create a marker cluster group for each category
-    groups = {
+    //removing to generalize for livinglightly
+   /* groups = {
       "Built Heritage": makeGroup('#d24646'),
       "Urban Life": makeGroup('#f97352'),
       "Intangible Cultural Heritage": makeGroup('#FFEB3B'),
@@ -212,7 +213,12 @@ myLayer.loadURL(Meteor.settings.public.apis.getFeatures);
       "Lived Experience": makeGroup('#F44334'),
       "Other Indian Influence": makeGroup('#F44332'),
       "Other Foreign Influence": makeGroup('#F44330')
-    };
+    };*/
+
+    groups ={};
+    _.each(Meteor.settings.public.appConfig.categories, function(category, index){
+      groups[category] = makeGroup(Meteor.settings.public.appConfig.categoryColors[index]);
+    });
     
      
     myLayer.eachLayer(function(layer) {
