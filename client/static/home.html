@@ -1,40 +1,106 @@
 <template name="pondyHome">
 
   
-    <section class="mbr-slider mbr-section mbr-section--no-padding carousel slide mbr-after-navbar margin-adjust" data-ride="carousel" data-wrap="true" data-interval="5000" id="home" style="background-color: rgb(255, 255, 255);">
-        <div class="mbr-hero">
-            <img src="http://livinglightly.in/wp-content/uploads/2016/11/9.jpg" class="img-responsive"/>
-          
-            <h1 class="mbr-hero__text" style="    background-color: rgba(0,0,0,0.6);
-   
-    min-height: 745px; top: 75px;">Mapping of LivingLightly event and related spaces by participants
-           </h1>
-           <div class="mbr-buttons btn-inverse mbr-buttons--center" style="position: absolute;
-    top: 30%;
-    left: 30%;">
-                                               <a class="mbr-buttons__btn btn btn-lg btn-danger" href={{pathFor route='app.show'
-               query=queryParams}}>EXPLORE THE MAP</a>
+  <section class="mbr-slider mbr-section mbr-section--no-padding carousel slide mbr-after-navbar margin-adjust" data-ride="carousel" data-wrap="true" data-interval="5000" id="slider-1" style="background-color: rgb(255, 255, 255);">
+    <div class="mbr-section__container">
+        <div>
+            <ol class="carousel-indicators">
+                <li data-app-prevent-settings="" data-target="#slider-1" data-slide-to="0" class="active"></li><li data-app-prevent-settings="" data-target="#slider-1" data-slide-to="1"></li><li data-app-prevent-settings="" data-target="#slider-1" data-slide-to="2"></li><li data-app-prevent-settings="" data-target="#slider-1" class="" data-slide-to="3"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--bg-adapted item dark center mbr-section--full-height active" style="background-image: url(//www.rotarydistrict3190.org.in/images/page-1_slide01.jpg?1483112340631);">
+                    <div class="mbr-box__magnet mbr-box__magnet--sm-padding">
+                        <div class=" container">
+                            
+                            <div class="row"><div class="col-sm-8 col-sm-offset-2">
+                                <div class="mbr-hero">
+                                    <h1>Rotary<br></h1>
+                                   
+                                    <p class="mbr-hero__subtext"><br>The Object of Rotary is to encourage and foster the ideal of service as a basis of worthy enterprise and, in particular, to encourage and foster</p>
+                                </div>
+                                <div class="mbr-buttons btn-inverse mbr-buttons--center">
+                                    <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">EXPLORE THE MAP</a>
 
-                            <a class="mbr-buttons__btn btn btn-lg btn-danger" href="/login">ADD TO THE MAP</a>
-                </div>
-        
+                 <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">ADD TO THE MAP</a></div>
+                            </div></div>
+                        </div>
+                    </div>
+                </div><div class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--bg-adapted item dark center mbr-section--full-height" style="background-image: url(//www.rotarydistrict3190.org.in/images/page-1_slide02.jpg?1483112341495);">
+                    <div class="mbr-box__magnet mbr-box__magnet--sm-padding">
+                        <div class=" container">
+                            
+                            <div class="row"><div class="col-sm-8 col-sm-offset-2">
+                                <div class="mbr-hero">
+                                    <h1>Rotary Clubs<br></h1>
+                                    <p class="mbr-hero__subtext"><br></p>
+                                </div>
+                                <div class="mbr-buttons btn-inverse mbr-buttons--center">
+                                    <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">EXPLORE THE MAP</a>
 
-            <p style="color:#000; padding:15px;">Image Courtesy:<a href="http://livinglightly.in/">livinglightly.in</a></p>
-        </div>
-    </section>
+                 <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">ADD TO THE MAP</a>
+             </div>
+                            </div></div>
+                        </div>
+                    </div>
+                </div><div class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--bg-adapted item dark center mbr-section--full-height" style="background-image: url(//www.rotarydistrict3190.org.in/images/page-1_slide03.jpg?1483112356230);">
+                    <div class="mbr-box__magnet mbr-box__magnet--sm-padding">
+                        <div class=" container">
+                            
+                            <div class="row"><div class="col-sm-8 col-sm-offset-2">
+                                <div class="mbr-hero">
+                                    <h1><br></h1>
+                                    
+                                    <p class="mbr-hero__subtext"><br></p>
+                                </div>
+                                <div class="mbr-buttons btn-inverse mbr-buttons--center">
+                                    <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">EXPLORE THE MAP</a>
 
-    <section class="mbr-section mbr-after-navbar" id="contact">
-        <div class="mbr-section__container container mbr-section__container--isolated">
-            <div class="mbr-header mbr-header--wysiwyg row">
-                <div class="col-sm-8 col-sm-offset-2">
-                    <h3 class="mbr-header__text">JANASTU<br></h3>
-                    <p class="mbr-header__subtext"> <!-- Curated by:<br>Indian National Trust for Art and Cultural Heritage (INTACH) Pondicherry<br>-->
-                        3354 KR road<br>Bangalore  560070,
-    <br>Karnataka, INDIA<br><br>+91-80-2676-2963<br><br>Email: <a href="mailto:janastu@servelots.com">janastu at servelots dot com</a><br><a href="http://janastu.org" target="_blank">janastu.org</a><br><br><br></p>
+                 <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">ADD TO THE MAP</a>
+             </div>
+                            </div></div>
+                        </div>
+                    </div>
+                </div><div class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--bg-adapted item dark center mbr-section--full-height" style="background-image: url(assets/images/page2.jpg);">
+                    <div class="mbr-box__magnet mbr-box__magnet--sm-padding">
+                        <div class=" container">
+                            
+                            <div class="row"><div class="col-sm-8 col-sm-offset-2">
+                                <div class="mbr-hero">
+                                    <h1><br></h1>
+                                    
+                                    <p class="mbr-hero__subtext"><br></p>
+                                </div>
+                                <div class="mbr-buttons btn-inverse mbr-buttons--center">
+                                    <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">EXPLORE THE MAP</a> 
+           
+                <a class="mbr-buttons__btn btn btn-lg btn-danger" href="{{pathFor route='app.show'
+                query='groups=Intach Group&categories=Built Heritage,Urban Life,Intangible Cultural Heritage,French Influence,Tamil Culture,Natural Heritage,Spiritual Practice,Village Life,Lived Experience,Other Indian Influence,Other Foreign Influence'}}">ADD TO THE MAP</a>
+
+            </div>
+                            </div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+            <a data-app-prevent-settings="" class="left carousel-control" role="button" data-slide="prev" href="#slider-1">
+                <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a data-app-prevent-settings="" class="right carousel-control" role="button" data-slide="next" href="#slider-1">
+                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-    </section>
+    </div>
+</section>
 
 
 </template>
