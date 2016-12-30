@@ -18,13 +18,13 @@
             "editFeature": "http://192.168.1.97:8080/api/editNewMediaHeritageForm2"
         },
         "appConfig": {
-            "appId": "LivingLightly",
+            "appId": "Rotary3190",
             "mapBoxToken": "pk.eyJ1Ijoic2FsdXMtc2FnZSIsImEiOiJmZWY5MmM3NGY1ZTQ1MzUzNjg1M2ExMjljNGVhNTFmZCJ9.ZLOgiB35QCkia_yYj-u1qg",
             "tileLayer": "mapbox.streets",
             "mapInitialView": [21.820707853875017, 82.705078125],
             "initialZoom": 6,
-            "logo": "http://livinglightly.in/wp-content/themes/attend-wp-child/img/icons.png",
-            "appName": "Living Lightly",
+            "logo": "http://clubrunner.blob.core.windows.net/00000050056/en-ca/files/sitepage/rotary-international-logos/ri-logo-wh-4p-ol-rgb.jpg/wh-4p-ol-rgb.jpg",
+            "appName": "Rotary 3190",
             "groups": ["Exhibitors", "Academic", "Stakeholders", "Default"],
             "categories": ["Food", "Products", "Journeys", "School", "Heritage", "Breeds", "Academia", "Events", "Others"],
             "categoryColors": ["#d24646", "#f97352", "#FFEB3B", "#536DFE", "#FF5722", "#00796B", "#F44336", "#F44334", "#F44332"]            
