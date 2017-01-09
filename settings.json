@@ -18,12 +18,12 @@
             "editFeature": "http://192.168.1.97:8080/api/editNewMediaHeritageForm2"
         },
         "appConfig": {
-            "appId": "LivingLightly",
+            "appId": "iitdelhicycle",
             "mapBoxToken": "pk.eyJ1Ijoic2FsdXMtc2FnZSIsImEiOiJmZWY5MmM3NGY1ZTQ1MzUzNjg1M2ExMjljNGVhNTFmZCJ9.ZLOgiB35QCkia_yYj-u1qg",
             "tileLayer": "mapbox.streets",
             "mapInitialView": [21.820707853875017, 82.705078125],
             "initialZoom": 6,
-            "logo": "http://livinglightly.in/wp-content/themes/attend-wp-child/img/icons.png",
+            "logo": "assets/images/2nammanimmacyclelogo.png",
             "appName": "Living Lightly",
             "groups": ["Exhibitors", "Academic", "Stakeholders", "Default"],
             "categories": ["Food", "Products", "Journeys", "School", "Heritage", "Breeds", "Academia", "Events", "Others"],
