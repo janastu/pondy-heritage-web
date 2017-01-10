@@ -1,7 +1,7 @@
 {
 
     "contactForm": {
-        "emailTo": "janastu@servelots.com"
+        "emailTo": "murali@nammacycle.in"
         },
     "public": {
 
@@ -18,15 +18,15 @@
             "editFeature": "http://192.168.1.97:8080/api/editNewMediaHeritageForm2"
         },
         "appConfig": {
-            "appId": "iitdelhicycle",
+            "appId": "CycleShareMap_IIT_Delhi",
             "mapBoxToken": "pk.eyJ1Ijoic2FsdXMtc2FnZSIsImEiOiJmZWY5MmM3NGY1ZTQ1MzUzNjg1M2ExMjljNGVhNTFmZCJ9.ZLOgiB35QCkia_yYj-u1qg",
             "tileLayer": "mapbox.streets",
-            "mapInitialView": [21.820707853875017, 82.705078125],
+            "mapInitialView": [28.5453551, 77.1901204],
             "initialZoom": 6,
             "logo": "assets/images/2nammanimmacyclelogo.png",
-            "appName": "Living Lightly",
-            "groups": ["Exhibitors", "Academic", "Stakeholders", "Default"],
-            "categories": ["Food", "Products", "Journeys", "School", "Heritage", "Breeds", "Academia", "Events", "Others"],
+            "appName": "CycleShareMap IIT Delhi",
+            "groups": [ "Academic","Stakeholders", "IIT Cycles Group", "IIT Students Group"],
+            "categories": ["Cafeteria", "Lecture Hall", "Library", "Parking location", "Bicycle Rental Station", "Toilet"],
             "categoryColors": ["#d24646", "#f97352", "#FFEB3B", "#536DFE", "#FF5722", "#00796B", "#F44336", "#F44334", "#F44332"]            
         }
     }
