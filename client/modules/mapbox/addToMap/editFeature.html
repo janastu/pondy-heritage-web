@@ -1,5 +1,5 @@
-<template name="AddToMapDialog">
- <div class="modal fade" id="add-heritage">
+<template name="EditFeatureModal">
+ <div class="modal fade" id="edit-heritage">
     <div class="modal-dialog modal-md">
       <div class="modal-content">
 
@@ -20,14 +20,16 @@
 <form name="multiform" id="multiform" enctype="multipart/form-data" >
 <div class="form-group">
 <label>Title:</label>
-<input type="text" class="form-control" name="title" required="" placeholder="Add a title">
+<input type="text" class="form-control" name="title" required="" placeholder="Add a title" value={{editState.properties.title}}>
 </div>
+
 <div class="form-group form-group-lg">
 <label>Description:</label>
-<textarea type="text" class="form-control input-lg" name="description" form="multiform" required="" placeholder="Add a description of this place">
-  
+<textarea class="form-control input-lg" name="description" required="" >
+  {{editState.properties.description}}
 </textarea>
 </div>
+
 <div class="">
 <div class="form-group" style="padding: 15px;">
 <label >Group:</label>
@@ -35,7 +37,7 @@
 <select  class="selectpicker" data-style="btn-primary" id="groupInfo" name="group"  >
     {{#each groupInfo}}
    
-      <option value={{id}} >{{name}}</option>
+      <option value={{id}} {{categorySelected name}}>{{name}}</option>
       
       {{/each}}
     </select>
@@ -49,7 +51,7 @@
 
 <select  class="selectpicker" data-style="btn-primary" id="category" name="category"  >
     {{#each categories}}
-      <option value={{categoryName}} >{{categoryName}}</option>
+      <option value={{categoryName}} {{categorySelected categoryName}}>{{categoryName}}</option>
       {{/each}}
      
     </select>
@@ -63,7 +65,7 @@
 
  <select  class="selectpicker" data-style="btn-primary" id="language" name="language"  >
   {{#each languages}}
-      <option value={{heritageLanguage}}>{{heritageLanguage}}</option>
+      <option value={{heritageLanguage}} {{languageSelected heritageLanguage}}>{{heritageLanguage}}</option>
       {{/each}}
    
     </select>
@@ -79,8 +81,9 @@ https://www.youtube.com/embed/... </span>
 </div>
 <div class="">
 <div class="form-group" style="padding: 15px;">
-
-<input type="file"  name="picture" accept='image/*' placeholder="Add a image">
+<a href={{editState.properties.url}} target="_blank">
+  <img src={{editState.properties.url}} class="img-responsive" style="width:100px; padding:15px;"  /></a>
+<input type="file"  name="picture" data-url="/images/temp-img.png" accept='image/*' placeholder="Add a image">
 </div>
 </div>
 

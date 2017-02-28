@@ -25,7 +25,7 @@
             "postFeature": "http://196.12.53.138:8080/heritageweb/api/createNewMediaHeritageForm2/",
             "deleteFeature": "http://196.12.53.138:8080/heritageweb/api/deleteNewMediaHeritageForm2/",
             "joinGroup": "http://196.12.53.138:8080/heritageweb/api/registerToGroup/",
-            "editFeature": "http://192.168.1.97:8080/api/editNewMediaHeritageForm2"
+            "editFeature": "http://196.12.53.138:8080/heritageweb/api/editNewMediaHeritageForm2"
         },
         "appConfig": {
             "appId": "PondyMap",

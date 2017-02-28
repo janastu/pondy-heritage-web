@@ -1,65 +1,49 @@
-//Add To map Controller
+Template.EditFeatureModal.helpers({
+	editState:function(){
+		return Session.get('editFeature');
+	},
+	categorySelected: function(categoryLabel){
+		
+		return (Session.get('editFeature').properties.category === categoryLabel) ? 'selected' : '';
+	},
+	groupSelected: function(groupLabel){
+		
+		return (Session.get('editFeature').properties.groupName === groupLabel) ? 'selected' : '';
+	},
+	languageSelected: function(lang){
+		//TODO: no lang property to refer to -> defaults to english
+		return (Session.get('editFeature').properties.groupName === lang) ? 'selected' : '';
+	},
+		latlng: function() {
+			return Session.get('mapClick');
+		},
+		loaded: function() {
+			return Session.get('uploadSpin');
+		},
+		categories: function() {
+			return Session.get('Categories');
+		},
+		languages: function() {
+			return Session.get('Languages');
+		},
+		//user group info resets on refresh if the user tries to post
+		groupInfo: function() {
+			    // user session if saved in browser session storage
+			if(sessionStorage.userGroups){
+	            var userGroups = JSON.parse(sessionStorage.userGroups);
+	            Session.set('Groupinfo', userGroups);
+	            
 
-Template.AddToMapBtn.helpers({
-	userLogged: function(){
-		return Session.get('userSession');
 	}
-
-});
-Template.AddToMapBtn.events({
-	'click #add-to-map': function(event){
-		event.preventDefault();
-		if(Session.get('userSession')){
-                //FlowRouter.go('/add-to-map');
-                if(Session.get('mapClick')){
-                	$('#add-heritage').modal({show: true});
-                } else {
-
-                	Session.set('markerAlert', true);
-                	Meteor.setTimeout(function(){
-                		Session.set("markerAlert", false);
-
-                	}, 5000);
-                }
-            } else {
-            	Router.go('login.static');
-            }
-        }
-    });
-
-
-
-Template.AddToMapDialog.helpers({
-	latlng: function() {
-		return Session.get('mapClick');
-	},
-	loaded: function() {
-		return Session.get('uploadSpin');
-	},
-	categories: function() {
-		return Session.get('Categories');
-	},
-	languages: function() {
-		return Session.get('Languages');
-	},
-	//user group info resets on refresh if the user tries to post
-	groupInfo: function() {
-		    // user session if saved in browser session storage
-		if(sessionStorage.userGroups){
-            var userGroups = JSON.parse(sessionStorage.userGroups);
-            Session.set('Groupinfo', userGroups);
-            
-
-}
-			return Session.get('Groupinfo');
-	}
+				return Session.get('Groupinfo');
+		}
 });
 
-
-Template.AddToMapDialog.events({
+Template.EditFeatureModal.events({
 	
 	'submit form': function(event, template){
 		event.preventDefault();
+		window.testE = event.target;
 		Session.set('uploadSpin', true);
         
         var userId = Session.get('userSession').token.split(":")[0].trim().toString();

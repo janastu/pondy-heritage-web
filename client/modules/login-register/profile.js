@@ -82,8 +82,16 @@ Template.myCards.events({
    },
    'click .edit-feature': function(event, template){
     event.preventDefault();
-    MAPP.API.editFeature(event.target.getAttribute('data-id'));
-    console.log(event.target);
+    //MAPP.API.editFeature(event.target.getAttribute('data-id'));
+    var editable = _.find(MAPP.GeoJson.get("Features").features, function(item){
+         if(item.id==event.target.getAttribute('data-id')){
+            return item;
+         }
+     });
+        Session.set('editFeature', editable);
+        Session.set('mapClick', {lat:editable.geometry.coordinates[1], lng:editable.geometry.coordinates[0]})
+        $('#edit-heritage').modal({show: true});
+    
   }
 });
 
